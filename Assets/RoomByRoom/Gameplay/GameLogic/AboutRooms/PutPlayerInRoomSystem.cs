@@ -6,7 +6,7 @@ namespace RoomByRoom
     internal class PutPlayerInRoomSystem : IEcsRunSystem
     {
         private EcsCustomInject<SceneData> _sceneData = default;
-        private EcsFilterInject<Inc<PlayerViewRef>> _playerViewRef = default;
+        private EcsFilterInject<Inc<UnitViewRef, ControllerByPlayer>> _playerViewRef = default;
         private EcsFilterInject<Inc<NoPlayer, RoomViewRef>> _rooms = default;
 
         public void Run(IEcsSystems systems)
@@ -19,8 +19,10 @@ namespace RoomByRoom
                 // UnityEngine.Debug.Log("Put player in room");
 
                 // teleport the player into the room
-                ref PlayerViewRef player = ref _playerViewRef.Pools.Inc1.Get(_sceneData.Value.PlayerEntity);
+                ref UnitViewRef player = ref _playerViewRef.Pools.Inc1.Get(_sceneData.Value.PlayerEntity);
                 ref RoomViewRef room = ref _rooms.Pools.Inc2.Get(index);
+
+                // UnityEngine.Debug.Log($"~Player: {player.Value.transform.position}. SpawnPoint: {room.Value.SpawnPoint.position}");
                 player.Value.transform.position = room.Value.SpawnPoint.position;
             }
         }

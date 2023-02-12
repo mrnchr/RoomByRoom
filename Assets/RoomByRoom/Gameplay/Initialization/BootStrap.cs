@@ -27,7 +27,10 @@ namespace RoomByRoom
                 .Add(new OpenDoorSystem())
                 .Add(new RandomRoomSystem())
                 .Add(new RecreateRoomSystem())
+                .Add(new MoveUnitSystem())
+                // .Add(new CameraFollowSystem())
                 .DelHere<NoPlayer>()
+                .DelHere<MoveCommand>()
 
                 .AddWorld(new EcsWorld(), Idents.Worlds.MessageWorld)
                 .DelHere<NextRoomMessage>(Idents.Worlds.MessageWorld)

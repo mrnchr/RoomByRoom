@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Prefab Data
   m_EditorClassIdentifier: 
   PlayerViews:
-  - {fileID: -5466955199506350242, guid: 34bd781d76436834fa1859ce2a98c28e, type: 3}
+  - {fileID: 5713328748562558450, guid: 34bd781d76436834fa1859ce2a98c28e, type: 3}
   StartRoom: {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
   SandEnemyRooms:
   - {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
