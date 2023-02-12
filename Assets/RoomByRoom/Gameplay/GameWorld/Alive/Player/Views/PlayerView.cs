@@ -5,5 +5,6 @@ namespace RoomByRoom
     public class PlayerView : GroundUnitView
     {
         public Transform Character;
+        public LayerMask GroundMask;
     }
 }

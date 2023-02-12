@@ -29,8 +29,11 @@ namespace RoomByRoom
                 .Add(new RecreateRoomSystem())
                 .Add(new MoveUnitSystem())
                 .Add(new RotateUnitSystem())
+                .Add(new JumpUnitSystem())
+                .Add(new AfterJumpUnitSystem())
                 .DelHere<NoPlayer>()
                 .DelHere<MoveCommand>()
+                .DelHere<JumpCommand>()
 
                 .AddWorld(new EcsWorld(), Idents.Worlds.MessageWorld)
                 .DelHere<NextRoomMessage>(Idents.Worlds.MessageWorld)
@@ -45,7 +48,7 @@ namespace RoomByRoom
                 .Init();
         }
 
-        void Update () 
+        private void Update () 
         {
             _updateSystems?.Run();
         }
@@ -55,9 +58,7 @@ namespace RoomByRoom
             {
                 _updateSystems.Destroy();
                 _updateSystems = null;
-            }
-
-            
+            }       
             
             if (_world != null) 
             {

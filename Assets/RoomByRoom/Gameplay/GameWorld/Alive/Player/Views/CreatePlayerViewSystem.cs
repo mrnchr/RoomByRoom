@@ -34,6 +34,7 @@ namespace RoomByRoom
                 // Add Jumping component
                 ref Jumping jumping = ref world.GetPool<Jumping>().Add(index);
                 jumping.JumpForce = playerView.JumpForce;
+                jumping.GroundMask = playerView.GroundMask;
                 jumping.CanJump = true;
 
                 // Update scene data

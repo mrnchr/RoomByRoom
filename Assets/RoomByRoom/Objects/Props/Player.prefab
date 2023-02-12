@@ -232,6 +232,9 @@ MonoBehaviour:
   Speed: 3
   JumpForce: 5
   Character: {fileID: 6060062670578281900}
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!54 &2896429287602711574
 Rigidbody:
   m_ObjectHideFlags: 0

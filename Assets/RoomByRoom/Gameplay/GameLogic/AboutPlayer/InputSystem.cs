@@ -19,7 +19,14 @@ namespace RoomByRoom
             {
                 OpenDoor(message);
                 Move(world, index);
+                Jump(world, index);
             }
+        }
+
+        private void Jump(EcsWorld world, int entity)
+        {
+            if(Input.GetAxisRaw("Jump") > 0)
+                world.GetPool<JumpCommand>().Add(entity);
         }
 
         private void Move(EcsWorld world, int entity)
