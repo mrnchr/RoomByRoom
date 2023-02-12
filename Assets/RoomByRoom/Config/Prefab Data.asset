@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 524d7a579b1c0de4cbaa5cfd48fe7d53, type: 3}
+  m_Name: Prefab Data
+  m_EditorClassIdentifier: 
+  PlayerViews:
+  - {fileID: -5466955199506350242, guid: 34bd781d76436834fa1859ce2a98c28e, type: 3}
+  StartRoom: {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
+  SandEnemyRooms:
+  - {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
+  WaterEnemyRooms:
+  - {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
+  DarkEnemyRooms:
+  - {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
+  BossRooms:
+  - {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
+  - {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
+  - {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
