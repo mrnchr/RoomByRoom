@@ -28,7 +28,7 @@ namespace RoomByRoom
                 .Add(new RandomRoomSystem())
                 .Add(new RecreateRoomSystem())
                 .Add(new MoveUnitSystem())
-                // .Add(new CameraFollowSystem())
+                .Add(new RotateUnitSystem())
                 .DelHere<NoPlayer>()
                 .DelHere<MoveCommand>()
 
