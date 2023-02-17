@@ -6,7 +6,7 @@ namespace RoomByRoom
 {
     internal class CreatePlayerViewSystem : IEcsRunSystem
     {
-        private EcsCustomInject<PrefabData> _prefabData = default;
+        private EcsCustomInject<PackedPrefabData> _packedPrefabData = default;
         private EcsCustomInject<SavedData> _savedData = default;
         private EcsCustomInject<SceneData> _sceneData = default;
         private EcsFilterInject<Inc<ControllerByPlayer>, Exc<UnitViewRef>> _player = default;
@@ -17,9 +17,9 @@ namespace RoomByRoom
             
             foreach(var index in _player.Value)
             {
-                RaceType race = _savedData.Value.PlayerRace.Race;
+                RaceType race = _savedData.Value.PlayerRace.Type;
                 // Spawn player in the world
-                GameObject player = Object.Instantiate(_prefabData.Value.PlayerViews[(int)race].gameObject);
+                GameObject player = Object.Instantiate(_packedPrefabData.Value.Prefabs.BasePlayerUnit.gameObject);
                 PlayerView playerView = player.GetComponent<PlayerView>();
 
                 // Add PlayerViewRef component

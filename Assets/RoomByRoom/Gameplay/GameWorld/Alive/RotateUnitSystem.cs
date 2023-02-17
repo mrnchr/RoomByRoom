@@ -25,21 +25,26 @@ namespace RoomByRoom
                     // if it's player then the transform is his mesh
                     if(world.GetPool<ControllerByPlayer>().Has(index))
                     {
-                        unitTransform = ((PlayerView)unitView.Value).Character;
+                        PlayerView player = (PlayerView)unitView.Value;
+                        unitTransform = player.Character;
+                        Transform mainCamera = player.MainCamera;
+                        Vector3 forward = mainCamera.TransformDirection(moveDirection);
+                        forward.y = 0;
+                        unitTransform.forward = forward.normalized;
                     }
-                    else 
+                    else
                     {
                         unitTransform = unitView.Value.transform;
-                    }
 
-                    // if jumping i.e. not flying, to change only two axis 
-                    unitTransform.forward = new Vector3
-                    (
-                        moveDirection.x, 
-                        world.GetPool<Jumping>().Has(index) ? moveDirection.y : 0, 
-                        moveDirection.z
-                    )
-                    .normalized;
+                        // if jumping i.e. not flying, to change only two axis 
+                        unitTransform.forward = new Vector3
+                        (
+                            moveDirection.x,
+                            world.GetPool<Jumping>().Has(index) ? moveDirection.y : 0,
+                            moveDirection.z
+                        )
+                        .normalized;
+                    }
                 }
             }
         }

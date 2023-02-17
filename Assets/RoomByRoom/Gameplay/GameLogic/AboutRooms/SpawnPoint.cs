@@ -3,8 +3,10 @@ using UnityEngine;
 
 namespace RoomByRoom
 {
+    [Serializable]
     public struct SpawnPoint
     {
-        public Vector3 PlayerSpawn;
+        public Transform UnitSpawn;
+        public UnitType UnitType;
     }
 }

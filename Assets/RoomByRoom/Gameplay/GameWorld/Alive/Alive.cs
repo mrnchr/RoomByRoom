@@ -6,5 +6,6 @@ namespace RoomByRoom
     public struct Alive
     {
         public float HP;
+        public UnitType UnitType;
     }
 }

@@ -74,4 +74,4 @@ crashlytics-build.properties
 !*.obj
 
 # Test files of the project
-/[Aa]ssets/**/*[Tt]est*.*
+# /[Aa]ssets/**/*[Tt]est*.*

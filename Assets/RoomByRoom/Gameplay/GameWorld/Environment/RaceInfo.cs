@@ -5,6 +5,6 @@ namespace RoomByRoom
     [Serializable]
     public struct RaceInfo
     {
-        public RaceType Race;
+        public RaceType Type;
     }
 }

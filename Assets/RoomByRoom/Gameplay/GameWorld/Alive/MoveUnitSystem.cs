@@ -10,13 +10,15 @@ namespace RoomByRoom
 
         public void Run(IEcsSystems systems)
         {
+            EcsWorld world = systems.GetWorld();
+
             foreach(var index in _units.Value)
             {
-                Move(index);
+                Move(world, index);
             }
         }
 
-        private void Move(int entity)
+        private void Move(EcsWorld world, int entity)
         {
             Vector3Int moveDirection = _units.Pools.Inc1.Get(entity).MoveDirection;
             ref Moving moving = ref _units.Pools.Inc2.Get(entity);
@@ -25,7 +27,18 @@ namespace RoomByRoom
             Vector3 endDirection = moveDirection;
             endDirection *= moving.Speed;
             endDirection.y = moving.Rb.velocity.y;
-            moving.Rb.velocity = endDirection;
+
+            // if the player change velocity relatively camera direction
+            ref UnitViewRef player = ref world.GetPool<UnitViewRef>().Get(entity);
+            if(player.Value is PlayerView playerView)
+            {
+                moving.Rb.velocity = playerView.transform.TransformDirection(endDirection);
+            }
+            else 
+            {
+                moving.Rb.velocity = endDirection;
+            }
+
         }
     }
 }

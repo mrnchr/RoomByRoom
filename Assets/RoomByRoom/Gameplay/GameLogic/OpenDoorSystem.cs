@@ -19,33 +19,31 @@ namespace RoomByRoom
             foreach (var index in _openDoor.Value)
             {
                 // Check pressing open door button and is opener the player 
-                if (_opener.Value.GetEntitiesCount() > 0)
+                foreach(var opener in _opener.Value)
                 {
                     // Checking has the game started
                     // If not then to create gameInfo and message about game start
                     if(_gameInfo.Value.GetEntitiesCount() == 0)
                     {
                         int gameEntity = world.NewEntity();
-                        ref GameInfo gameInfo = ref _gameInfo.Pools.Inc1.Add(gameEntity);
-                        gameInfo.RoomCount = 0;
+                        ref GameInfo newGameInfo = ref _gameInfo.Pools.Inc1.Add(gameEntity);
+                        newGameInfo.RoomCount = 0;
 
                         // Send StartGameMessage
-                        int entity = message.NewEntity();
-                        message.GetPool<StartGameMessage>().Add(entity);
+                        int startGameEntity = message.NewEntity();
+                        message.GetPool<StartGameMessage>().Add(startGameEntity);
                     }
+
                     // Create message about a new room creating and increment roomCount
-                    else 
-                    {
-                        ref GameInfo gameInfo = ref _gameInfo.Pools.Inc1.Get(_gameInfo.Value.GetRawEntities()[0]);
+                    ref GameInfo gameInfo = ref _gameInfo.Pools.Inc1.Get(_gameInfo.Value.GetRawEntities()[0]);
 
-                        // Send NextRoomMessage
-                        int entity = message.NewEntity();
-                        ref NextRoomMessage nextRoom = ref message.GetPool<NextRoomMessage>().Add(entity);
-                        nextRoom.Race.Race = FastRandom.GetRandomEnemyRace();
-                        nextRoom.Type.Type = CalculateRoomType(gameInfo.RoomCount);
+                    // Send NextRoomMessage
+                    int nextRoomEntity = message.NewEntity();
+                    ref NextRoomMessage nextRoom = ref message.GetPool<NextRoomMessage>().Add(nextRoomEntity);
+                    nextRoom.Race.Type = FastRandom.GetRandomEnemyRace();
+                    nextRoom.Type.Type = CalculateRoomType(gameInfo.RoomCount);
 
-                        ++gameInfo.RoomCount;
-                    }
+                    ++gameInfo.RoomCount;
                 }
             }
         }

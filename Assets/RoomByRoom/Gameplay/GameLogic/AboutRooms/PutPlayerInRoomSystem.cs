@@ -23,7 +23,7 @@ namespace RoomByRoom
                 ref RoomViewRef room = ref _rooms.Pools.Inc2.Get(index);
 
                 // UnityEngine.Debug.Log($"~Player: {player.Value.transform.position}. SpawnPoint: {room.Value.SpawnPoint.position}");
-                player.Value.transform.position = room.Value.SpawnPoint.position;
+                player.Value.transform.position = room.Value.SpawnPoints[0].UnitSpawn.position;
             }
         }
     }

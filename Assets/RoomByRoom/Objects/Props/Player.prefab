@@ -232,6 +232,7 @@ MonoBehaviour:
   Speed: 3
   JumpForce: 5
   Character: {fileID: 6060062670578281900}
+  MainCamera: {fileID: 7110909528767226035}
   GroundMask:
     serializedVersion: 2
     m_Bits: 8

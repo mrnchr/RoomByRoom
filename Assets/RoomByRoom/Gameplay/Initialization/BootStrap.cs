@@ -11,10 +11,13 @@ namespace RoomByRoom
         [SerializeField] private SceneData _sceneData;
         [SerializeField] private SavedData _savedData;
         [SerializeField] private PrefabData _prefabData;
-        EcsWorld _world;        
-        IEcsSystems _updateSystems;
+        [SerializeField] private Configuration _configuration;
+        private PackedPrefabData _packedPrefabData;
+        private IEcsSystems _updateSystems;
+        private EcsWorld _world;        
 
         void Start () {
+            _packedPrefabData = new PackedPrefabData(_prefabData);
             _world = new EcsWorld();
             _updateSystems = new EcsSystems(_world);
             _updateSystems
@@ -25,12 +28,14 @@ namespace RoomByRoom
                 .Add(new PutPlayerInRoomSystem())
                 .Add(new InputSystem())
                 .Add(new OpenDoorSystem())
-                .Add(new RandomRoomSystem())
                 .Add(new RecreateRoomSystem())
                 .Add(new MoveUnitSystem())
                 .Add(new RotateUnitSystem())
                 .Add(new JumpUnitSystem())
                 .Add(new AfterJumpUnitSystem())
+                .Add(new RotateCameraSystem())
+                .Add(new CreateSpawnPointSystem())
+                .Add(new CreateEnemySystem())
                 .DelHere<NoPlayer>()
                 .DelHere<MoveCommand>()
                 .DelHere<JumpCommand>()
@@ -40,11 +45,12 @@ namespace RoomByRoom
                 .DelHere<OpenDoorMessage>(Idents.Worlds.MessageWorld)
                 .DelHere<AddPlayerMessage>(Idents.Worlds.MessageWorld)
                 .DelHere<StartGameMessage>(Idents.Worlds.MessageWorld)
+                .DelHere<RotateCameraMessage>(Idents.Worlds.MessageWorld)
 #if UNITY_EDITOR
                 .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ())
                 .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem (Idents.Worlds.MessageWorld))
 #endif
-                .Inject(_sceneData, _savedData, _prefabData)
+                .Inject(_sceneData, _savedData, _packedPrefabData, _configuration)
                 .Init();
         }
 

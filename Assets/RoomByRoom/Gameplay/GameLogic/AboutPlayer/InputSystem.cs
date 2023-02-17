@@ -1,4 +1,3 @@
-using System;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
@@ -20,7 +19,16 @@ namespace RoomByRoom
                 OpenDoor(message);
                 Move(world, index);
                 Jump(world, index);
+                RotateCamera(message);
             }
+        }
+
+        private void RotateCamera(EcsWorld message)
+        {
+            // Send RotateCameraMessage
+            int entity = message.NewEntity();
+            ref RotateCameraMessage command = ref message.GetPool<RotateCameraMessage>().Add(entity);
+            command.RotateDirection = new Vector2Int((int)Input.GetAxisRaw("Mouse X"), (int)Input.GetAxisRaw("Mouse Y"));
         }
 
         private void Jump(EcsWorld world, int entity)

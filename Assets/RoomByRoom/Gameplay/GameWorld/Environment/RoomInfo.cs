@@ -7,11 +7,4 @@ namespace RoomByRoom
     {
         public RoomType Type;
     }
-
-    public enum RoomType
-    {
-        Start,
-        Enemy,
-        Boss
-    }
 }
