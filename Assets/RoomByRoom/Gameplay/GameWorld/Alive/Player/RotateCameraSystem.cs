@@ -10,27 +10,22 @@ namespace RoomByRoom
         private EcsFilterInject<Inc<RotateCameraMessage>> _rotateMessage = Idents.Worlds.MessageWorld;
         private EcsFilterInject<Inc<ControllerByPlayer, UnitViewRef>> _player = default;
         private EcsCustomInject<Configuration> _configuration = default;
-        private EcsCustomInject<SceneData> _sceneData = default;
 
         public void Run(IEcsSystems systems)
         {
             foreach(var index in _rotateMessage.Value)
             {
-                ref RotateCameraMessage rotateMessage = ref _rotateMessage.Pools.Inc1.Get(index);
-                PlayerView player = (PlayerView)_player.Pools.Inc2.Get(_sceneData.Value.PlayerEntity).Value;
-                Vector3 vel = player.Rb.angularVelocity;
+                foreach (var plIndex in _player.Value)
+                {
+                    ref RotateCameraMessage rotateMessage = ref _rotateMessage.Pools.Inc1.Get(index);
+                    PlayerView player = (PlayerView)_player.Pools.Inc2.Get(plIndex).Value;
 
-                // assign to angular velocity the value according to RotateCameraMessage
-                vel.y = rotateMessage.RotateDirection.x * _configuration.Value.MouseSensitivity.x;
-                player.Rb.angularVelocity = vel;
+                    Vector2 rotation = rotateMessage.RotateDirection * _configuration.Value.MouseSensitivity;
 
-                // rotate camera around the player
-                player.MainCamera.RotateAround
-                (
-                    player.transform.position,
-                    player.transform.right,
-                    rotateMessage.RotateDirection.y * _configuration.Value.MouseSensitivity.y
-                );
+                    // rotate camera around player
+                    player.CameraHolder.Rotate(rotation.y, 0, 0);
+                    player.CameraHolder.Rotate(0, rotation.x, 0, Space.World);
+                }
             }
         }
     }

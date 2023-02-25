@@ -27,7 +27,7 @@ namespace RoomByRoom
                     {
                         PlayerView player = (PlayerView)unitView.Value;
                         unitTransform = player.Character;
-                        Transform mainCamera = player.MainCamera;
+                        Transform mainCamera = player.CameraHolder.transform;
                         Vector3 forward = mainCamera.TransformDirection(moveDirection);
                         forward.y = 0;
                         unitTransform.forward = forward.normalized;

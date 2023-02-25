@@ -22,23 +22,25 @@ namespace RoomByRoom
         {
             Vector3Int moveDirection = _units.Pools.Inc1.Get(entity).MoveDirection;
             ref Moving moving = ref _units.Pools.Inc2.Get(entity);
-
-            // change velocity
-            Vector3 endDirection = moveDirection;
-            endDirection *= moving.Speed;
-            endDirection.y = moving.Rb.velocity.y;
+            Vector3 endDirection;
 
             // if the player change velocity relatively camera direction
             ref UnitViewRef player = ref world.GetPool<UnitViewRef>().Get(entity);
             if(player.Value is PlayerView playerView)
             {
-                moving.Rb.velocity = playerView.transform.TransformDirection(endDirection);
+                endDirection = playerView.CameraHolder.transform.TransformDirection(moveDirection);
+                endDirection.y = 0;
+                endDirection = endDirection.normalized * moving.Speed;
+                endDirection.y = moving.Rb.velocity.y;
             }
             else 
             {
-                moving.Rb.velocity = endDirection;
+                endDirection = moveDirection;
+                endDirection *= moving.Speed;
+                endDirection.y = moving.Rb.velocity.y;
             }
 
+            moving.Rb.velocity = endDirection;
         }
     }
 }

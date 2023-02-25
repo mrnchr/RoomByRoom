@@ -3,7 +3,10 @@ namespace RoomByRoom
     public enum UnitType
     {
         Player, 
-        Enemy,
+        Humanoid,
+        Baby,
+        Flying,
+        Giant,
         Boss 
     }
 }

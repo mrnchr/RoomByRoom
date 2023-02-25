@@ -20,6 +20,10 @@ namespace RoomByRoom
             ref Alive alive = ref world.GetPool<Alive>().Add(playerEntity);
             alive = _savedData.Value.PlayerHP;
 
+            // Add UnitInfo component
+            ref UnitInfo unit = ref world.GetPool<UnitInfo>().Add(playerEntity);
+            unit.Type = UnitType.Player;
+
             // Add Opener component
             // TODO: remove after tests
             world.GetPool<Opener>().Add(playerEntity);

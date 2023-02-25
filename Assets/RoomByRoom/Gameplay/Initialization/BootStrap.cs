@@ -14,6 +14,7 @@ namespace RoomByRoom
         [SerializeField] private Configuration _configuration;
         private PackedPrefabData _packedPrefabData;
         private IEcsSystems _updateSystems;
+        // private IEcsSystems _fixedUpdateSystems;
         private EcsWorld _world;        
 
         void Start () {
@@ -33,9 +34,9 @@ namespace RoomByRoom
                 .Add(new RotateUnitSystem())
                 .Add(new JumpUnitSystem())
                 .Add(new AfterJumpUnitSystem())
-                .Add(new RotateCameraSystem())
                 .Add(new CreateSpawnPointSystem())
                 .Add(new CreateEnemySystem())
+                .Add(new RotateCameraSystem())
                 .DelHere<NoPlayer>()
                 .DelHere<MoveCommand>()
                 .DelHere<JumpCommand>()
@@ -52,6 +53,13 @@ namespace RoomByRoom
 #endif
                 .Inject(_sceneData, _savedData, _packedPrefabData, _configuration)
                 .Init();
+
+            // _fixedUpdateSystems = new EcsSystems(_world);
+            // _fixedUpdateSystems
+            //     .Add(new RotateCameraSystem())
+            //     .AddWorld(message, Idents.Worlds.MessageWorld)
+            //     .Inject(_sceneData, _savedData, _packedPrefabData, _configuration)
+            //     .Init();
         }
 
         private void Update () 
@@ -59,12 +67,23 @@ namespace RoomByRoom
             _updateSystems?.Run();
         }
 
+        private void FixedUpdate()
+        {
+            // _fixedUpdateSystems?.Run();
+        }
+
         void OnDestroy () {
             if (_updateSystems != null) 
             {
                 _updateSystems.Destroy();
                 _updateSystems = null;
-            }       
+            }  
+
+            // if (_fixedUpdateSystems != null) 
+            // {
+            //     _fixedUpdateSystems.Destroy();
+            //     _fixedUpdateSystems = null;
+            // }      
             
             if (_world != null) 
             {

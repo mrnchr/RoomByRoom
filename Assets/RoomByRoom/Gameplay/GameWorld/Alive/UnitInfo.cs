@@ -3,8 +3,8 @@ using System;
 namespace RoomByRoom
 {
     [Serializable]
-    public struct Alive
+    public struct UnitInfo
     {
-        public float HP;
+        public UnitType Type;
     }
 }

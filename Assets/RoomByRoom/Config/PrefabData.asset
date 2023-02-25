@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 524d7a579b1c0de4cbaa5cfd48fe7d53, type: 3}
-  m_Name: Prefab Data
+  m_Name: PrefabData
   m_EditorClassIdentifier: 
-  PlayerViews:
-  - {fileID: 5713328748562558450, guid: 34bd781d76436834fa1859ce2a98c28e, type: 3}
+  BasePlayerUnit: {fileID: 5713328748562558450, guid: 34bd781d76436834fa1859ce2a98c28e, type: 3}
+  SandEnemyUnits: []
+  WaterEnemyUnits: []
+  DarkEnemyUnits: []
+  BossUnits: []
   StartRoom: {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
   SandEnemyRooms:
   - {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
