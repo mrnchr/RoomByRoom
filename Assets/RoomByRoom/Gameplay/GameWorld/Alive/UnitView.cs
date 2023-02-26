@@ -4,7 +4,6 @@ namespace RoomByRoom
 {
     public class UnitView : MonoBehaviour
     {
-        public Rigidbody Rb;
-        public float Speed;
+        public Moving Moving;
     }
 }

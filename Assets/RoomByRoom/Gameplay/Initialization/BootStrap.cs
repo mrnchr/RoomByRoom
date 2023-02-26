@@ -37,6 +37,7 @@ namespace RoomByRoom
                 .Add(new CreateSpawnPointSystem())
                 .Add(new CreateEnemySystem())
                 .Add(new RotateCameraSystem())
+                .Add(new CreateEnemyViewSystem())
                 .DelHere<NoPlayer>()
                 .DelHere<MoveCommand>()
                 .DelHere<JumpCommand>()

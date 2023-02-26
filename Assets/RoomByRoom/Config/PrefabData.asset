@@ -13,9 +13,21 @@ MonoBehaviour:
   m_Name: PrefabData
   m_EditorClassIdentifier: 
   BasePlayerUnit: {fileID: 5713328748562558450, guid: 34bd781d76436834fa1859ce2a98c28e, type: 3}
-  SandEnemyUnits: []
-  WaterEnemyUnits: []
-  DarkEnemyUnits: []
+  SandEnemyUnits:
+  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
+  - {fileID: 6961861350650080126, guid: b373d69a565b4f244bfab63bf493d1b4, type: 3}
+  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
+  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
+  WaterEnemyUnits:
+  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
+  - {fileID: 6961861350650080126, guid: b373d69a565b4f244bfab63bf493d1b4, type: 3}
+  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
+  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
+  DarkEnemyUnits:
+  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
+  - {fileID: 6961861350650080126, guid: b373d69a565b4f244bfab63bf493d1b4, type: 3}
+  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
+  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
   BossUnits: []
   StartRoom: {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
   SandEnemyRooms:

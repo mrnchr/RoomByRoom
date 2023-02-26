@@ -3,9 +3,9 @@ namespace RoomByRoom
     public enum UnitType
     {
         Player, 
-        Humanoid,
         Baby,
         Flying,
+        Humanoid,
         Giant,
         Boss 
     }

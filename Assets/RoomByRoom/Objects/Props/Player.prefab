@@ -260,14 +260,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb0de4ead7ff4c4d96be91744831757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rb: {fileID: 2896429287602711574}
-  Speed: 3
-  JumpForce: 5
+  Moving:
+    Rb: {fileID: 2896429287602711574}
+    Speed: 5
+  Jumping:
+    JumpForce: 5
+    GroundMask:
+      serializedVersion: 2
+      m_Bits: 8
   Character: {fileID: 6060062670578281900}
   CameraHolder: {fileID: 3459337283819569723}
-  GroundMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!54 &2896429287602711574
 Rigidbody:
   m_ObjectHideFlags: 0

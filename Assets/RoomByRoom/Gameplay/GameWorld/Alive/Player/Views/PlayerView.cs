@@ -6,6 +6,5 @@ namespace RoomByRoom
     {
         public Transform Character;
         public Transform CameraHolder;
-        public LayerMask GroundMask;
     }
 }

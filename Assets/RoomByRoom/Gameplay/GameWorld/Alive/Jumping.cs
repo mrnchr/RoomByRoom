@@ -1,11 +1,13 @@
+using System;
 using UnityEngine;
 
 namespace RoomByRoom
 {
+    [Serializable]
     public struct Jumping
     {
         public float JumpForce;
         public LayerMask GroundMask;
-        public bool CanJump;
+        [NonSerialized] public bool CanJump;
     }
 }

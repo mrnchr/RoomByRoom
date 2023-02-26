@@ -28,13 +28,11 @@ namespace RoomByRoom
 
                 // Add Moving component
                 ref Moving moving = ref world.GetPool<Moving>().Add(index);
-                moving.Rb = playerView.Rb;
-                moving.Speed = playerView.Speed;
+                moving = playerView.Moving;
 
                 // Add Jumping component
                 ref Jumping jumping = ref world.GetPool<Jumping>().Add(index);
-                jumping.JumpForce = playerView.JumpForce;
-                jumping.GroundMask = playerView.GroundMask;
+                jumping = playerView.Jumping;
                 jumping.CanJump = true;
 
                 // Update scene data
