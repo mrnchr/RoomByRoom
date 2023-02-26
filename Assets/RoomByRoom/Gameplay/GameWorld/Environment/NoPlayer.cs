@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-    public struct NoPlayer
+    public struct AddPlayerCommand
     {
     }
 }

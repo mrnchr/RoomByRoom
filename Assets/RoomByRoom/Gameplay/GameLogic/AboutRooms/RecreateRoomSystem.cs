@@ -18,7 +18,7 @@ namespace RoomByRoom
             foreach(var index in _nextRoom.Value)
             {
                 // Delete current room
-                Object.Destroy(world.GetPool<RoomViewRef>().Get(_sceneData.Value.CurrentRoomEntity).Value.gameObject);
+                GameObject.Destroy(world.GetPool<RoomViewRef>().Get(_sceneData.Value.CurrentRoomEntity).Value.gameObject);
                 world.DelEntity(_sceneData.Value.CurrentRoomEntity);
                 
                 // Create new room
@@ -31,7 +31,7 @@ namespace RoomByRoom
 
                 // Add RoomInfo component
                 ref RoomInfo room = ref world.GetPool<RoomInfo>().Add(roomEntity);
-                room = nextRoom.Type;
+                room.Type = nextRoom.Type;
             }
         }
     }

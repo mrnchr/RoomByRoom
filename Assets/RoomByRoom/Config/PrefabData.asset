@@ -28,14 +28,13 @@ MonoBehaviour:
   - {fileID: 6961861350650080126, guid: b373d69a565b4f244bfab63bf493d1b4, type: 3}
   - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
   - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
-  BossUnits: []
+  BossUnits:
+  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
+  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
+  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
   StartRoom: {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
-  SandEnemyRooms:
-  - {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
-  WaterEnemyRooms:
-  - {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
-  DarkEnemyRooms:
-  - {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
+  EnemyRooms:
+  - {fileID: 1271579379973155671, guid: cd615c3850e89194cbb07adac20d0aec, type: 3}
   BossRooms:
   - {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
   - {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}

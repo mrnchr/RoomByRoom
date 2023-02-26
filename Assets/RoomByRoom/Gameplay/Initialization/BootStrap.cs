@@ -1,8 +1,11 @@
+using UnityEngine;
+
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
+
 using RoomByRoom.Utility;
-using UnityEngine;
+using RoomByRoom.Debug;
 
 namespace RoomByRoom 
 {
@@ -22,35 +25,38 @@ namespace RoomByRoom
             _world = new EcsWorld();
             _updateSystems = new EcsSystems(_world);
             _updateSystems
+                .AddWorld(new EcsWorld(), Idents.Worlds.MessageWorld)
+
                 .Add(new LoadRoomSystem())
-                .Add(new CreateRoomViewSystem())
                 .Add(new LoadPlayerSystem())
+                .DelHere<AddPlayerCommand>()
+                .Add(new CreateRoomViewSystem())
                 .Add(new CreatePlayerViewSystem())
-                .Add(new PutPlayerInRoomSystem())
+                .DelHere<SpawnPoint>()
+                .Add(new CreateSpawnPointSystem())
+                .Add(new PutUnitInRoomSystem())
+                .DelHere<OpenDoorMessage>(Idents.Worlds.MessageWorld)
+                .DelHere<RotateCameraMessage>(Idents.Worlds.MessageWorld)
+                .DelHere<MoveCommand>()
+                .DelHere<JumpCommand>()
                 .Add(new InputSystem())
-                .Add(new OpenDoorSystem())
-                .Add(new RecreateRoomSystem())
                 .Add(new MoveUnitSystem())
                 .Add(new RotateUnitSystem())
                 .Add(new JumpUnitSystem())
                 .Add(new AfterJumpUnitSystem())
-                .Add(new CreateSpawnPointSystem())
-                .Add(new CreateEnemySystem())
                 .Add(new RotateCameraSystem())
-                .Add(new CreateEnemyViewSystem())
-                .DelHere<NoPlayer>()
-                .DelHere<MoveCommand>()
-                .DelHere<JumpCommand>()
-
-                .AddWorld(new EcsWorld(), Idents.Worlds.MessageWorld)
-                .DelHere<NextRoomMessage>(Idents.Worlds.MessageWorld)
-                .DelHere<OpenDoorMessage>(Idents.Worlds.MessageWorld)
-                .DelHere<AddPlayerMessage>(Idents.Worlds.MessageWorld)
                 .DelHere<StartGameMessage>(Idents.Worlds.MessageWorld)
-                .DelHere<RotateCameraMessage>(Idents.Worlds.MessageWorld)
+                .DelHere<NextRoomMessage>(Idents.Worlds.MessageWorld)
+                .Add(new OpenDoorSystem())
+                .Add(new RecreateRoomSystem())
+                .Add(new CreateEnemySystem())
+                .Add(new CreateEnemyViewSystem())
+
 #if UNITY_EDITOR
-                .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ())
-                .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem (Idents.Worlds.MessageWorld))
+                .Add(new MarkEnemySystem())
+                .Add(new RemoveEnemySystem())
+                .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
+                .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem(bakeComponentsInName: false))
 #endif
                 .Inject(_sceneData, _savedData, _packedPrefabData, _configuration)
                 .Init();

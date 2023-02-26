@@ -12,9 +12,7 @@ namespace RoomByRoom
         public UnitView[] DarkEnemyUnits;
         public UnitView[] BossUnits;
         public RoomView StartRoom;
-        public RoomView[] SandEnemyRooms;
-        public RoomView[] WaterEnemyRooms;
-        public RoomView[] DarkEnemyRooms;
+        public RoomView[] EnemyRooms;
         public RoomView[] BossRooms;
     }
 }

@@ -41,7 +41,7 @@ namespace RoomByRoom
                     int nextRoomEntity = message.NewEntity();
                     ref NextRoomMessage nextRoom = ref message.GetPool<NextRoomMessage>().Add(nextRoomEntity);
                     nextRoom.Race.Type = FastRandom.GetEnemyRace();
-                    nextRoom.Type.Type = CalculateRoomType(gameInfo.RoomCount);
+                    nextRoom.Type = CalculateRoomType(gameInfo.RoomCount);
 
                     ++gameInfo.RoomCount;
                 }

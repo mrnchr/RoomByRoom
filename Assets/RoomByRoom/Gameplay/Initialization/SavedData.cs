@@ -8,6 +8,6 @@ namespace RoomByRoom
         public RaceInfo RoomRace;
         public RoomInfo RoomType;
         public RaceInfo PlayerRace;
-        public Alive PlayerHP;
+        public Healthy PlayerHP;
     }
 }

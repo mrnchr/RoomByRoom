@@ -3,7 +3,7 @@ using System;
 namespace RoomByRoom
 {
     [Serializable]
-    public struct Alive
+    public struct Healthy
     {
         public float HP;
     }

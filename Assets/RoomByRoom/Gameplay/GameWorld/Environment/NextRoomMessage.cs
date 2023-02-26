@@ -3,6 +3,6 @@ namespace RoomByRoom
     public struct NextRoomMessage
     {
         public RaceInfo Race;
-        public RoomInfo Type;
+        public RoomType Type;
     }
 }
