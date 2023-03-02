@@ -28,6 +28,10 @@ namespace RoomByRoom
             // TODO: remove after tests
             world.GetPool<Opener>().Add(playerEntity);
 
+            //Add Attackable component
+            // TODO: redo after tests
+            world.GetPool<Attackable>().Add(playerEntity);
+
             // Add ControllerByPlayer component
             world.GetPool<ControllerByPlayer>().Add(playerEntity);
         }

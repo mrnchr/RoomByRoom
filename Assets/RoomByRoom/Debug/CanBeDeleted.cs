@@ -1,4 +1,4 @@
-namespace RoomByRoom.Debug
+namespace RoomByRoom.Debugging
 {
     public struct CanBeDeleted
     {

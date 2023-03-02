@@ -3,12 +3,13 @@ using UnityEngine;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
+using Leopotam.EcsLite.UnityEditor;
 
 using RoomByRoom.Utility;
-using RoomByRoom.Debug;
+using RoomByRoom.Debugging;
 
 namespace RoomByRoom 
-{
+{ 
     sealed class BootStrap : MonoBehaviour 
     {
         [SerializeField] private SceneData _sceneData;
@@ -29,22 +30,28 @@ namespace RoomByRoom
 
                 .Add(new LoadRoomSystem())
                 .Add(new LoadPlayerSystem())
+
                 .DelHere<AddPlayerCommand>()
                 .Add(new CreateRoomViewSystem())
                 .Add(new CreatePlayerViewSystem())
+
                 .DelHere<SpawnPoint>()
                 .Add(new CreateSpawnPointSystem())
                 .Add(new PutUnitInRoomSystem())
+
                 .DelHere<OpenDoorMessage>(Idents.Worlds.MessageWorld)
                 .DelHere<RotateCameraMessage>(Idents.Worlds.MessageWorld)
                 .DelHere<MoveCommand>()
                 .DelHere<JumpCommand>()
+                .DelHere<AttackCommand>()
                 .Add(new InputSystem())
                 .Add(new MoveUnitSystem())
                 .Add(new RotateUnitSystem())
                 .Add(new JumpUnitSystem())
                 .Add(new AfterJumpUnitSystem())
                 .Add(new RotateCameraSystem())
+                .Add(new AttackSystem())
+
                 .DelHere<StartGameMessage>(Idents.Worlds.MessageWorld)
                 .DelHere<NextRoomMessage>(Idents.Worlds.MessageWorld)
                 .Add(new OpenDoorSystem())
@@ -55,8 +62,8 @@ namespace RoomByRoom
 #if UNITY_EDITOR
                 .Add(new MarkEnemySystem())
                 .Add(new RemoveEnemySystem())
-                .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
-                .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem(bakeComponentsInName: false))
+                .Add(new EcsWorldDebugSystem())
+                .Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif
                 .Inject(_sceneData, _savedData, _packedPrefabData, _configuration)
                 .Init();

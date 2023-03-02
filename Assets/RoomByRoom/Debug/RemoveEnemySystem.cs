@@ -3,7 +3,7 @@ using Leopotam.EcsLite.Di;
 
 using RoomByRoom.Utility;
 
-namespace RoomByRoom.Debug
+namespace RoomByRoom.Debugging
 {
     public class RemoveEnemySystem : IEcsRunSystem
     {
