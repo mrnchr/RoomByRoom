@@ -98,9 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a6a5d8144ca1234aa0a014e5692ff6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Entity: 0
   Moving:
-    Rb: {fileID: 7602069609288155339}
     Speed: 5
+  Rb: {fileID: 7602069609288155339}
+  Animator: {fileID: 0}
 --- !u!54 &7602069609288155339
 Rigidbody:
   m_ObjectHideFlags: 0

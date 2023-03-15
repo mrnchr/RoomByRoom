@@ -307,8 +307,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd7225ea67c62b488517c935211ff04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _saveName: flop
+  _defaultData: {fileID: 11400000, guid: 459d3dc4785704147a404de04da7ed2b, type: 2}
   _sceneData: {fileID: 65209845}
-  _savedData: {fileID: 11400000, guid: 6caaca9299ef3224eb1681702d601bed, type: 2}
   _prefabData: {fileID: 11400000, guid: d39d563c980198c488935c6529f8b5c3, type: 2}
   _configuration: {fileID: 11400000, guid: d18482ebc8e5cdf458dae86145d75263, type: 2}
 --- !u!1 &1897892192

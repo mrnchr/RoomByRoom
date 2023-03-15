@@ -17,7 +17,7 @@ namespace RoomByRoom
             
             foreach(var index in _player.Value)
             {
-                RaceType race = _savedData.Value.PlayerRace.Type;
+                ref PlayerEntity playerEntity = ref _savedData.Value.Player;
                 // Spawn player in the world
                 GameObject player = Object.Instantiate(_packedPrefabData.Value.Prefabs.BasePlayerUnit.gameObject);
                 PlayerView playerView = player.GetComponent<PlayerView>();
@@ -28,12 +28,11 @@ namespace RoomByRoom
 
                 // Add Moving component
                 ref Moving moving = ref world.GetPool<Moving>().Add(index);
-                moving = playerView.Moving;
+                moving = playerEntity.Moving;
 
                 // Add Jumping component
                 ref Jumping jumping = ref world.GetPool<Jumping>().Add(index);
-                jumping = playerView.Jumping;
-                jumping.CanJump = true;
+                jumping = playerEntity.Jumping;
 
                 // Update scene data
                 _sceneData.Value.PlayerEntity = index;

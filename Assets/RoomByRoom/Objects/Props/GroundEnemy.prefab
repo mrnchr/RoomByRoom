@@ -114,14 +114,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5aad2ec8dca2c84fa837c8fa2a2bbb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Entity: 0
   Moving:
-    Rb: {fileID: 7458765991792694848}
     Speed: 5
+  Rb: {fileID: 7458765991792694848}
+  Animator: {fileID: 0}
   Jumping:
     JumpForce: 5
-    GroundMask:
-      serializedVersion: 2
-      m_Bits: 8
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!136 &6055365227142874368
 CapsuleCollider:
   m_ObjectHideFlags: 0

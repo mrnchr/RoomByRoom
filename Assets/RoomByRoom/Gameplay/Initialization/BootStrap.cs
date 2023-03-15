@@ -12,22 +12,32 @@ namespace RoomByRoom
 { 
     sealed class BootStrap : MonoBehaviour 
     {
-        [SerializeField] private SceneData _sceneData;
-        [SerializeField] private SavedData _savedData;
+        // TODO: change to external injection
+        [SerializeField] private DefaultData _defaultData;        
+        [SerializeField] private SceneData _sceneData;        
         [SerializeField] private PrefabData _prefabData;
         [SerializeField] private Configuration _configuration;
+        private SavedData _savedData;
         private PackedPrefabData _packedPrefabData;
         private IEcsSystems _updateSystems;
         // private IEcsSystems _fixedUpdateSystems;
         private EcsWorld _world;        
 
         void Start () {
+            _savedData = new SavedData();
+            _sceneData.SavedData = _savedData;
+
+            var savingSvc = new SavingService(_configuration.DefaultSaveName);
+
             _packedPrefabData = new PackedPrefabData(_prefabData);
+
             _world = new EcsWorld();
             _updateSystems = new EcsSystems(_world);
+
             _updateSystems
                 .AddWorld(new EcsWorld(), Idents.Worlds.MessageWorld)
 
+                .Add(new LoadSaveSystem())
                 .Add(new LoadRoomSystem())
                 .Add(new LoadPlayerSystem())
 
@@ -58,6 +68,7 @@ namespace RoomByRoom
                 .Add(new RecreateRoomSystem())
                 .Add(new CreateEnemySystem())
                 .Add(new CreateEnemyViewSystem())
+                // .Add(new AttackAnimationCatcher())
 
 #if UNITY_EDITOR
                 .Add(new MarkEnemySystem())
@@ -65,7 +76,8 @@ namespace RoomByRoom
                 .Add(new EcsWorldDebugSystem())
                 .Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif
-                .Inject(_sceneData, _savedData, _packedPrefabData, _configuration)
+                .Inject(_sceneData, _savedData, _packedPrefabData, _configuration,
+                savingSvc, _defaultData)
                 .Init();
 
             // _fixedUpdateSystems = new EcsSystems(_world);

@@ -14,5 +14,6 @@ namespace RoomByRoom
         public RoomView StartRoom;
         public RoomView[] EnemyRooms;
         public RoomView[] BossRooms;
+        public ItemView PlayerHand;
     }
 }

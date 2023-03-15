@@ -75,3 +75,4 @@ crashlytics-build.properties
 
 # Test files of the project
 # /[Aa]ssets/**/*[Tt]est*.*
+/[Aa]ssets/_Local*

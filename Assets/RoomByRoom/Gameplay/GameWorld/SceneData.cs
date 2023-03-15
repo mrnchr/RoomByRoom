@@ -6,5 +6,6 @@ namespace RoomByRoom
     {
         public int CurrentRoomEntity;
         public int PlayerEntity;
+        public SavedData SavedData;
     }
 }

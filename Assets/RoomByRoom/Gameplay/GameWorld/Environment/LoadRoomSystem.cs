@@ -12,15 +12,16 @@ namespace RoomByRoom
             var world = systems.GetWorld();
 
             // Create saved room
-            int roomEntity = world.NewEntity();
+            int room = world.NewEntity();
+            RoomEntity roomEntity = _savedData.Value.Room;
 
             // Add RaceInfo component
-            ref RaceInfo race = ref world.GetPool<RaceInfo>().Add(roomEntity);
-            race = _savedData.Value.RoomRace;
+            ref RaceInfo race = ref world.GetPool<RaceInfo>().Add(room);
+            race = roomEntity.Race;
 
             // Add RoomInfo component
-            ref RoomInfo type = ref world.GetPool<RoomInfo>().Add(roomEntity);
-            type = _savedData.Value.RoomType;
+            ref RoomInfo type = ref world.GetPool<RoomInfo>().Add(room);
+            type = roomEntity.Info;
         }
     }
 }

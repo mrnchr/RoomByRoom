@@ -6,7 +6,7 @@ namespace RoomByRoom
     [Serializable]
     public struct SpawnPoint
     {
-        public Transform UnitSpawn;
         public UnitType UnitType;
+        public Transform UnitSpawn;
     }
 }

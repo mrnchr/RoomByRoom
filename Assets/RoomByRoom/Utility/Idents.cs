@@ -6,5 +6,10 @@ namespace RoomByRoom.Utility
         {
             public static string MessageWorld = "ForMessages";
         }
+
+        public static class FilePaths
+        {
+            public static string SavingDirectory = @"Assets\_Local\Saves\";
+        }
     }
 }

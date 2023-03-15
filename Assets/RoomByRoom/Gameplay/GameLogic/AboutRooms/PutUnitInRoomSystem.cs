@@ -6,7 +6,7 @@ namespace RoomByRoom
 {
     internal class PutUnitInRoomSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<UnitViewRef, UnitInfo, Moving>> _units = default;
+        private EcsFilterInject<Inc<UnitViewRef, UnitInfo>> _units = default;
         private EcsFilterInject<Inc<SpawnPoint>> _points = default;
 
         public void Run(IEcsSystems systems)
@@ -57,8 +57,10 @@ namespace RoomByRoom
             // Move unit depending on his type
             foreach(var unit in _units.Value)
             {
-                ref Moving moving = ref _units.Pools.Inc3.Get(unit);
+                ref UnitViewRef unitRef = ref _units.Pools.Inc1.Get(unit);
                 ref UnitInfo unitInfo = ref _units.Pools.Inc2.Get(unit);
+
+                // Determine spawn point for each type of unit
                 SpawnPoint unitPoint;
                 if(unitInfo.Type == UnitType.Player)
                 {
@@ -74,10 +76,10 @@ namespace RoomByRoom
                     enemyPoints.RemoveAt(0);
                 }
 
-                moving.Rb.transform.position = unitPoint.UnitSpawn.transform.position;
+                unitRef.Value.transform.position = unitPoint.UnitSpawn.transform.position;
 
                 // Due to spawn at the same point enemies run away
-                moving.Rb.velocity = UnityEngine.Vector3.zero;
+                unitRef.Value.Rb.velocity = UnityEngine.Vector3.zero;
             }
         }
 

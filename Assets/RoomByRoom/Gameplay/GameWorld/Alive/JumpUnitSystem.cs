@@ -7,22 +7,22 @@ namespace RoomByRoom
 {
     public class JumpUnitSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<Jumping, Moving, JumpCommand>> _units = default;
+        private EcsFilterInject<Inc<Jumping, UnitViewRef, JumpCommand>, Exc<CantJump, Flying>> _units = default;
 
         public void Run(IEcsSystems systems)
         {
+            EcsWorld world = systems.GetWorld();
+
             foreach(var index in _units.Value)
             {
-                ref Moving moving = ref _units.Pools.Inc2.Get(index);
+                GroundUnitView groundUnit = (GroundUnitView)(_units.Pools.Inc2.Get(index).Value);
                 ref Jumping jumping = ref _units.Pools.Inc1.Get(index);
 
-                if(jumping.CanJump && Physics.CheckSphere(moving.Rb.transform.position, 0.01f, jumping.GroundMask, QueryTriggerInteraction.Ignore))
+                if(Physics.CheckSphere(groundUnit.transform.position, 0.01f, groundUnit.GroundMask, QueryTriggerInteraction.Ignore))
                 {
-                    Vector3 dir = moving.Rb.velocity;
-                    dir.y = 0;
-                    moving.Rb.velocity = dir;
-                    moving.Rb.AddForce(Vector3.up * jumping.JumpForce, ForceMode.Impulse);
-                    jumping.CanJump = false;
+                    groundUnit.Rb.velocity.Scale(new Vector3(1, 0, 1));
+                    groundUnit.Rb.AddForce(Vector3.up * jumping.JumpForce, ForceMode.Impulse);
+                    world.GetPool<CantJump>().Add(index);
                 }
             }
         }

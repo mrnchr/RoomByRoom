@@ -4,6 +4,8 @@ namespace RoomByRoom
 {
     public class HumanoidView : GroundUnitView
     {
+        public ItemView MainWeapon;
+
         public override void PlayAttackAnimation(WeaponType weaponType)
         {            
             Animator.SetInteger("Weapon", (int)weaponType);

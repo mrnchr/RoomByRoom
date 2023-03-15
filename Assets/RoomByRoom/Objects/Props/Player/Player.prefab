@@ -408,6 +408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8728705096820590502}
   - component: {fileID: 5713328748562558450}
+  - component: {fileID: 2941326413648381322}
   - component: {fileID: 2896429287602711574}
   - component: {fileID: 7518074114578690808}
   m_Layer: 0
@@ -446,17 +447,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb0de4ead7ff4c4d96be91744831757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Entity: 0
   Moving:
-    Rb: {fileID: 2896429287602711574}
     Speed: 5
+  Rb: {fileID: 2896429287602711574}
   Animator: {fileID: 7518074114578690808}
   Jumping:
     JumpForce: 5
-    GroundMask:
-      serializedVersion: 2
-      m_Bits: 8
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  MainWeapon: {fileID: 0}
   Character: {fileID: 6060062670578281900}
   CameraHolder: {fileID: 3459337283819569723}
+--- !u!114 &2941326413648381322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028227670313272210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6859ca89631460c4eaf189722ba34bad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OwnView: {fileID: 5713328748562558450}
 --- !u!54 &2896429287602711574
 Rigidbody:
   m_ObjectHideFlags: 0
