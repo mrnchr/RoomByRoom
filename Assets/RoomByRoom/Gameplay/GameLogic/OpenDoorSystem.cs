@@ -9,12 +9,13 @@ namespace RoomByRoom
     {
         private EcsFilterInject<Inc<OpenDoorMessage>> _openDoor = Idents.Worlds.MessageWorld;
         private EcsFilterInject<Inc<Opener>> _opener = default;
-        private EcsFilterInject<Inc<GameInfo>> _gameInfo = default;
+        private EcsCustomInject<SavedData> _savedData = default;
 
         public void Run(IEcsSystems systems)
         {
             EcsWorld message = systems.GetWorld(Idents.Worlds.MessageWorld);
             EcsWorld world = systems.GetWorld();
+            ref GameInfo startGame = ref _savedData.Value.GameInfo;
 
             foreach (var index in _openDoor.Value)
             {
@@ -23,27 +24,20 @@ namespace RoomByRoom
                 {
                     // Checking has the game started
                     // If not then to create gameInfo and message about game start
-                    if(_gameInfo.Value.GetEntitiesCount() == 0)
+                    if(startGame.RoomCount == 0)
                     {
-                        int gameEntity = world.NewEntity();
-                        ref GameInfo newGameInfo = ref _gameInfo.Pools.Inc1.Add(gameEntity);
-                        newGameInfo.RoomCount = 0;
-
                         // Send StartGameMessage
                         int startGameEntity = message.NewEntity();
                         message.GetPool<StartGameMessage>().Add(startGameEntity);
                     }
 
-                    // Create message about a new room creating and increment roomCount
-                    ref GameInfo gameInfo = ref _gameInfo.Pools.Inc1.Get(_gameInfo.Value.GetRawEntities()[0]);
-
                     // Send NextRoomMessage
                     int nextRoomEntity = message.NewEntity();
                     ref NextRoomMessage nextRoom = ref message.GetPool<NextRoomMessage>().Add(nextRoomEntity);
                     nextRoom.Race.Type = FastRandom.GetEnemyRace();
-                    nextRoom.Type = CalculateRoomType(gameInfo.RoomCount);
+                    nextRoom.Type = CalculateRoomType(startGame.RoomCount);
 
-                    ++gameInfo.RoomCount;
+                    ++startGame.RoomCount;
                 }
             }
         }

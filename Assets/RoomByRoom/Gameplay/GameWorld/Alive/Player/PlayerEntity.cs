@@ -6,7 +6,7 @@ namespace RoomByRoom
     public struct PlayerEntity
     {
         public RaceInfo Race;
-        public Healthy Health;
+        public Health Health;
         public Moving Moving;
         public Jumping Jumping;
     }

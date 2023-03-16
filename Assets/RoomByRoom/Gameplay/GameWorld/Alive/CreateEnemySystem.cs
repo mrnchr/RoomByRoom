@@ -43,10 +43,10 @@ namespace RoomByRoom
         {
             int enemy = _world.NewEntity();
 
-            // Add Healthy component
+            // Add Health component
             // TODO: to change HP
-            ref Healthy healthy = ref _world.GetPool<Healthy>().Add(enemy);
-            healthy.HP = hp;
+            ref Health health = ref _world.GetPool<Health>().Add(enemy);
+            health.Point = hp;
 
             // Add UnitInfo component
             ref UnitInfo unit = ref _world.GetPool<UnitInfo>().Add(enemy);

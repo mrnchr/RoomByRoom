@@ -154,6 +154,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentRoomEntity: 0
   PlayerEntity: 0
+  SavedData:
+    GameInfo:
+      RoomCount: 0
+    Player:
+      Race:
+        Type: 0
+      Health:
+        Point: 0
+      Moving:
+        Speed: 0
+      Jumping:
+        JumpForce: 0
+    Room:
+      Info:
+        Type: 0
+      Race:
+        Type: 0
+    Inventory:
+      Item: []
+      Weapon: []
+      PhysDamage: []
+      Protection: []
 --- !u!4 &65209846
 Transform:
   m_ObjectHideFlags: 0
@@ -307,7 +329,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd7225ea67c62b488517c935211ff04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _saveName: flop
   _defaultData: {fileID: 11400000, guid: 459d3dc4785704147a404de04da7ed2b, type: 2}
   _sceneData: {fileID: 65209845}
   _prefabData: {fileID: 11400000, guid: d39d563c980198c488935c6529f8b5c3, type: 2}

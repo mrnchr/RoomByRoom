@@ -5,6 +5,7 @@ namespace RoomByRoom
     [Serializable]
     public class SavedData
     {
+        public GameInfo GameInfo;
         public PlayerEntity Player;
         public RoomEntity Room;
         public InventoryEntity Inventory;

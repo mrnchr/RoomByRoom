@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace RoomByRoom
 {
-    public class RoomView : MonoBehaviour
+    public class RoomView : View
     {
         public SpawnPoint[] SpawnPoints;
     }

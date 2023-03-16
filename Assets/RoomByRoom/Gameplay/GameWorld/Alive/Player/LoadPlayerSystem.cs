@@ -17,9 +17,9 @@ namespace RoomByRoom
             ref RaceInfo info = ref world.GetPool<RaceInfo>().Add(player);
             info = playerEntity.Race;
             
-            // Add Healthy component
-            ref Healthy healthy = ref world.GetPool<Healthy>().Add(player);
-            healthy = playerEntity.Health;
+            // Add Health component
+            ref Health health = ref world.GetPool<Health>().Add(player);
+            health = playerEntity.Health;
 
             // Add UnitInfo component
             ref UnitInfo unit = ref world.GetPool<UnitInfo>().Add(player);

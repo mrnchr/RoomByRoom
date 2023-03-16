@@ -13,14 +13,14 @@ namespace RoomByRoom
             _saveName = saveName;
         }
 
-        public bool SaveData(SavedData savedData)
-        {
-            return _saver.SaveData(_saveName, savedData);
-        }
-
         public bool LoadData(out SavedData savedData)
         {
             return _saver.LoadData(_saveName, out savedData);
+        }
+        
+        public bool SaveData(SavedData savedData)
+        {
+            return _saver.SaveData(_saveName, savedData);
         }
     }
 }

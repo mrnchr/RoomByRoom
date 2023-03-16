@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8661e64fe09f5458c1c61d8660012d, type: 3}
   m_Name: DefaultData
   m_EditorClassIdentifier: 
+  GameInfo:
+    RoomCount: 0
   Player:
     Race:
       Type: 0
     Health:
-      HP: 100
+      Point: 0
     Moving:
       Speed: 5
     Jumping:

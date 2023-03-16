@@ -19,6 +19,7 @@ namespace RoomByRoom
                 return;
             }
 
+            _savedData.Value.GameInfo = _defaultData.Value.GameInfo;
             _savedData.Value.Player = _defaultData.Value.Player;
             _savedData.Value.Room = _defaultData.Value.Room;
             _savedData.Value.Inventory = _defaultData.Value.Inventory;

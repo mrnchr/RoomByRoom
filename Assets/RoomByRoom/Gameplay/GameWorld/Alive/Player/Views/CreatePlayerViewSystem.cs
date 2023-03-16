@@ -17,6 +17,7 @@ namespace RoomByRoom
             
             foreach(var index in _player.Value)
             {
+                // Create player entity from save
                 ref PlayerEntity playerEntity = ref _savedData.Value.Player;
                 // Spawn player in the world
                 GameObject player = Object.Instantiate(_packedPrefabData.Value.Prefabs.BasePlayerUnit.gameObject);

@@ -6,7 +6,7 @@ namespace RoomByRoom
 {
     public class CreateEnemyViewSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<Healthy, UnitInfo, RaceInfo>, Exc<ControllerByPlayer, UnitViewRef>> _rawEnemies = default;
+        private EcsFilterInject<Inc<Health, UnitInfo, RaceInfo>, Exc<ControllerByPlayer, UnitViewRef>> _rawEnemies = default;
         private EcsCustomInject<PackedPrefabData> _prefabData = default;
 
         public void Run(IEcsSystems systems)

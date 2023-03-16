@@ -18,6 +18,7 @@ namespace RoomByRoom
         [SerializeField] private PrefabData _prefabData;
         [SerializeField] private Configuration _configuration;
         private SavedData _savedData;
+        private GameInfo _gameInfo;        
         private PackedPrefabData _packedPrefabData;
         private IEcsSystems _updateSystems;
         // private IEcsSystems _fixedUpdateSystems;
@@ -40,6 +41,7 @@ namespace RoomByRoom
                 .Add(new LoadSaveSystem())
                 .Add(new LoadRoomSystem())
                 .Add(new LoadPlayerSystem())
+                .Add(new LoadInventorySystem())
 
                 .DelHere<AddPlayerCommand>()
                 .Add(new CreateRoomViewSystem())
@@ -77,7 +79,7 @@ namespace RoomByRoom
                 .Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif
                 .Inject(_sceneData, _savedData, _packedPrefabData, _configuration,
-                savingSvc, _defaultData)
+                savingSvc, _defaultData, _gameInfo)
                 .Init();
 
             // _fixedUpdateSystems = new EcsSystems(_world);
