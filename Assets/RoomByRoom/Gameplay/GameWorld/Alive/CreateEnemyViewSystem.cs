@@ -21,6 +21,7 @@ namespace RoomByRoom
                 // Spawn enemy object by his entity's race and type
                 GameObject enemy = GameObject.Instantiate(SelectEnemy(unitInfo.Type, raceInfo.Type));
                 UnitView enemyView = enemy.GetComponent<UnitView>();
+                enemyView.Entity = index;
 
                 // Add UnitViewRef component
                 ref UnitViewRef enemyRef = ref world.GetPool<UnitViewRef>().Add(index);

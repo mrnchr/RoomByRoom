@@ -25,6 +25,7 @@ namespace RoomByRoom
                 // Room Spawn
                 GameObject room = GameObject.Instantiate(SelectRoom(race, type));
                 RoomView roomView = room.GetComponent<RoomView>();
+                roomView.Entity = index;
 
                 // Add RoomViewRef component
                 ref RoomViewRef roomRef = ref world.GetPool<RoomViewRef>().Add(index);

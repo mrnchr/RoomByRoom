@@ -6,7 +6,7 @@ using Leopotam.EcsLite.Di;
 
 namespace RoomByRoom
 {
-    internal class LoadInventorySystem : IEcsInitSystem
+    public class LoadInventorySystem : IEcsInitSystem
     {
         private EcsCustomInject<SavedData> _savedData = default;
         private EcsFilterInject<Inc<ControllerByPlayer>> _player = default;
@@ -47,39 +47,41 @@ namespace RoomByRoom
 
         private void CollectEntities()
         {
-            void CollectEntities<T>(List<BoundComponent<T>> components)
+            void CollectEntity<T>(BoundComponent<T> component)
             where T : struct
             {
-                foreach(var component in components)
-                {
-                    _savedItems.Add(component.BoundEntity);
-                }
+                _savedItems.Add(component.BoundEntity);
             }
 
-            CollectEntities(_savedInventory.Item);
-            CollectEntities(_savedInventory.Weapon);
-            CollectEntities(_savedInventory.PhysDamage);
-            CollectEntities(_savedInventory.Protection);
-            CollectEntities(_savedInventory.Equipped);
+            ProcessComponents(_savedInventory.Item, CollectEntity);
+            ProcessComponents(_savedInventory.Weapon, CollectEntity);
+            ProcessComponents(_savedInventory.PhysDamage, CollectEntity);
+            ProcessComponents(_savedInventory.Protection, CollectEntity);
+            ProcessComponents(_savedInventory.Equipped, CollectEntity);
+            ProcessComponents(_savedInventory.Shape, CollectEntity);
         }
+
+        void ProcessComponents<T>(List<BoundComponent<T>> components, Action<BoundComponent<T>> action)
+        where T : struct
+        {
+            components.ForEach(action);
+        }   
 
         private void LoadEntities()
         {
-            void LoadEntities<T>(List<BoundComponent<T>> components)
+            void LoadComponent<T>(BoundComponent<T> component)
             where T : struct
             {
-                foreach(var component in components)
-                {
-                    ref T comp = ref _world.GetPool<T>().Add(_boundItems[component.BoundEntity]);
-                    comp = component.ComponentInfo;
-                }
+                ref T comp = ref _world.GetPool<T>().Add(_boundItems[component.BoundEntity]);
+                comp = component.ComponentInfo;
             }
-
-            LoadEntities(_savedInventory.Item);
-            LoadEntities(_savedInventory.Weapon);
-            LoadEntities(_savedInventory.PhysDamage);
-            LoadEntities(_savedInventory.Protection);
-            LoadEntities(_savedInventory.Equipped);
+            
+            ProcessComponents(_savedInventory.Item, LoadComponent);
+            ProcessComponents(_savedInventory.Weapon, LoadComponent);
+            ProcessComponents(_savedInventory.PhysDamage, LoadComponent);
+            ProcessComponents(_savedInventory.Protection, LoadComponent);
+            ProcessComponents(_savedInventory.Equipped, LoadComponent);
+            ProcessComponents(_savedInventory.Shape, LoadComponent);
         }
     }
 }

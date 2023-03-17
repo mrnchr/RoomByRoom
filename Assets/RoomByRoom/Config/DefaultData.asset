@@ -18,7 +18,7 @@ MonoBehaviour:
     Race:
       Type: 0
     Health:
-      Point: 0
+      Point: 100
     Moving:
       Speed: 5
     Jumping:
@@ -42,3 +42,9 @@ MonoBehaviour:
       ComponentInfo:
         Point: 10
     Protection: []
+    Equipped:
+    - BoundEntity: 0
+    Shape:
+    - BoundEntity: 0
+      ComponentInfo:
+        PrefabIndex: -1

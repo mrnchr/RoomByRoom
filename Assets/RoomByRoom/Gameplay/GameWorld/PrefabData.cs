@@ -14,6 +14,16 @@ namespace RoomByRoom
         public RoomView StartRoom;
         public RoomView[] EnemyRooms;
         public RoomView[] BossRooms;
-        public ItemView PlayerHand;
+        public WeaponView PlayerHand;
+        public WeaponView[] OneHandWeapons;
+        public WeaponView[] TwoHandsWeapons;
+        public WeaponView[] Bows;
+        public ArmorView[] Boots;
+        public ArmorView[] Leggings;
+        public ArmorView[] Gloves;
+        public ArmorView[] Breastplates;
+        public ArmorView[] Helmets;
+        public ArmorView[] Shields;
+        public ArtifactView[] Artifacts;
     }
 }

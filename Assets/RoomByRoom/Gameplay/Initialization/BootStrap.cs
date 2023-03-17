@@ -5,8 +5,8 @@ using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
 using Leopotam.EcsLite.UnityEditor;
 
-using RoomByRoom.Utility;
 using RoomByRoom.Debugging;
+using RoomByRoom.Utility;
 
 namespace RoomByRoom 
 { 
@@ -42,10 +42,12 @@ namespace RoomByRoom
                 .Add(new LoadRoomSystem())
                 .Add(new LoadPlayerSystem())
                 .Add(new LoadInventorySystem())
+                .Add(new PickMainPlayerWeaponSystem())
 
                 .DelHere<AddPlayerCommand>()
                 .Add(new CreateRoomViewSystem())
                 .Add(new CreatePlayerViewSystem())
+                .Add(new CreateEquipmentViewSystem())
 
                 .DelHere<SpawnPoint>()
                 .Add(new CreateSpawnPointSystem())

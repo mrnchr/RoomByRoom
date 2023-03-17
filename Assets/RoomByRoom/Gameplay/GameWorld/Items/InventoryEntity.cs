@@ -12,5 +12,6 @@ namespace RoomByRoom
         public List<BoundComponent<PhysicalDamage>> PhysDamage = new List<BoundComponent<PhysicalDamage>>();
         public List<BoundComponent<Protection>> Protection = new List<BoundComponent<Protection>>();
         public List<BoundComponent<Equipped>> Equipped = new List<BoundComponent<Equipped>>();
+        public List<BoundComponent<Shape>> Shape = new List<BoundComponent<Shape>>();
     }
 }

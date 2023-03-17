@@ -39,3 +39,14 @@ MonoBehaviour:
   - {fileID: 1271579379973155671, guid: 043eba53d19d5fb48afab64c9182b6d2, type: 3}
   - {fileID: 1271579379973155671, guid: 043eba53d19d5fb48afab64c9182b6d2, type: 3}
   - {fileID: 1271579379973155671, guid: 043eba53d19d5fb48afab64c9182b6d2, type: 3}
+  PlayerHand: {fileID: 4540532948907761103, guid: 8af8d21b0fa2d744285f63f336b94fe4, type: 3}
+  OneHandWeapons: []
+  TwoHandsWeapons: []
+  Bows: []
+  Boots: []
+  Leggings: []
+  Gloves: []
+  Breastplates: []
+  Helmets: []
+  Shields: []
+  Artifacts: []

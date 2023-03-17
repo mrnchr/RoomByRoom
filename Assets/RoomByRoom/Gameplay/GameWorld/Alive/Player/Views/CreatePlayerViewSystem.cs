@@ -22,6 +22,7 @@ namespace RoomByRoom
                 // Spawn player in the world
                 GameObject player = Object.Instantiate(_packedPrefabData.Value.Prefabs.BasePlayerUnit.gameObject);
                 PlayerView playerView = player.GetComponent<PlayerView>();
+                playerView.Entity = index;
 
                 // Add PlayerViewRef component
                 ref UnitViewRef playerRef = ref world.GetPool<UnitViewRef>().Add(index);
