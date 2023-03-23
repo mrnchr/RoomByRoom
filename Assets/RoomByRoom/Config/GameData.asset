@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e291b7b17d30fb14fb413d54f20c432f, type: 3}
+  m_Name: GameData
+  m_EditorClassIdentifier: 
+  Flying:
+    Unit:
+      Health:
+        Point: 75
+      Moving:
+        Speed: 4
+  Giant:
+    Unit:
+      Health:
+        Point: 200
+      Moving:
+        Speed: 2
+    Jumping:
+      JumpForce: 4
+  Humanoid:
+    Unit:
+      Health:
+        Point: 100
+      Moving:
+        Speed: 5
+    Jumping:
+      JumpForce: 5
+  Baby:
+    Unit:
+      Health:
+        Point: 50
+      Moving:
+        Speed: 10
+    Jumping:
+      JumpForce: 6
+  SandBoss:
+    Unit:
+      Health:
+        Point: 1000
+      Moving:
+        Speed: 4
+    Jumping:
+      JumpForce: 5
+  WaterBoss:
+    Unit:
+      Health:
+        Point: 400
+      Moving:
+        Speed: 13
+    Jumping:
+      JumpForce: 13
+  DarkBoss:
+    Unit:
+      Health:
+        Point: 500
+      Moving:
+        Speed: 7
+    Jumping:
+      JumpForce: 4

@@ -17,12 +17,14 @@ MonoBehaviour:
   Player:
     Race:
       Type: 0
-    Health:
-      Point: 100
-    Moving:
-      Speed: 5
-    Jumping:
-      JumpForce: 5
+    Ground:
+      Unit:
+        Health:
+          Point: 100
+        Moving:
+          Speed: 5
+      Jumping:
+        JumpForce: 5
   Room:
     Info:
       Type: 0

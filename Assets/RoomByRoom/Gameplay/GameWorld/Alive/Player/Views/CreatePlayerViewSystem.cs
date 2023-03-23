@@ -30,11 +30,11 @@ namespace RoomByRoom
 
                 // Add Moving component
                 ref Moving moving = ref world.GetPool<Moving>().Add(index);
-                moving = playerEntity.Moving;
+                moving = playerEntity.Ground.Unit.Moving;
 
                 // Add Jumping component
                 ref Jumping jumping = ref world.GetPool<Jumping>().Add(index);
-                jumping = playerEntity.Jumping;
+                jumping = playerEntity.Ground.Jumping;
 
                 // Update scene data
                 _sceneData.Value.PlayerEntity = index;

@@ -6,7 +6,6 @@ namespace RoomByRoom
 {
     public class UnitView : View
     {
-        public Moving Moving;
         public Rigidbody Rb;
         public ItemPlace Item;
         public Animator Animator;

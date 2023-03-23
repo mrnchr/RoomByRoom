@@ -8,5 +8,6 @@ namespace RoomByRoom
         public Vector2 MouseSensitivity;
         public string DefaultSaveName;
         public bool IsNewGame;
+        public bool SaveInFile;
     }
 }

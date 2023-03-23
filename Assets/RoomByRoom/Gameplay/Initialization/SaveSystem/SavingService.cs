@@ -1,26 +1,24 @@
-using System.Runtime.Serialization.Formatters.Binary;
-
 namespace RoomByRoom
 {
     public class SavingService
     {
         private ISaver _saver;
-        private string _saveName;
+        private string _profileName;
 
-        public SavingService(string saveName)
+        public SavingService(string profileName, bool saveInFile)
         {
-            _saver = new Serializator();
-            _saveName = saveName;
+            _saver = saveInFile ? new Serializator() : new DBAccessor();
+            _profileName = profileName;
         }
 
-        public bool LoadData(out SavedData savedData)
+        public bool LoadData(ref SavedData savedData)
         {
-            return _saver.LoadData(_saveName, out savedData);
+            return _saver.LoadData(_profileName, ref savedData);
         }
         
         public bool SaveData(SavedData savedData)
         {
-            return _saver.SaveData(_saveName, savedData);
+            return _saver.SaveData(_profileName, savedData);
         }
     }
 }

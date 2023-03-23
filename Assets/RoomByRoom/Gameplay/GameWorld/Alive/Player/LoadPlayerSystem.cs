@@ -19,7 +19,7 @@ namespace RoomByRoom
             
             // Add Health component
             ref Health health = ref world.GetPool<Health>().Add(player);
-            health = playerEntity.Health;
+            health = playerEntity.Ground.Unit.Health;
 
             // Add UnitInfo component
             ref UnitInfo unit = ref world.GetPool<UnitInfo>().Add(player);

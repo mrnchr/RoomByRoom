@@ -16,10 +16,12 @@ namespace RoomByRoom
         [SerializeField] private DefaultData _defaultData;        
         [SerializeField] private SceneData _sceneData;        
         [SerializeField] private PrefabData _prefabData;
+        [SerializeField] private GameData _gameData;
         [SerializeField] private Configuration _configuration;
         private SavedData _savedData;
         private GameInfo _gameInfo;        
         private PackedPrefabData _packedPrefabData;
+        private PackedGameData _packedGameData;
         private IEcsSystems _updateSystems;
         // private IEcsSystems _fixedUpdateSystems;
         private EcsWorld _world;        
@@ -28,9 +30,9 @@ namespace RoomByRoom
             _savedData = new SavedData();
             _sceneData.SavedData = _savedData;
 
-            var savingSvc = new SavingService(_configuration.DefaultSaveName);
-
+            var savingSvc = new SavingService(_configuration.DefaultSaveName, _configuration.SaveInFile);
             _packedPrefabData = new PackedPrefabData(_prefabData);
+            _packedGameData = new PackedGameData(_gameData);
 
             _world = new EcsWorld();
             _updateSystems = new EcsSystems(_world);
@@ -81,7 +83,7 @@ namespace RoomByRoom
                 .Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif
                 .Inject(_sceneData, _savedData, _packedPrefabData, _configuration,
-                savingSvc, _defaultData, _gameInfo)
+                savingSvc, _defaultData, _gameInfo, _packedGameData)
                 .Init();
 
             // _fixedUpdateSystems = new EcsSystems(_world);

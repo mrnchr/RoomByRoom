@@ -15,13 +15,7 @@ namespace RoomByRoom
 
         private Dictionary<ArmorType, ItemPlace> _itemPlaces = new Dictionary<ArmorType, ItemPlace>();
 
-        public ItemPlace this[ArmorType type]
-        {
-            get
-            {
-                return _itemPlaces[type];
-            }
-        }
+        public ItemPlace GetItemPlace(ArmorType type) => _itemPlaces[type];
 
         private void Awake()
         {
@@ -37,7 +31,6 @@ namespace RoomByRoom
         {            
             Animator.SetInteger("Weapon", (int)weaponType);
             Animator.SetTrigger("StartAttack");
-            Debug.Log("Start Attack");
 
             // TODO: change when there is a bow
         }

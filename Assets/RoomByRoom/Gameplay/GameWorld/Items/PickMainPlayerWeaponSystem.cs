@@ -9,6 +9,7 @@ namespace RoomByRoom
 
         public void Init(IEcsSystems systems)
         {
+            // Find and lace in hands player weapon which is not bow
             foreach(var index in _weapons.Value)
             {
                 if(_weapons.Pools.Inc1.Get(index).Type != WeaponType.Bow)

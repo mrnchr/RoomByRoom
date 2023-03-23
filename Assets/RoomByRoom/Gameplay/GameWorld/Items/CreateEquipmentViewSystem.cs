@@ -17,8 +17,10 @@ namespace RoomByRoom
 
             foreach(var index in _weapons.Value)
             {
+                // Get owner
                 ref Owned owned = ref world.GetPool<Owned>().Get(index);
                 ref UnitViewRef owner = ref world.GetPool<UnitViewRef>().Get(owned.Owner);
+
                 ref WeaponInfo weaponInfo = ref world.GetPool<WeaponInfo>().Get(index);
                 ref Shape shape = ref world.GetPool<Shape>().Get(index);
 
@@ -29,6 +31,7 @@ namespace RoomByRoom
                 ref ItemViewRef weaponRef = ref world.GetPool<ItemViewRef>().Add(index);
                 weaponRef.Value = weaponView;
 
+                // Put item in unit's hands
                 UnitView.ItemPlace place = owner.Value.Item;
                 weaponView.transform.SetParent(place.Holder);
                 weaponView.transform.position = place.Point.position;
@@ -40,6 +43,7 @@ namespace RoomByRoom
             {
                 ref Owned owned = ref world.GetPool<Owned>().Get(index);
                 ref UnitViewRef owner = ref world.GetPool<UnitViewRef>().Get(owned.Owner);
+                
                 ref ArmorInfo armorInfo = ref _armors.Pools.Inc2.Get(index);
                 ref Shape shape = ref world.GetPool<Shape>().Get(index);
 
@@ -50,11 +54,11 @@ namespace RoomByRoom
                 ref ItemViewRef armorRef = ref world.GetPool<ItemViewRef>().Add(index);
                 armorRef.Value = armorView;
 
+                // Put item on him as armor if unit is humanoid else as simple item
                 UnitView.ItemPlace place;
-
                 if(owner.Value is HumanoidView humanoid)
                 {
-                    place = humanoid[armorInfo.Type];
+                    place = humanoid.GetItemPlace(armorInfo.Type);
                 }
                 else
                 {

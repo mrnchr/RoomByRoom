@@ -160,12 +160,14 @@ MonoBehaviour:
     Player:
       Race:
         Type: 0
-      Health:
-        Point: 0
-      Moving:
-        Speed: 0
-      Jumping:
-        JumpForce: 0
+      Ground:
+        Unit:
+          Health:
+            Point: 0
+          Moving:
+            Speed: 0
+        Jumping:
+          JumpForce: 0
     Room:
       Info:
         Type: 0
@@ -334,6 +336,7 @@ MonoBehaviour:
   _defaultData: {fileID: 11400000, guid: 459d3dc4785704147a404de04da7ed2b, type: 2}
   _sceneData: {fileID: 65209845}
   _prefabData: {fileID: 11400000, guid: d39d563c980198c488935c6529f8b5c3, type: 2}
+  _gameData: {fileID: 11400000, guid: 7ef6d0c93a2b4394d9900f00999303fa, type: 2}
   _configuration: {fileID: 11400000, guid: d18482ebc8e5cdf458dae86145d75263, type: 2}
 --- !u!1 &1897892192
 GameObject:

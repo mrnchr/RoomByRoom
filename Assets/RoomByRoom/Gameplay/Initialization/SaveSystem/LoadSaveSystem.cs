@@ -13,7 +13,7 @@ namespace RoomByRoom
         public void PreInit(IEcsSystems systems)
         {
             SavedData transferData = new SavedData();
-            if(!_conf.Value.IsNewGame && _savingSvc.Value.LoadData(out transferData))
+            if(!_conf.Value.IsNewGame && _savingSvc.Value.LoadData(ref transferData))
             {
                 _savedData.Value.Copy(transferData);
                 return;
@@ -23,7 +23,6 @@ namespace RoomByRoom
             _savedData.Value.Player = _defaultData.Value.Player;
             _savedData.Value.Room = _defaultData.Value.Room;
             _savedData.Value.Inventory = _defaultData.Value.Inventory;
-
             _savingSvc.Value.SaveData(_savedData.Value);
         }
     }

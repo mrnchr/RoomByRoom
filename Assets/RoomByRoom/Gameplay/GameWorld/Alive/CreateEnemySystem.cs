@@ -1,5 +1,8 @@
+using System;
+
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+
 using RoomByRoom.Utility;
 
 namespace RoomByRoom
@@ -7,6 +10,7 @@ namespace RoomByRoom
     public class CreateEnemySystem : IEcsRunSystem
     {
         private EcsFilterInject<Inc<NextRoomMessage>> _nextRoom = Idents.Worlds.MessageWorld;
+        private EcsCustomInject<PackedGameData> _gameData = default;
         private EcsWorld _world;
 
         public void Run(IEcsSystems systems)
@@ -43,11 +47,6 @@ namespace RoomByRoom
         {
             int enemy = _world.NewEntity();
 
-            // Add Health component
-            // TODO: to change HP
-            ref Health health = ref _world.GetPool<Health>().Add(enemy);
-            health.Point = hp;
-
             // Add UnitInfo component
             ref UnitInfo unit = ref _world.GetPool<UnitInfo>().Add(enemy);
             unit.Type = enemyType;
@@ -55,6 +54,12 @@ namespace RoomByRoom
             // Add RaceInfo component
             ref RaceInfo race = ref _world.GetPool<RaceInfo>().Add(enemy);
             race.Type = enemyRace;
+
+            UnitEntity unitEntity = _gameData.Value.GetUnitEntity(enemyType, enemyRace);
+
+            // Add Health component
+            ref Health health = ref _world.GetPool<Health>().Add(enemy);
+            health.Point = unitEntity.Health.Point;
         }
     }
 }

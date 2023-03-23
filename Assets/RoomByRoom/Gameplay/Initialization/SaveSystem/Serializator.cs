@@ -9,13 +9,11 @@ namespace RoomByRoom
     {
         private BinaryFormatter _formatter = new BinaryFormatter();
 
-        public bool LoadData(string fromFile, out SavedData savedData)
+        public bool LoadData(string fromProfile, ref SavedData savedData)
         {
-            savedData = new SavedData();
-
             try
             {
-                using (FileStream fs = new FileStream(Idents.FilePaths.SavingDirectory + fromFile, FileMode.Open))
+                using (FileStream fs = new FileStream(Idents.FilePaths.SavingDirectory + fromProfile, FileMode.Open))
                 {
                     savedData = (SavedData)_formatter.Deserialize(fs);
                 }
@@ -28,9 +26,9 @@ namespace RoomByRoom
             }
         }
 
-        public bool SaveData(string toFile, in SavedData savedData)
+        public bool SaveData(string toProfile, SavedData savedData)
         {
-            using (FileStream fs = new FileStream(Idents.FilePaths.SavingDirectory + toFile, FileMode.Create))
+            using (FileStream fs = new FileStream(Idents.FilePaths.SavingDirectory + toProfile, FileMode.Create))
             {
                 _formatter.Serialize(fs, savedData);
             }
