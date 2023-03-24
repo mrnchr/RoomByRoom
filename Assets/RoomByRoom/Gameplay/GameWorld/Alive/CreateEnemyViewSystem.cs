@@ -8,6 +8,7 @@ namespace RoomByRoom
     {
         private EcsFilterInject<Inc<Health, UnitInfo, RaceInfo>, Exc<ControllerByPlayer, UnitViewRef>> _rawEnemies = default;
         private EcsCustomInject<PackedGameData> _gameData = default;
+        private EcsCustomInject<AttackService> _attackSvc = default;
         private EcsCustomInject<PackedPrefabData> _prefabData = default;
 
         public void Run(IEcsSystems systems)
@@ -23,6 +24,7 @@ namespace RoomByRoom
                 GameObject enemy = GameObject.Instantiate(SelectEnemy(unitInfo.Type, raceInfo.Type));
                 UnitView enemyView = enemy.GetComponent<UnitView>();
                 enemyView.Entity = index;
+                enemyView.AttackCtr.SetService(_attackSvc.Value);
 
                 // Add UnitViewRef component
                 ref UnitViewRef enemyRef = ref world.GetPool<UnitViewRef>().Add(index);

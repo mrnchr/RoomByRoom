@@ -17,8 +17,10 @@ namespace RoomByRoom
 
         public ItemPlace GetItemPlace(ArmorType type) => _itemPlaces[type];
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             _itemPlaces[ArmorType.Boots] = Boots;
             _itemPlaces[ArmorType.Leggings] = Leggings;
             _itemPlaces[ArmorType.Gloves] = Gloves;
@@ -29,8 +31,8 @@ namespace RoomByRoom
 
         public override void PlayAttackAnimation(WeaponType weaponType)
         {            
-            Animator.SetInteger("Weapon", (int)weaponType);
-            Animator.SetTrigger("StartAttack");
+            Anim.SetInteger("Weapon", (int)weaponType);
+            Anim.SetTrigger("StartAttack");
 
             // TODO: change when there is a bow
         }

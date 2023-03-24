@@ -10,8 +10,15 @@ namespace RoomByRoom
         public RoomEntity Room;
         public InventoryEntity Inventory;
 
+        public SavedData()
+        {
+            Player.Ground = new GroundUnitEntity();
+            Inventory = new InventoryEntity();
+        }
+
         public void Copy(SavedData from)
         {
+            GameInfo = from.GameInfo;
             Player = from.Player;
             Room = from.Room;
             Inventory = from.Inventory;

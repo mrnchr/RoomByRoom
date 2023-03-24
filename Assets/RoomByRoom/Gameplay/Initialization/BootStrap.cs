@@ -37,6 +37,8 @@ namespace RoomByRoom
             _world = new EcsWorld();
             _updateSystems = new EcsSystems(_world);
 
+            var attackSvc = new AttackService(_world);
+
             _updateSystems
                 .AddWorld(new EcsWorld(), Idents.Worlds.MessageWorld)
 
@@ -74,8 +76,8 @@ namespace RoomByRoom
                 .Add(new RecreateRoomSystem())
                 .Add(new CreateEnemySystem())
                 .Add(new CreateEnemyViewSystem())
-                // .Add(new AttackAnimationCatcher())
 
+                .Add(new DamageSystem())
 #if UNITY_EDITOR
                 .Add(new MarkEnemySystem())
                 .Add(new RemoveEnemySystem())
@@ -83,7 +85,7 @@ namespace RoomByRoom
                 .Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif
                 .Inject(_sceneData, _savedData, _packedPrefabData, _configuration,
-                savingSvc, _defaultData, _gameInfo, _packedGameData)
+                savingSvc, _defaultData, _gameInfo, _packedGameData, attackSvc)
                 .Init();
 
             // _fixedUpdateSystems = new EcsSystems(_world);

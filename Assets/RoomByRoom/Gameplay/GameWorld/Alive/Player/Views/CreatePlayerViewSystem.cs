@@ -9,6 +9,7 @@ namespace RoomByRoom
         private EcsCustomInject<PackedPrefabData> _packedPrefabData = default;
         private EcsCustomInject<SavedData> _savedData = default;
         private EcsCustomInject<SceneData> _sceneData = default;
+        private EcsCustomInject<AttackService> _attackSvc = default;
         private EcsFilterInject<Inc<ControllerByPlayer>, Exc<UnitViewRef>> _player = default;
 
         public void Run(IEcsSystems systems)
@@ -23,6 +24,7 @@ namespace RoomByRoom
                 GameObject player = Object.Instantiate(_packedPrefabData.Value.Prefabs.BasePlayerUnit.gameObject);
                 PlayerView playerView = player.GetComponent<PlayerView>();
                 playerView.Entity = index;
+                playerView.AttackCtr.SetService(_attackSvc.Value);
 
                 // Add PlayerViewRef component
                 ref UnitViewRef playerRef = ref world.GetPool<UnitViewRef>().Add(index);

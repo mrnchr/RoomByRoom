@@ -498,15 +498,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Entity: 0
-  Moving:
-    Speed: 5
   Rb: {fileID: 2896429287602711574}
   Item:
     Holder: {fileID: 3794586048681726919}
     Point: {fileID: 1727977324070020315}
   Animator: {fileID: 7518074114578690808}
-  Jumping:
-    JumpForce: 5
+  AttackCtr: {fileID: 2941326413648381322}
   GroundMask:
     serializedVersion: 2
     m_Bits: 8
@@ -539,10 +536,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8028227670313272210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6859ca89631460c4eaf189722ba34bad, type: 3}
+  m_Script: {fileID: 11500000, guid: fd3f558130b03dc4db0af54144054abe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OwnView: {fileID: 5713328748562558450}
+  _ownView: {fileID: 5713328748562558450}
 --- !u!54 &2896429287602711574
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -557,7 +554,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!95 &7518074114578690808
 Animator:

@@ -9,11 +9,18 @@ namespace RoomByRoom
 
         public void Init(IEcsSystems systems)
         {
+            EcsWorld world = systems.GetWorld();
+
             // Find and lace in hands player weapon which is not bow
             foreach(var index in _weapons.Value)
             {
-                if(_weapons.Pools.Inc1.Get(index).Type != WeaponType.Bow)
-                    systems.GetWorld().GetPool<InHands>().Add(index);
+                if (_weapons.Pools.Inc1.Get(index).Type != WeaponType.Bow)
+                {
+                    world.GetPool<InHands>().Add(index);
+                    ref Owned owned = ref world.GetPool<Owned>().Get(index);
+                    ref MainWeapon mainWeapon = ref world.GetPool<MainWeapon>().Add(owned.Owner);
+                    mainWeapon.Entity = index;
+                }
             }
         }
     }

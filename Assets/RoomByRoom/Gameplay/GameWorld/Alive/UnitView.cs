@@ -6,17 +6,20 @@ namespace RoomByRoom
 {
     public class UnitView : View
     {
-        public Rigidbody Rb;
+        [HideInInspector] public Rigidbody Rb;
         public ItemPlace Item;
-        public Animator Animator;
+        [HideInInspector] public Animator Anim;
+        [HideInInspector] public AttackCatcher AttackCtr;
+
+        protected virtual void Awake()
+        {
+            Rb = GetComponent<Rigidbody>();
+            Anim = GetComponent<Animator>();
+            AttackCtr = GetComponent<AttackCatcher>();
+        }
 
         public virtual void PlayAttackAnimation(WeaponType weaponType)
         {
-        }
-
-        public void OnReset()
-        {
-            TryGetComponent<Animator>(out Animator);
         }
         
         [Serializable]

@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace RoomByRoom
 {
-    public class View : MonoBehaviour
+    public abstract class View : MonoBehaviour
     {
-        [HideInInspector] public int Entity;
+        public int Entity;
     }
 }

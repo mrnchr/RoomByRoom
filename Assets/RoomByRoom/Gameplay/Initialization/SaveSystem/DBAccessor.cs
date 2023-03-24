@@ -20,15 +20,15 @@ namespace RoomByRoom
 
         public bool LoadData(string fromProfile, ref SavedData savedData)
         {
+            // Get data from db for current profile
             _comm.CommandText = $"select * from profile where name = \'{fromProfile}\';";
             SQLiteDataReader profileRow = _comm.ExecuteReader();
 
-            if(profileRow == null)
+            if(!profileRow.Read())
             {
                 return false;
             }
-
-            int index = 2;
+            int index = 1;
 
             savedData.GameInfo.RoomCount = profileRow.GetInt32(index++);
             savedData.Player.Race.Type = (RaceType)profileRow.GetInt32(index++);
@@ -38,10 +38,13 @@ namespace RoomByRoom
             savedData.Room.Info.Type = (RoomType)profileRow.GetInt32(index++);
             savedData.Room.Race.Type = (RaceType)profileRow.GetInt32(index++);
 
+            profileRow.Close();
+            
+            // Get inventory components from db
             _comm.CommandText = $"select * from item where profile_name = \'{fromProfile}\';";
             profileRow = _comm.ExecuteReader();
 
-            while(profileRow.NextResult())
+            while(profileRow.Read())
             {
                 BoundComponent<ItemInfo> comp = new BoundComponent<ItemInfo>();
                 comp.BoundEntity = profileRow.GetInt32(0);
@@ -49,10 +52,12 @@ namespace RoomByRoom
                 savedData.Inventory.Item.Add(comp);
             }
 
+            profileRow.Close();
+
             _comm.CommandText = $"select * from weapon where profile_name = \'{fromProfile}\';";
             profileRow = _comm.ExecuteReader();
 
-            while(profileRow.NextResult())
+            while(profileRow.Read())
             {
                 BoundComponent<WeaponInfo> comp = new BoundComponent<WeaponInfo>();
                 comp.BoundEntity = profileRow.GetInt32(0);
@@ -60,10 +65,12 @@ namespace RoomByRoom
                 savedData.Inventory.Weapon.Add(comp);
             }
 
+            profileRow.Close();
+
             _comm.CommandText = $"select * from phys_damage where profile_name = \'{fromProfile}\';";
             profileRow = _comm.ExecuteReader();
 
-            while(profileRow.NextResult())
+            while(profileRow.Read())
             {
                 BoundComponent<PhysicalDamage> comp = new BoundComponent<PhysicalDamage>();
                 comp.BoundEntity = profileRow.GetInt32(0);
@@ -71,20 +78,24 @@ namespace RoomByRoom
                 savedData.Inventory.PhysDamage.Add(comp);
             }
 
+            profileRow.Close();
+
             _comm.CommandText = $"select * from equiped where profile_name = \'{fromProfile}\';";
             profileRow = _comm.ExecuteReader();
 
-            while(profileRow.NextResult())
+            while(profileRow.Read())
             {
                 BoundComponent<Equipped> comp = new BoundComponent<Equipped>();
                 comp.BoundEntity = profileRow.GetInt32(0);
                 savedData.Inventory.Equipped.Add(comp);
             }
 
+            profileRow.Close();
+
             _comm.CommandText = $"select * from protection where profile_name = \'{fromProfile}\';";
             profileRow = _comm.ExecuteReader();
 
-            while(profileRow.NextResult())
+            while(profileRow.Read())
             {
                 BoundComponent<Protection> comp = new BoundComponent<Protection>();
                 comp.BoundEntity = profileRow.GetInt32(0);
@@ -92,10 +103,12 @@ namespace RoomByRoom
                 savedData.Inventory.Protection.Add(comp);
             }
 
+            profileRow.Close();
+
             _comm.CommandText = $"select * from shape where profile_name = \'{fromProfile}\';";
             profileRow = _comm.ExecuteReader();
 
-            while(profileRow.NextResult())
+            while(profileRow.Read())
             {
                 BoundComponent<Shape> comp = new BoundComponent<Shape>();
                 comp.BoundEntity = profileRow.GetInt32(0);
@@ -108,7 +121,7 @@ namespace RoomByRoom
 
         public bool SaveData(string toProfile, SavedData savedData)
         {
-
+            // Save current profile
             _comm.CommandText = "insert or replace into profile values " +
             $"(" +
             $"\'{toProfile}\', " +
@@ -122,6 +135,7 @@ namespace RoomByRoom
             ");";
             _comm.ExecuteNonQuery();
 
+            // Save current profile's inventory
             foreach(var comp in savedData.Inventory.Item)
             {
                 _comm.CommandText = $"insert or replace into item values " +
