@@ -23,10 +23,10 @@ namespace RoomByRoom
                     ref UnitViewRef unitView = ref _units.Pools.Inc2.Get(index);
 
                     // if it's player then the transform is his mesh
-                    if(world.GetPool<ControllerByPlayer>().Has(index))
+                    if(unitView.Value is PlayerView player)
                     {
-                        PlayerView player = (PlayerView)unitView.Value;
                         unitTransform = player.Character;
+                        
                         Transform mainCamera = player.CameraHolder.transform;
                         Vector3 forward = mainCamera.TransformDirection(moveDirection);
                         forward.y = 0;
