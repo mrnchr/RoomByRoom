@@ -7,7 +7,7 @@ namespace RoomByRoom
 
         public SavingService(string profileName, bool saveInFile)
         {
-            _saver = saveInFile ? new Serializator() : new DBAccessor();
+            _saver = saveInFile ? new Serializator() : new Database.DBAccessor();
             _profileName = profileName;
         }
 
