@@ -24,6 +24,9 @@ namespace RoomByRoom
                 if (itemInfo.Type == ItemType.Artifact)
                     continue;
 
+                if(itemInfo.Type == ItemType.Armor && _world.GetComponent<ArmorInfo>(index).Type != ArmorType.Shield)
+                    continue;
+
                 View.InstantiateView(GetPrefab(index, itemInfo.Type), out ItemView itemView);
                 itemView.Entity = index;
 
@@ -31,6 +34,9 @@ namespace RoomByRoom
                     .Initialize(x => { x.Value = itemView; return x; });
 
                 WearItem(index, itemInfo.Type, itemView);
+
+                if(itemInfo.Type == ItemType.Weapon)
+                    itemView.gameObject.SetActive(_world.HasComponent<InHands>(index));
             }
         }
 
@@ -43,15 +49,14 @@ namespace RoomByRoom
 
         private GameObject GetPrefab(int entity, ItemType itemType)
         {
-            int prefabIndex = 
-                _world.GetComponent<Shape>(entity)
-                .PrefabIndex;
+            int prefabIndex = _world.GetComponent<Shape>(entity).PrefabIndex;
 
             int typeNumber =
                 itemType == ItemType.Weapon
                 ? (int)_world.GetComponent<WeaponInfo>(entity).Type
                 : (int)_world.GetComponent<ArmorInfo>(entity).Type;
 
+            Debug.Log($"itemType: {itemType}, typeNumber: {typeNumber}, prefabIndex: {prefabIndex}");
             return _prefabData.Value.GetItem(itemType, typeNumber, prefabIndex)
                 .gameObject;
         }

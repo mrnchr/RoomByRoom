@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 
 namespace RoomByRoom.Utility
@@ -9,5 +11,8 @@ namespace RoomByRoom.Utility
             from.position = to.position;
             from.rotation = to.rotation;
         }
+        
+        public static int GetEnumLength<T>() 
+        where T : Enum => Enum.GetNames(typeof(T)).Length;
     }
 }

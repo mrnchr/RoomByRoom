@@ -48,6 +48,7 @@ namespace RoomByRoom
                 .Add(new LoadInventorySystem())
                 .Add(new PickPlayerMainWeaponSystem())
                 .Add(new CreateEnemySystem())
+                .Add(new WearHumanoidEnemySystem())
 
                 .DelHere<AddPlayerCommand>()
                 .Add(new CreateRoomViewSystem())

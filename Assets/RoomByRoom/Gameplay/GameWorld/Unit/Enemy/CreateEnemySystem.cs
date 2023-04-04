@@ -54,6 +54,9 @@ namespace RoomByRoom
             _world.AddComponent<RaceInfo>(enemy)
                 .Initialize(x => { x.Type = race; return x; });
 
+            if(type == UnitType.Humanoid)
+                _world.AddComponent<Bare>(enemy);
+
             _world.AddComponent<Health>(enemy)
                 .Initialize(x => 
                     { 

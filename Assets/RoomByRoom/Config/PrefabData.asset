@@ -16,17 +16,17 @@ MonoBehaviour:
   SandEnemyUnits:
   - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
   - {fileID: 6961861350650080126, guid: b373d69a565b4f244bfab63bf493d1b4, type: 3}
-  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
+  - {fileID: 7951482278573504638, guid: 0ab915d8e6d70bb4a83d97116ef2c63f, type: 3}
   - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
   WaterEnemyUnits:
   - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
   - {fileID: 6961861350650080126, guid: b373d69a565b4f244bfab63bf493d1b4, type: 3}
-  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
+  - {fileID: 7951482278573504638, guid: 0ab915d8e6d70bb4a83d97116ef2c63f, type: 3}
   - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
   DarkEnemyUnits:
   - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
   - {fileID: 6961861350650080126, guid: b373d69a565b4f244bfab63bf493d1b4, type: 3}
-  - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
+  - {fileID: 7951482278573504638, guid: 0ab915d8e6d70bb4a83d97116ef2c63f, type: 3}
   - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
   BossUnits:
   - {fileID: 2876747702410217383, guid: 56495a09a682fa54eb59b0ae67c9248d, type: 3}
@@ -42,12 +42,15 @@ MonoBehaviour:
   PlayerHand: {fileID: 4540532948907761103, guid: 8af8d21b0fa2d744285f63f336b94fe4, type: 3}
   OneHandWeapons:
   - {fileID: 3142000838712670560, guid: 767cd857677e2ef4d8cd8a06100208d6, type: 3}
-  TwoHandsWeapons: []
-  Bows: []
+  TwoHandsWeapons:
+  - {fileID: 8935909954702642164, guid: 15fb228984a3c8e41b56c9f82bf180e8, type: 3}
+  Bows:
+  - {fileID: 7980760320212665143, guid: f208f3b06fc41584a86a98e6ef5bae4c, type: 3}
   Boots: []
   Leggings: []
   Gloves: []
   Breastplates: []
   Helmets: []
-  Shields: []
+  Shields:
+  - {fileID: -6468063185674759400, guid: 9efe4288fcfb0ab4fa764ba6f093cd1a, type: 3}
   Artifacts: []

@@ -49,6 +49,7 @@ namespace RoomByRoom
 
             ProcessComponents(_savedInventory.Item, CollectEntity);
             ProcessComponents(_savedInventory.Weapon, CollectEntity);
+            ProcessComponents(_savedInventory.Armor, CollectEntity);
             ProcessComponents(_savedInventory.PhysDamage, CollectEntity);
             ProcessComponents(_savedInventory.Protection, CollectEntity);
             ProcessComponents(_savedInventory.Equipped, CollectEntity);
@@ -72,6 +73,7 @@ namespace RoomByRoom
             
             ProcessComponents(_savedInventory.Item, LoadComponent);
             ProcessComponents(_savedInventory.Weapon, LoadComponent);
+            ProcessComponents(_savedInventory.Armor, LoadComponent);
             ProcessComponents(_savedInventory.PhysDamage, LoadComponent);
             ProcessComponents(_savedInventory.Protection, LoadComponent);
             ProcessComponents(_savedInventory.Equipped, LoadComponent);

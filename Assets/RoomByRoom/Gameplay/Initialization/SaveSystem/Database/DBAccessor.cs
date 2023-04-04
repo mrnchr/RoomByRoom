@@ -65,6 +65,7 @@ namespace RoomByRoom.Database
 
             savedData.Inventory.Item = PullComponent<ItemTable, ItemInfo>();
             savedData.Inventory.Weapon = PullComponent<WeaponTable, WeaponInfo>();
+            savedData.Inventory.Armor = PullComponent<ArmorTable, ArmorInfo>();
             savedData.Inventory.Protection = PullComponent<ProtectionTable, Protection>();
             savedData.Inventory.PhysDamage = PullComponent<PhysicalDamageTable, PhysicalDamage>();
             savedData.Inventory.Equipped = PullComponent<EquippedTable, Equipped>();
@@ -113,6 +114,7 @@ namespace RoomByRoom.Database
 
             PutComponent<ItemTable, ItemInfo>(savedData.Inventory.Item);
             PutComponent<WeaponTable, WeaponInfo>(savedData.Inventory.Weapon);
+            PutComponent<ArmorTable, ArmorInfo>(savedData.Inventory.Armor);
             PutComponent<ProtectionTable, Protection>(savedData.Inventory.Protection);
             PutComponent<PhysicalDamageTable, PhysicalDamage>(savedData.Inventory.PhysDamage);
             PutComponent<EquippedTable, Equipped>(savedData.Inventory.Equipped);
