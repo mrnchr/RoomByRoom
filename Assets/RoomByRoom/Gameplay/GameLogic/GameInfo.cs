@@ -4,8 +4,9 @@ using UnityEngine;
 namespace RoomByRoom
 {
     [Serializable]
-    public struct GameInfo
+    public class GameInfo
     {
         public int RoomCount;
+        public int Money;
     }
 }

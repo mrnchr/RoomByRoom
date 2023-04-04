@@ -95,19 +95,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 2876747702410217380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5aad2ec8dca2c84fa837c8fa2a2bbb0, type: 3}
+  m_Script: {fileID: 11500000, guid: 13f0c5b6092cc3943a18a3e31bc8fab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Entity: 0
-  Moving:
-    Speed: 5
-  Rb: {fileID: 2876747702410217382}
-  Animator: {fileID: 0}
-  Jumping:
-    JumpForce: 5
+  Rb: {fileID: 0}
+  Item:
+    Holder: {fileID: 0}
+    Point: {fileID: 0}
+  Anim: {fileID: 0}
+  AttackCtr: {fileID: 0}
   GroundMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
 --- !u!54 &2876747702410217382
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -16,27 +16,27 @@ namespace RoomByRoom
         [SerializeField] private DefaultData _defaultData;        
         [SerializeField] private SceneData _sceneData;        
         [SerializeField] private PrefabData _prefabData;
-        [SerializeField] private GameData _gameData;
         [SerializeField] private Configuration _configuration;
         private SavedData _savedData;
         private GameInfo _gameInfo;        
         private PackedPrefabData _packedPrefabData;
-        private PackedGameData _packedGameData;
         private IEcsSystems _updateSystems;
         // private IEcsSystems _fixedUpdateSystems;
         private EcsWorld _world;        
 
         void Start () {
             _savedData = new SavedData();
-            _sceneData.SavedData = _savedData;
 
             var savingSvc = new SavingService(_configuration.DefaultSaveName, _configuration.SaveInFile);
             _packedPrefabData = new PackedPrefabData(_prefabData);
-            _packedGameData = new PackedGameData(_gameData);
+
+            _gameInfo = new GameInfo();
+
+            _sceneData.CurrentGame = _gameInfo;
+            _sceneData.CurrentSave = _savedData;
 
             _world = new EcsWorld();
             _updateSystems = new EcsSystems(_world);
-
             var attackSvc = new AttackService(_world);
 
             _updateSystems
@@ -46,14 +46,14 @@ namespace RoomByRoom
                 .Add(new LoadRoomSystem())
                 .Add(new LoadPlayerSystem())
                 .Add(new LoadInventorySystem())
-                .Add(new PickMainPlayerWeaponSystem())
+                .Add(new PickPlayerMainWeaponSystem())
+                .Add(new CreateEnemySystem())
 
                 .DelHere<AddPlayerCommand>()
                 .Add(new CreateRoomViewSystem())
-                .Add(new CreatePlayerViewSystem())
+                .Add(new CreateUnitViewSystem())
                 .Add(new CreateEquipmentViewSystem())
 
-                .DelHere<SpawnPoint>()
                 .Add(new CreateSpawnPointSystem())
                 .Add(new PutUnitInRoomSystem())
 
@@ -74,10 +74,9 @@ namespace RoomByRoom
                 .DelHere<NextRoomMessage>(Idents.Worlds.MessageWorld)
                 .Add(new OpenDoorSystem())
                 .Add(new RecreateRoomSystem())
-                .Add(new CreateEnemySystem())
-                .Add(new CreateEnemyViewSystem())
 
                 .Add(new DamageSystem())
+                .Add(new DieSystem())
 #if UNITY_EDITOR
                 .Add(new MarkEnemySystem())
                 .Add(new RemoveEnemySystem())
@@ -85,7 +84,7 @@ namespace RoomByRoom
                 .Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif
                 .Inject(_sceneData, _savedData, _packedPrefabData, _configuration,
-                savingSvc, _defaultData, _gameInfo, _packedGameData, attackSvc)
+                savingSvc, _defaultData, _gameInfo, attackSvc)
                 .Init();
 
             // _fixedUpdateSystems = new EcsSystems(_world);

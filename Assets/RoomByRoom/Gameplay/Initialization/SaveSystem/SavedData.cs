@@ -5,20 +5,20 @@ namespace RoomByRoom
     [Serializable]
     public class SavedData
     {
-        public GameInfo GameInfo;
+        public GameInfo GameSave;
         public PlayerEntity Player;
         public RoomEntity Room;
         public InventoryEntity Inventory;
 
         public SavedData()
         {
-            Player.Ground = new GroundUnitEntity();
+            GameSave = new GameInfo();
             Inventory = new InventoryEntity();
         }
 
-        public void Copy(SavedData from)
+        public void CopyOf(SavedData from)
         {
-            GameInfo = from.GameInfo;
+            GameSave = from.GameSave;
             Player = from.Player;
             Room = from.Room;
             Inventory = from.Inventory;

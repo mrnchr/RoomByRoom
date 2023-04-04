@@ -1,6 +1,11 @@
 using System.Collections.Generic;
+
+using UnityEngine;
+
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+
+using RoomByRoom.Utility;
 
 namespace RoomByRoom
 {
@@ -8,101 +13,120 @@ namespace RoomByRoom
     {
         private EcsFilterInject<Inc<UnitViewRef, UnitInfo>> _units = default;
         private EcsFilterInject<Inc<SpawnPoint>> _points = default;
+        private EcsWorld _world;
 
         public void Run(IEcsSystems systems)
         {
-            if(_points.Value.GetEntitiesCount() == 0)
-            {
+            if (!HasSpawnPoints())
                 return;
-            }
 
-            EcsWorld world = systems.GetWorld();
+            _world = systems.GetWorld();
 
             int playerPoint = 0;
             int bossPoint = 0;
             List<int> allEnemyPoints = new List<int>();
-            int numberOfEnemies = 0;
 
-            // Define player, boss and enemy spawn points
-            foreach(var point in _points.Value)
+            foreach (var index in _points.Value)
             {
-                ref SpawnPoint spawnPoint = ref _points.Pools.Inc1.Get(point);
-                if(spawnPoint.UnitType == UnitType.Player)
+                UnitType unitType = _world.GetComponent<SpawnPoint>(index).UnitType;
+                switch (unitType)
                 {
-                    playerPoint = point;
-                }
-                else if(spawnPoint.UnitType == UnitType.Boss)
-                {
-                    bossPoint = point;
-                }
-                else 
-                {
-                    allEnemyPoints.Add(point);
+                    case UnitType.Player:
+                        playerPoint = index;
+                        break;
+                    case UnitType.Boss:
+                        bossPoint = index;
+                        break;
+                    default:
+                        allEnemyPoints.Add(index);
+                        break;
                 }
             }
 
-            // Calculate the number of enemies
-            foreach(var enemy in _units.Value)
+            List<int> enemyPoints = SelectEnemyPoints(allEnemyPoints);
+
+            foreach (int index in _units.Value)
             {
-                ref UnitInfo unitInfo = ref _units.Pools.Inc2.Get(enemy);
-                if(unitInfo.Type != UnitType.Player && unitInfo.Type != UnitType.Boss)
-                {
-                    numberOfEnemies++;
-                }
+                UnitType unitType = _world.GetComponent<UnitInfo>(index).Type;
+                int spawnEntity = GetSpawnEntity(enemyPoints, unitType);
+                PutInSpawn(index, GetSpawn(spawnEntity));
             }
 
-            // select random spawn points where enemies will be moved in
-            List<int> enemyPoints = SelectEnemyPoints(allEnemyPoints, numberOfEnemies);
+            foreach (int index in _points.Value)
+                _world.DelEntity(index);
 
-            // Move unit depending on his type
-            foreach(var unit in _units.Value)
+            int GetSpawnEntity(List<int> enemyPoints, UnitType unitType)
             {
-                ref UnitViewRef unitRef = ref _units.Pools.Inc1.Get(unit);
-                ref UnitInfo unitInfo = ref _units.Pools.Inc2.Get(unit);
-
-                // Determine spawn point for each type of unit
-                SpawnPoint unitPoint;
-                if(unitInfo.Type == UnitType.Player)
+                int spawnEntity;
+                switch (unitType)
                 {
-                    unitPoint = _points.Pools.Inc1.Get(playerPoint);
-                }
-                else if (unitInfo.Type == UnitType.Boss)
-                {
-                    unitPoint = _points.Pools.Inc1.Get(bossPoint);
-                }
-                else 
-                {
-                    unitPoint = _points.Pools.Inc1.Get(enemyPoints[0]);
-                    enemyPoints.RemoveAt(0);
+                    case UnitType.Player:
+                        spawnEntity = playerPoint;
+                        break;
+                    case UnitType.Boss:
+                        spawnEntity = bossPoint;
+                        break;
+                    default:
+                        spawnEntity = enemyPoints[0];
+                        enemyPoints.RemoveAt(0);
+                        break;
                 }
 
-                unitRef.Value.transform.position = unitPoint.UnitSpawn.transform.position;
-
-                // Due to spawn at the same point enemies run away
-                unitRef.Value.Rb.velocity = UnityEngine.Vector3.zero;
+                return spawnEntity;
             }
         }
 
-        private List<int> SelectEnemyPoints(List<int> allSpawnPoints, int numberOfEnemies) 
+        private Transform GetSpawn(int spawnEntity)
         {
-            List<int> enemyPoints = new List<int>();
-            int index;
+            ref SpawnPoint unitPoint = ref _world.GetComponent<SpawnPoint>(spawnEntity);
+            Transform spawn = unitPoint.UnitSpawn;
             
-            if(allSpawnPoints.Count < numberOfEnemies)
+            return spawn;
+        }
+
+        private bool HasSpawnPoints() => _points.Value.GetEntitiesCount() > 0;
+
+        private void PutInSpawn(int index, Transform spawn)
+        {
+            UnitView unitView = _world.GetComponent<UnitViewRef>(index).Value;
+            Utils.SetTransform(unitView.transform, spawn);
+            unitView.Rb.velocity = UnityEngine.Vector3.zero;
+        }
+
+        private List<int> SelectEnemyPoints(List<int> allSpawnPoints) 
+        {
+            int numberOfEnemies = 0;
+
+            foreach(var unit in _units.Value)
             {
-                throw new System.ArgumentException("Spawn points for enemies is less than enemies themselves");
+                if (IsEnemy(_world.GetComponent<UnitInfo>(unit).Type))
+                    numberOfEnemies++;
             }
 
+            if(numberOfEnemies == 0)
+                return null;
+
+            List<int> enemyPoints = new List<int>();
+            
+            if(allSpawnPoints.Count < numberOfEnemies)
+                throw new System.ArgumentException("Spawn points for enemies is less than enemies themselves");
+
+            int index;
             while(numberOfEnemies > 0)
             {
                 index = UnityEngine.Random.Range(0, allSpawnPoints.Count);
                 enemyPoints.Add(allSpawnPoints[index]);
-
+                
                 allSpawnPoints.RemoveAt(index);
                 numberOfEnemies--;
             }
 
             return enemyPoints;
+        }
+
+        private static bool IsEnemy(UnitType type)
+        {
+            return type != UnitType.Player && type != UnitType.Boss;
         }
     }
 }

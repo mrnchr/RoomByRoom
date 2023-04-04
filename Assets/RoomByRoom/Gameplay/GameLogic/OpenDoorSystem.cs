@@ -1,48 +1,62 @@
+using UnityEngine;
+
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+
 using RoomByRoom.Utility;
-using UnityEngine;
 
 namespace RoomByRoom
 {
     public class OpenDoorSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<OpenDoorMessage>> _openDoor = Idents.Worlds.MessageWorld;
+        private EcsFilterInject<Inc<OpenDoorMessage>> _openDoorMsg = Idents.Worlds.MessageWorld;
         private EcsFilterInject<Inc<Opener>> _opener = default;
-        private EcsCustomInject<SavedData> _savedData = default;
+        private EcsCustomInject<GameInfo> _gameInfo = default;
+        private EcsWorld _message;
 
         public void Run(IEcsSystems systems)
         {
-            EcsWorld message = systems.GetWorld(Idents.Worlds.MessageWorld);
+            _message = systems.GetWorld(Idents.Worlds.MessageWorld);
             EcsWorld world = systems.GetWorld();
-            ref GameInfo startGame = ref _savedData.Value.GameInfo;
 
-            foreach (var index in _openDoor.Value)
+            foreach (var index in _openDoorMsg.Value)
             {
-                // Check pressing open door button and is opener the player 
                 foreach(var opener in _opener.Value)
                 {
-                    // Checking has the game started
-                    // If not then to create gameInfo and message about game start
-                    if(startGame.RoomCount == 0)
-                    {
-                        // Send StartGameMessage
-                        int startGameEntity = message.NewEntity();
-                        message.GetPool<StartGameMessage>().Add(startGameEntity);
-                    }
+                    if (IsFirstRoom(_gameInfo.Value.RoomCount))
+                        StartGame();
 
-                    // Send NextRoomMessage
-                    int nextRoomEntity = message.NewEntity();
-                    ref NextRoomMessage nextRoom = ref message.GetPool<NextRoomMessage>().Add(nextRoomEntity);
-                    nextRoom.Race.Type = FastRandom.GetEnemyRace();
-                    nextRoom.Type = CalculateRoomType(startGame.RoomCount);
+                    CreateNextRoom();
 
-                    ++startGame.RoomCount;
+                    ++_gameInfo.Value.RoomCount;
                 }
             }
         }
 
-        private RoomType CalculateRoomType(int number)
+        private void CreateNextRoom()
+        {
+            _message.AddComponent<NextRoomMessage>(_message.NewEntity())
+                .Initialize(x =>
+                {
+                    x.Race.Type = FastRandom.EnemyRace;
+                    x.Room.Type = GetRoomType(_gameInfo.Value.RoomCount);
+                    return x;
+                });
+        }
+
+        private void StartGame()
+        {
+            int startGameEntity = _message.NewEntity();
+            _message.AddComponent<StartGameMessage>(startGameEntity);
+        }
+
+
+        private static bool IsFirstRoom(int number)
+        {
+            return number == 0;
+        }
+
+        private static RoomType GetRoomType(int number)
         {
             return number % 10 == 9 ? RoomType.Boss : RoomType.Enemy;
         }

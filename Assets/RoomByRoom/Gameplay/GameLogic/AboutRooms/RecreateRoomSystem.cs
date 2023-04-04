@@ -7,32 +7,38 @@ namespace RoomByRoom
 {
     public class RecreateRoomSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<NextRoomMessage>> _nextRoom = Idents.Worlds.MessageWorld;
-        private EcsCustomInject<SceneData> _sceneData = default;
+        private EcsFilterInject<Inc<NextRoomMessage>> _nextRoomMsg = Idents.Worlds.MessageWorld;
+        private EcsFilterInject<Inc<RoomViewRef>> _room = default;
+        private EcsWorld _world;
 
         public void Run(IEcsSystems systems)
         {
-            EcsWorld world = systems.GetWorld();
+            _world = systems.GetWorld();
             EcsWorld message = systems.GetWorld(Idents.Worlds.MessageWorld);
 
-            foreach(var index in _nextRoom.Value)
+            foreach(var index in _nextRoomMsg.Value)
             {
-                // Delete current room
-                GameObject.Destroy(world.GetPool<RoomViewRef>().Get(_sceneData.Value.CurrentRoomEntity).Value.gameObject);
-                world.DelEntity(_sceneData.Value.CurrentRoomEntity);
-                
-                // Create new room
-                int roomEntity = world.NewEntity();
-                ref NextRoomMessage nextRoom = ref _nextRoom.Pools.Inc1.Get(index);
-
-                // Add RaceInfo component
-                ref RaceInfo race = ref world.GetPool<RaceInfo>().Add(roomEntity);
-                race = nextRoom.Race;
-
-                // Add RoomInfo component
-                ref RoomInfo room = ref world.GetPool<RoomInfo>().Add(roomEntity);
-                room.Type = nextRoom.Type;
+                DeleteRoom();
+                CreateRoom(message.GetComponent<NextRoomMessage>(index));
             }
+        }
+
+        private void CreateRoom(NextRoomMessage nextRoom)
+        {
+            int roomEntity = _world.NewEntity();
+
+            _world.AddComponent<RaceInfo>(roomEntity)
+                .Initialize(x => x = nextRoom.Race);
+
+            _world.AddComponent<RoomInfo>(roomEntity)
+                .Initialize(x => x = nextRoom.Room);
+        }
+
+        private void DeleteRoom()
+        {
+            int roomEntity = _room.Value.GetRawEntities()[0];
+            GameObject.Destroy(_world.GetComponent<RoomViewRef>(roomEntity).Value.gameObject);
+            _world.DelEntity(roomEntity);
         }
     }
 }

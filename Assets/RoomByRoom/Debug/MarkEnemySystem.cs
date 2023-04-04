@@ -25,7 +25,7 @@ namespace RoomByRoom.Debugging
 
             foreach(var enemy in _enemies.Value)
             {
-                world.GetPool<CanBeDeleted>().Add(enemy);
+                world.AddComponent<CanBeDeleted>(enemy);
             }
         }
     }

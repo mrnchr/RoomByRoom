@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 524d7a579b1c0de4cbaa5cfd48fe7d53, type: 3}
+  m_Script: {fileID: 11500000, guid: d84e4a7f9cecaaa4aa66936c3c99f941, type: 3}
   m_Name: PrefabData
   m_EditorClassIdentifier: 
   BasePlayerUnit: {fileID: 5713328748562558450, guid: 34bd781d76436834fa1859ce2a98c28e, type: 3}
@@ -40,7 +40,8 @@ MonoBehaviour:
   - {fileID: 1271579379973155671, guid: 043eba53d19d5fb48afab64c9182b6d2, type: 3}
   - {fileID: 1271579379973155671, guid: 043eba53d19d5fb48afab64c9182b6d2, type: 3}
   PlayerHand: {fileID: 4540532948907761103, guid: 8af8d21b0fa2d744285f63f336b94fe4, type: 3}
-  OneHandWeapons: []
+  OneHandWeapons:
+  - {fileID: 3142000838712670560, guid: 767cd857677e2ef4d8cd8a06100208d6, type: 3}
   TwoHandsWeapons: []
   Bows: []
   Boots: []

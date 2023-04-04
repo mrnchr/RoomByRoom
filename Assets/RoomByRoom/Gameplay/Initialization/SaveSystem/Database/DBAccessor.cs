@@ -22,10 +22,9 @@ namespace RoomByRoom.Database
             _comm.ExecuteNonQuery();
         }
 
-        public bool LoadData(string fromProfile, ref SavedData savedData)
+        public bool LoadData(string profile, ref SavedData savedData)
         {
-            // Get data from db for current profile
-            _comm.CommandText = $"select * from profile where name = \'{fromProfile}\';";
+            _comm.CommandText = $"select * from profile where name = \'{profile}\';";
             SQLiteDataReader profileRow = _comm.ExecuteReader();
 
             if(!profileRow.Read())
@@ -36,11 +35,11 @@ namespace RoomByRoom.Database
 
             int index = 1;
 
-            savedData.GameInfo.RoomCount = profileRow.GetInt32(index++);
+            savedData.GameSave.RoomCount = profileRow.GetInt32(index++);
             savedData.Player.Race.Type = (RaceType)profileRow.GetInt32(index++);
-            savedData.Player.Ground.Unit.Health.Point = profileRow.GetFloat(index++);
-            savedData.Player.Ground.Unit.Moving.Speed = profileRow.GetFloat(index++);
-            savedData.Player.Ground.Jumping.JumpForce = profileRow.GetFloat(index++);
+            savedData.Player.HealthCmp.Point = profileRow.GetFloat(index++);
+            savedData.Player.MovingCmp.Speed = profileRow.GetFloat(index++);
+            savedData.Player.JumpingCmp.JumpForce = profileRow.GetFloat(index++);
             savedData.Room.Info.Type = (RoomType)profileRow.GetInt32(index++);
             savedData.Room.Race.Type = (RaceType)profileRow.GetInt32(index++);
 
@@ -51,7 +50,7 @@ namespace RoomByRoom.Database
             where TValue : struct
             {
                 T compTable = new T();
-                _comm.CommandText = $"select * from {compTable.GetTableName()} where profile_name = \'{fromProfile}\';";
+                _comm.CommandText = $"select * from {compTable.GetTableName()} where profile_name = \'{profile}\';";
                 profileRow = _comm.ExecuteReader();
                 List<BoundComponent<TValue>> comps = new List<BoundComponent<TValue>>();
 
@@ -64,7 +63,6 @@ namespace RoomByRoom.Database
                 return comps;
             }
 
-            // Get inventory components from db
             savedData.Inventory.Item = PullComponent<ItemTable, ItemInfo>();
             savedData.Inventory.Weapon = PullComponent<WeaponTable, WeaponInfo>();
             savedData.Inventory.Protection = PullComponent<ProtectionTable, Protection>();
@@ -75,30 +73,26 @@ namespace RoomByRoom.Database
             return true;
         }
 
-        public bool DeleteData(string profile)
+        public void DeleteData(string profile)
         {
             _comm.CommandText = $"delete from profile where name = \'{profile}\';";
             _comm.ExecuteNonQuery();
 
-            return true;
         }
 
-        public bool SaveData(string toProfile, SavedData savedData)
+        public void SaveData(string profile, SavedData savedData)
         {
-            if(!DeleteData(toProfile))
-            {
-                return false;
-            }
+            DeleteData(profile);
 
             // Save current profile
             _comm.CommandText = "insert or replace into profile values " +
             $"(" +
-            $"\'{toProfile}\', " +
-            $"{savedData.GameInfo.RoomCount}, " +
+            $"\'{profile}\', " +
+            $"{savedData.GameSave.RoomCount}, " +
             $"{(int)savedData.Player.Race.Type}, " +
-            $"{savedData.Player.Ground.Unit.Health.Point}, " +
-            $"{savedData.Player.Ground.Unit.Moving.Speed}, " +
-            $"{savedData.Player.Ground.Jumping.JumpForce}, " +
+            $"{savedData.Player.HealthCmp.Point}, " +
+            $"{savedData.Player.MovingCmp.Speed}, " +
+            $"{savedData.Player.JumpingCmp.JumpForce}, " +
             $"{(int)savedData.Room.Info.Type}, " +
             $"{(int)savedData.Room.Race.Type} " +
             ");";
@@ -112,7 +106,7 @@ namespace RoomByRoom.Database
                 T compTable = new T();
                 foreach (var comp in comps)
                 {
-                    _comm.CommandText = compTable.GetTextToPut(comp, toProfile);
+                    _comm.CommandText = compTable.GetTextToPut(comp, profile);
                     _comm.ExecuteNonQuery();
                 }
             }
@@ -123,8 +117,6 @@ namespace RoomByRoom.Database
             PutComponent<PhysicalDamageTable, PhysicalDamage>(savedData.Inventory.PhysDamage);
             PutComponent<EquippedTable, Equipped>(savedData.Inventory.Equipped);
             PutComponent<ShapeTable, Shape>(savedData.Inventory.Shape);
-
-            return true;
         }
     }
 }

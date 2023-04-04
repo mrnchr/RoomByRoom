@@ -152,22 +152,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3444bd41daa861f459ecffdd7b4d4576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentRoomEntity: 0
-  PlayerEntity: 0
-  SavedData:
-    GameInfo:
+  CurrentGame:
+    RoomCount: 0
+    Money: 0
+  CurrentSave:
+    GameSave:
       RoomCount: 0
+      Money: 0
     Player:
       Race:
         Type: 0
-      Ground:
-        Unit:
-          Health:
-            Point: 0
-          Moving:
-            Speed: 0
-        Jumping:
-          JumpForce: 0
+      HealthCmp:
+        Point: 0
+      MovingCmp:
+        Speed: 0
+      JumpingCmp:
+        JumpForce: 0
     Room:
       Info:
         Type: 0
@@ -336,7 +336,6 @@ MonoBehaviour:
   _defaultData: {fileID: 11400000, guid: 459d3dc4785704147a404de04da7ed2b, type: 2}
   _sceneData: {fileID: 65209845}
   _prefabData: {fileID: 11400000, guid: d39d563c980198c488935c6529f8b5c3, type: 2}
-  _gameData: {fileID: 11400000, guid: 7ef6d0c93a2b4394d9900f00999303fa, type: 2}
   _configuration: {fileID: 11400000, guid: d18482ebc8e5cdf458dae86145d75263, type: 2}
 --- !u!1 &1897892192
 GameObject:

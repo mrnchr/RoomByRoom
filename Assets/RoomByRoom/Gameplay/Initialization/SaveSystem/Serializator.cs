@@ -26,14 +26,12 @@ namespace RoomByRoom
             }
         }
 
-        public bool SaveData(string toProfile, SavedData savedData)
+        public void SaveData(string toProfile, SavedData savedData)
         {
             using (FileStream fs = new FileStream(Idents.FilePaths.SavingDirectory + toProfile, FileMode.Create))
             {
                 _formatter.Serialize(fs, savedData);
             }
-
-            return true;
         }
     }
 }

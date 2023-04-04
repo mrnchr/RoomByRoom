@@ -13,18 +13,17 @@ MonoBehaviour:
   m_Name: DefaultData
   m_EditorClassIdentifier: 
   GameInfo:
-    RoomCount: 0
+    RoomCount: 2
+    Money: 0
   Player:
     Race:
       Type: 0
-    Ground:
-      Unit:
-        Health:
-          Point: 100
-        Moving:
-          Speed: 5
-      Jumping:
-        JumpForce: 5
+    HealthCmp:
+      Point: 100
+    MovingCmp:
+      Speed: 5
+    JumpingCmp:
+      JumpForce: 5
   Room:
     Info:
       Type: 0
@@ -38,15 +37,15 @@ MonoBehaviour:
     Weapon:
     - BoundEntity: 0
       ComponentInfo:
-        Type: 0
+        Type: 1
     PhysDamage:
     - BoundEntity: 0
       ComponentInfo:
-        Point: 10
+        Point: 12
     Protection: []
     Equipped:
     - BoundEntity: 0
     Shape:
     - BoundEntity: 0
       ComponentInfo:
-        PrefabIndex: -1
+        PrefabIndex: 0

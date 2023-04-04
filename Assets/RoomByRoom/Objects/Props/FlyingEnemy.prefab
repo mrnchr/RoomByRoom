@@ -96,16 +96,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3108273858157000538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a6a5d8144ca1234aa0a014e5692ff6f, type: 3}
+  m_Script: {fileID: 11500000, guid: 125b5fcb96079ab4bb96e17d7542e3a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Entity: 0
-  Rb: {fileID: 7602069609288155339}
+  Rb: {fileID: 0}
   Item:
     Holder: {fileID: 0}
     Point: {fileID: 0}
-  Animator: {fileID: 0}
-  AttackCtr: {fileID: 403022639453077665}
+  Anim: {fileID: 0}
+  AttackCtr: {fileID: 0}
 --- !u!114 &403022639453077665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,10 +115,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3108273858157000538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd3f558130b03dc4db0af54144054abe, type: 3}
+  m_Script: {fileID: 11500000, guid: 943763dc852f9004d8851ebf5d5f10a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ownView: {fileID: 6961861350650080126}
 --- !u!54 &7602069609288155339
 Rigidbody:
   m_ObjectHideFlags: 0

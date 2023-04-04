@@ -3,22 +3,16 @@ namespace RoomByRoom
     public class SavingService
     {
         private ISaver _saver;
-        private string _profileName;
+        private string _profile;
 
-        public SavingService(string profileName, bool saveInFile)
+        public SavingService(string profile, bool saveInFile)
         {
             _saver = saveInFile ? new Serializator() : new Database.DBAccessor();
-            _profileName = profileName;
+            _profile = profile;
         }
 
-        public bool LoadData(ref SavedData savedData)
-        {
-            return _saver.LoadData(_profileName, ref savedData);
-        }
-        
-        public bool SaveData(SavedData savedData)
-        {
-            return _saver.SaveData(_profileName, savedData);
-        }
+        public bool LoadData(ref SavedData savedData) => _saver.LoadData(_profile, ref savedData);
+
+        public void SaveData(SavedData savedData) => _saver.SaveData(_profile, savedData);
     }
 }
