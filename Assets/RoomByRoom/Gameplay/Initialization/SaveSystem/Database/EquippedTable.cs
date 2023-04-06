@@ -8,9 +8,10 @@ namespace RoomByRoom.Database
 
         public BoundComponent<Equipped> Pull(SQLiteDataReader row)
         {
-            BoundComponent<Equipped> comp = new BoundComponent<Equipped>();
-            comp.BoundEntity = row.GetInt32(0);
-            return comp;
+            return new BoundComponent<Equipped>
+            {
+                BoundEntity = row.GetInt32(0)
+            };
         }
 
         public string GetTextToPut(BoundComponent<Equipped> comp, string toProfile)

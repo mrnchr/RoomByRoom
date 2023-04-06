@@ -14,11 +14,12 @@ namespace RoomByRoom.Database
             _conn = new SQLiteConnection("Data Source = " + _dbFileName);
 
             _conn.Open();
-            _comm = new SQLiteCommand();
-            _comm.Connection = _conn;
-
-            // turn on foreign references
-            _comm.CommandText = "PRAGMA foreign_keys=ON";
+            _comm = new SQLiteCommand
+            {
+                Connection = _conn,
+                // turn on foreign references
+                CommandText = "PRAGMA foreign_keys=ON"
+            };
             _comm.ExecuteNonQuery();
         }
 
@@ -49,10 +50,10 @@ namespace RoomByRoom.Database
             where T : ITable<BoundComponent<TValue>>, new()
             where TValue : struct
             {
-                T compTable = new T();
+                T compTable = new();
                 _comm.CommandText = $"select * from {compTable.GetTableName()} where profile_name = \'{profile}\';";
                 profileRow = _comm.ExecuteReader();
-                List<BoundComponent<TValue>> comps = new List<BoundComponent<TValue>>();
+                List<BoundComponent<TValue>> comps = new();
 
                 while(profileRow.Read())
                 {
@@ -78,7 +79,6 @@ namespace RoomByRoom.Database
         {
             _comm.CommandText = $"delete from profile where name = \'{profile}\';";
             _comm.ExecuteNonQuery();
-
         }
 
         public void SaveData(string profile, SavedData savedData)
@@ -104,7 +104,7 @@ namespace RoomByRoom.Database
             where T : ITable<BoundComponent<TValue>>, new()
             where TValue : struct
             {
-                T compTable = new T();
+                T compTable = new();
                 foreach (var comp in comps)
                 {
                     _comm.CommandText = compTable.GetTextToPut(comp, profile);

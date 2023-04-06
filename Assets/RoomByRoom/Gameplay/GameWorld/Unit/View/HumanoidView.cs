@@ -7,7 +7,7 @@ namespace RoomByRoom
 {
     [Serializable]
     public struct ItemPlace
-    { 
+    {
         public Transform Parent;
         public Transform Point;
     }
@@ -42,10 +42,9 @@ namespace RoomByRoom
         }
 
         public override void PlayAttackAnimation(WeaponType weaponType)
-        {            
+        {
             Anim.SetInteger("Weapon", (int)weaponType);
             Anim.SetTrigger("StartAttack");
-
             // TODO: change when there is a bow
         }
     }

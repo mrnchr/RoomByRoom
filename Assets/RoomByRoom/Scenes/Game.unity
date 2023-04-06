@@ -176,6 +176,7 @@ MonoBehaviour:
     Inventory:
       Item: []
       Weapon: []
+      Armor: []
       PhysDamage: []
       Protection: []
       Equipped: []

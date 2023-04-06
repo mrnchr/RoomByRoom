@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2690954049384765872}
   - component: {fileID: 8886587214676764908}
   - component: {fileID: 5491319475771844952}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeftEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7038819613938431518}
   - component: {fileID: 8073766394007811176}
   - component: {fileID: 1224725677465304075}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6658505811205199731}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShieldPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7608963733538804060}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BowPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,14 +220,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2511025298841950818}
-  m_LocalRotation: {x: -0, y: -0, z: 0.35025576, w: 0.93665415}
+  m_LocalRotation: {x: 0, y: 0, z: -0.41464558, w: 0.90998304}
   m_LocalPosition: {x: 0, y: 0, z: -0.497}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3116613541422591316}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 41.006}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -48.994}
 --- !u!1 &4195615754939442266
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,7 +237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4884956689888765521}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OneHandPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5472109448058491711}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +301,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 81958601550673529}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4118391874584316331}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TwoHandPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,7 +365,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7539807925864866851}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HandPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 7535846555084048286}
   - component: {fileID: 494191288536937822}
   - component: {fileID: 4429286651541752310}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RightEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -481,7 +481,7 @@ GameObject:
   - component: {fileID: 6575388813123098960}
   - component: {fileID: 3030177713371656789}
   - component: {fileID: 530379201385273087}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,9 +569,10 @@ GameObject:
   - component: {fileID: 105529830621035891}
   - component: {fileID: 8244773168464493054}
   - component: {fileID: -7590874700279587269}
-  m_Layer: 0
+  - component: {fileID: -4533008738594715933}
+  m_Layer: 6
   m_Name: HumanoidEnemy
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -612,7 +613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Entity: 0
   MovingCmp:
-    Speed: 5
+    Speed: 3
   Anim: {fileID: 0}
   AttackCtr: {fileID: 0}
   Rb: {fileID: 0}
@@ -729,7 +730,7 @@ Animator:
   m_GameObject: {fileID: 8535636547081096538}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bcafe2943e87c3944a80bc804a47b16c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 72a190ec182ec2644967d3fcae1a5824, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -751,3 +752,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943763dc852f9004d8851ebf5d5f10a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!208 &-4533008738594715933
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8535636547081096538}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.55, y: 1, z: 0.55}
+  m_MoveThreshold: 0.01
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.1

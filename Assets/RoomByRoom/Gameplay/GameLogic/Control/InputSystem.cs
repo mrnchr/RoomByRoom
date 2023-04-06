@@ -51,13 +51,16 @@ namespace RoomByRoom
 
         private void Move(int entity)
         {
+            Vector3 dir = GetMovementInput();
             _world.AddComponent<MoveCommand>(entity)
-                .Initialize(x => { x.MoveDirection = GetMovementInput(); return x; });
+                .Initialize(x => { x.MoveDirection = dir; return x; });
+            _world.AddComponent<RotateCommand>(entity)
+                .Initialize(x => { x.RotateDirection = dir; return x; });
         }
 
-        private static Vector3Int GetMovementInput()
+        private static Vector3 GetMovementInput()
         {
-            return new Vector3Int((int)Input.GetAxisRaw("Horizontal"), 0, (int)Input.GetAxisRaw("Vertical"));
+            return new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         }
 
         private void OpenDoor()

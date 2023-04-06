@@ -17,11 +17,10 @@ namespace RoomByRoom
         public void Run(IEcsSystems systems)
         {
             _message = systems.GetWorld(Idents.Worlds.MessageWorld);
-            EcsWorld world = systems.GetWorld();
 
             foreach (var index in _openDoorMsg.Value)
             {
-                foreach(var opener in _opener.Value)
+                foreach (var _ in _opener.Value)
                 {
                     if (IsFirstRoom(_gameInfo.Value.RoomCount))
                         StartGame();
@@ -49,7 +48,6 @@ namespace RoomByRoom
             int startGameEntity = _message.NewEntity();
             _message.AddComponent<StartGameMessage>(startGameEntity);
         }
-
 
         private static bool IsFirstRoom(int number)
         {

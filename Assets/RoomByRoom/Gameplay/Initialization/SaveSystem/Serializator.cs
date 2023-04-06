@@ -28,10 +28,8 @@ namespace RoomByRoom
 
         public void SaveData(string toProfile, SavedData savedData)
         {
-            using (FileStream fs = new FileStream(Idents.FilePaths.SavingDirectory + toProfile, FileMode.Create))
-            {
-                _formatter.Serialize(fs, savedData);
-            }
+            using FileStream fs = new FileStream(Idents.FilePaths.SavingDirectory + toProfile, FileMode.Create);
+            _formatter.Serialize(fs, savedData);
         }
     }
 }

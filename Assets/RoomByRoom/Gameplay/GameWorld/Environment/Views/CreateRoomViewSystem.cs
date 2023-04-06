@@ -37,21 +37,13 @@ namespace RoomByRoom
         {
             RoomType type = _world.GetComponent<RoomInfo>(room).Type;
             RaceType race = _world.GetComponent<RaceInfo>(room).Type;
-
-            RoomView roomView;
-            switch (type)
+            RoomView roomView = type switch
             {
-                case RoomType.Enemy:
-                    roomView = _prefabData.EnemyRooms[FastRandom.GetEnemyRoom(_prefabData.EnemyRooms.Length)];
-                    break;
-                case RoomType.Boss:
-                    roomView = _prefabData.BossRooms[(int)race - 1];
-                    break;
-                default:
-                    roomView = _prefabData.StartRoom;
-                    break;
-            }
-
+                RoomType.Enemy => _prefabData.EnemyRooms[FastRandom.GetEnemyRoom(_prefabData.EnemyRooms.Length)],
+                RoomType.Boss => _prefabData.BossRooms[(int)race - 1],
+                RoomType.Start => _prefabData.StartRoom,
+                _ => throw new ArgumentException()
+            };
             return roomView.gameObject;
         }
     }

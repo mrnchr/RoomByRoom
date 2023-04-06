@@ -25,19 +25,22 @@ namespace RoomByRoom
         private void Move(int entity)
         {
             UnitView unitView = _world.GetComponent<UnitViewRef>(entity).Value;
-            ref Moving moving = ref _units.Pools.Inc3.Get(entity);
             Vector3 endDirection = GetRawDirection(entity, unitView);
 
-            endDirection = endDirection.normalized * moving.Speed;
+            endDirection = endDirection.normalized * GetSpeed(entity);
             endDirection.y = unitView.Rb.velocity.y;
-
             unitView.Rb.velocity = endDirection;
+        }
+
+        private float GetSpeed(int entity)
+        {
+            return _world.GetComponent<Moving>(entity).Speed;
         }
 
         private Vector3 GetRawDirection(int entity, UnitView unitView)
         {
             Vector3 endDirection;
-            Vector3Int moveDirection = _world.GetComponent<MoveCommand>(entity).MoveDirection;
+            Vector3 moveDirection = _world.GetComponent<MoveCommand>(entity).MoveDirection;
             if (unitView is PlayerView playerView)
             {
                 endDirection = playerView.CameraHolder.TransformDirection(moveDirection);

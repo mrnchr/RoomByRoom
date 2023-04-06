@@ -9,7 +9,7 @@ namespace RoomByRoom
 {
     public class RotateUnitSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<MoveCommand, UnitViewRef>> _units = default;
+        private EcsFilterInject<Inc<RotateCommand, UnitViewRef>> _units = default;
 
         public void Run(IEcsSystems systems)
         {
@@ -17,30 +17,30 @@ namespace RoomByRoom
 
             foreach(var index in _units.Value)
             {
-                Vector3Int moveDirection = world.GetComponent<MoveCommand>(index).MoveDirection;
+                Vector3 rotateDirection = world.GetComponent<RotateCommand>(index).RotateDirection;
 
-                if (IsMoving(moveDirection))
+                if (IsMoving(rotateDirection))
                 {
                     UnitView unitView = world.GetComponent<UnitViewRef>(index).Value;
 
                     if (unitView is PlayerView player)
-                        RotatePlayer(moveDirection, player);
+                        RotatePlayer(rotateDirection, player);
                     else
-                        RotateUnit(moveDirection, unitView);
+                        RotateUnit(rotateDirection, unitView);
                 }
             }
         }
 
-        private bool IsMoving(Vector3Int moveDirection) => moveDirection != Vector3Int.zero;
+        private bool IsMoving(Vector3 rotateDirection) => rotateDirection != Vector3.zero;
 
-        private void RotateUnit(Vector3Int moveDirection, UnitView unitView)
+        private void RotateUnit(Vector3 rotateDirection, UnitView unitView)
         {
-            unitView.transform.forward = ((Vector3)moveDirection).normalized;
+            unitView.transform.forward = rotateDirection.normalized;
         }
 
-        private void RotatePlayer(Vector3Int moveDirection, PlayerView player)
+        private void RotatePlayer(Vector3 rotateDirection, PlayerView player)
         {
-            Vector3 forward = player.CameraHolder.TransformDirection(moveDirection);
+            Vector3 forward = player.CameraHolder.TransformDirection(rotateDirection);
             forward.y = 0;
             player.Character.forward = forward.normalized;
         }

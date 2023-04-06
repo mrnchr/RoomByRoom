@@ -48,15 +48,15 @@ namespace RoomByRoom
 
         private Moving GetMoving(int entity, UnitView unit)
         {
-            return IsPlayer(entity) 
-                ? _savedData.Value.Player.MovingCmp 
+            return IsPlayer(entity)
+                ? _savedData.Value.Player.MovingCmp
                 : unit.MovingCmp;
         }
 
         private Jumping GetJumping(int entity, GroundUnitView unit)
         {
-            return IsPlayer(entity) 
-                ? _savedData.Value.Player.JumpingCmp 
+            return IsPlayer(entity)
+                ? _savedData.Value.Player.JumpingCmp
                 : unit.JumpingCmp;
         }
 

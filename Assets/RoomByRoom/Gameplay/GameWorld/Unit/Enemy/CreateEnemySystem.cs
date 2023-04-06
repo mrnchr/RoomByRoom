@@ -54,17 +54,17 @@ namespace RoomByRoom
             _world.AddComponent<RaceInfo>(enemy)
                 .Initialize(x => { x.Type = race; return x; });
 
+            _world.AddComponent<ControllerByAI>(enemy);
+
             if(type == UnitType.Humanoid)
                 _world.AddComponent<Bare>(enemy);
 
-            _world.AddComponent<Health>(enemy)
-                .Initialize(x => 
-                    { 
-                        x.Point = FastRandom.GetUnitHP(_gameInfo.Value.RoomCount, type); 
-                        return x; 
+            _ = _world.AddComponent<Health>(enemy)
+                .Initialize(x =>
+                    {
+                        x.Point = FastRandom.GetUnitHP(_gameInfo.Value.RoomCount, type);
+                        return x;
                     });
         }
-
-
     }
 }

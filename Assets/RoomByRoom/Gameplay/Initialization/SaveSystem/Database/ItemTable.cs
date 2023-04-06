@@ -4,13 +4,14 @@ namespace RoomByRoom.Database
 {
     public class ItemTable : ITable<BoundComponent<ItemInfo>>
     {
-
         public string GetTableName() => "item";
 
         public BoundComponent<ItemInfo> Pull(SQLiteDataReader row)
         {
-            BoundComponent<ItemInfo> comp = new BoundComponent<ItemInfo>();
-            comp.BoundEntity = row.GetInt32(0);
+            BoundComponent<ItemInfo> comp = new BoundComponent<ItemInfo>
+            {
+                BoundEntity = row.GetInt32(0)
+            };
             comp.ComponentInfo.Type = (ItemType)row.GetInt32(2);
             return comp;
         }

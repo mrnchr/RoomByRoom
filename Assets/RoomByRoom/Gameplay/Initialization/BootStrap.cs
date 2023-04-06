@@ -8,23 +8,23 @@ using Leopotam.EcsLite.UnityEditor;
 using RoomByRoom.Debugging;
 using RoomByRoom.Utility;
 
-namespace RoomByRoom 
-{ 
-    sealed class BootStrap : MonoBehaviour 
+namespace RoomByRoom
+{
+    sealed class BootStrap : MonoBehaviour
     {
         // TODO: change to external injection
-        [SerializeField] private DefaultData _defaultData;        
-        [SerializeField] private SceneData _sceneData;        
+        [SerializeField] private DefaultData _defaultData;
+        [SerializeField] private SceneData _sceneData;
         [SerializeField] private PrefabData _prefabData;
         [SerializeField] private Configuration _configuration;
         private SavedData _savedData;
-        private GameInfo _gameInfo;        
+        private GameInfo _gameInfo;
         private PackedPrefabData _packedPrefabData;
         private IEcsSystems _updateSystems;
         // private IEcsSystems _fixedUpdateSystems;
-        private EcsWorld _world;        
+        private EcsWorld _world;
 
-        void Start () {
+        private void Start () {
             _savedData = new SavedData();
 
             var savingSvc = new SavingService(_configuration.DefaultSaveName, _configuration.SaveInFile);
@@ -61,9 +61,11 @@ namespace RoomByRoom
                 .DelHere<OpenDoorMessage>(Idents.Worlds.MessageWorld)
                 .DelHere<RotateCameraMessage>(Idents.Worlds.MessageWorld)
                 .DelHere<MoveCommand>()
+                .DelHere<RotateCommand>()
                 .DelHere<JumpCommand>()
                 .DelHere<AttackCommand>()
                 .Add(new InputSystem())
+                .Add(new EnemyAISystem())
                 .Add(new MoveUnitSystem())
                 .Add(new RotateUnitSystem())
                 .Add(new JumpUnitSystem())
@@ -96,7 +98,7 @@ namespace RoomByRoom
             //     .Init();
         }
 
-        private void Update () 
+        private void Update ()
         {
             _updateSystems?.Run();
         }
@@ -106,20 +108,20 @@ namespace RoomByRoom
             // _fixedUpdateSystems?.Run();
         }
 
-        void OnDestroy () {
-            if (_updateSystems != null) 
+        private void OnDestroy () {
+            if (_updateSystems != null)
             {
                 _updateSystems.Destroy();
                 _updateSystems = null;
-            }  
+            }
 
             // if (_fixedUpdateSystems != null) 
             // {
             //     _fixedUpdateSystems.Destroy();
             //     _fixedUpdateSystems = null;
             // }      
-            
-            if (_world != null) 
+
+            if (_world != null)
             {
                 _world.Destroy();
                 _world = null;

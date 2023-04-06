@@ -37,9 +37,6 @@ MonoBehaviour:
     - BoundEntity: 1
       ComponentInfo:
         Type: 0
-    - BoundEntity: 2
-      ComponentInfo:
-        Type: 1
     Weapon:
     - BoundEntity: 0
       ComponentInfo:
@@ -47,10 +44,7 @@ MonoBehaviour:
     - BoundEntity: 1
       ComponentInfo:
         Type: 3
-    Armor:
-    - BoundEntity: 2
-      ComponentInfo:
-        Type: 5
+    Armor: []
     PhysDamage:
     - BoundEntity: 0
       ComponentInfo:
@@ -58,21 +52,14 @@ MonoBehaviour:
     - BoundEntity: 1
       ComponentInfo:
         Point: 9
-    Protection:
-    - BoundEntity: 2
-      ComponentInfo:
-        Point: 10
+    Protection: []
     Equipped:
     - BoundEntity: 0
     - BoundEntity: 1
-    - BoundEntity: 2
     Shape:
     - BoundEntity: 0
       ComponentInfo:
         PrefabIndex: 0
     - BoundEntity: 1
-      ComponentInfo:
-        PrefabIndex: 0
-    - BoundEntity: 2
       ComponentInfo:
         PrefabIndex: 0

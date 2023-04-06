@@ -24,7 +24,7 @@ namespace RoomByRoom
 
             int playerPoint = 0;
             int bossPoint = 0;
-            List<int> allEnemyPoints = new List<int>();
+            List<int> allEnemyPoints = new();
 
             foreach (var index in _points.Value)
             {
@@ -79,9 +79,7 @@ namespace RoomByRoom
         private Transform GetSpawn(int spawnEntity)
         {
             ref SpawnPoint unitPoint = ref _world.GetComponent<SpawnPoint>(spawnEntity);
-            Transform spawn = unitPoint.UnitSpawn;
-            
-            return spawn;
+            return unitPoint.UnitSpawn;
         }
 
         private bool HasSpawnPoints() => _points.Value.GetEntitiesCount() > 0;
@@ -90,10 +88,10 @@ namespace RoomByRoom
         {
             UnitView unitView = _world.GetComponent<UnitViewRef>(index).Value;
             Utils.SetTransform(unitView.transform, spawn);
-            unitView.Rb.velocity = UnityEngine.Vector3.zero;
+            unitView.Rb.velocity = Vector3.zero;
         }
 
-        private List<int> SelectEnemyPoints(List<int> allSpawnPoints) 
+        private List<int> SelectEnemyPoints(List<int> allSpawnPoints)
         {
             int numberOfEnemies = 0;
 
@@ -106,8 +104,8 @@ namespace RoomByRoom
             if(numberOfEnemies == 0)
                 return null;
 
-            List<int> enemyPoints = new List<int>();
-            
+            List<int> enemyPoints = new();
+
             if(allSpawnPoints.Count < numberOfEnemies)
                 throw new System.ArgumentException("Spawn points for enemies is less than enemies themselves");
 
@@ -116,7 +114,7 @@ namespace RoomByRoom
             {
                 index = UnityEngine.Random.Range(0, allSpawnPoints.Count);
                 enemyPoints.Add(allSpawnPoints[index]);
-                
+
                 allSpawnPoints.RemoveAt(index);
                 numberOfEnemies--;
             }

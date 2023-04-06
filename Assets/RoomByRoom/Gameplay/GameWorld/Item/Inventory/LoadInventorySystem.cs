@@ -12,8 +12,8 @@ namespace RoomByRoom
     {
         private EcsCustomInject<SavedData> _savedData = default;
         private EcsFilterInject<Inc<ControllerByPlayer>> _player = default;
-        private HashSet<int> _savedItems = new HashSet<int>();
-        private Dictionary<int, int> _boundItems = new Dictionary<int, int>();
+        private HashSet<int> _savedItems = new();
+        private Dictionary<int, int> _boundItems = new();
         private InventoryEntity _savedInventory;
         private EcsWorld _world;
 
@@ -60,7 +60,7 @@ namespace RoomByRoom
         where T : struct
         {
             components.ForEach(action);
-        }   
+        }
 
         private void LoadEntities()
         {
@@ -70,7 +70,7 @@ namespace RoomByRoom
                 _world.AddComponent<T>(_boundItems[component.BoundEntity])
                     .Initialize(x => x = component.ComponentInfo);
             }
-            
+
             ProcessComponents(_savedInventory.Item, LoadComponent);
             ProcessComponents(_savedInventory.Weapon, LoadComponent);
             ProcessComponents(_savedInventory.Armor, LoadComponent);

@@ -8,8 +8,10 @@ namespace RoomByRoom.Database
 
         public BoundComponent<ArmorInfo> Pull(SQLiteDataReader row)
         {
-            BoundComponent<ArmorInfo> comp = new BoundComponent<ArmorInfo>();
-            comp.BoundEntity = row.GetInt32(0);
+            BoundComponent<ArmorInfo> comp = new()
+            {
+                BoundEntity = row.GetInt32(0),
+            };
             comp.ComponentInfo.Type = (ArmorType)row.GetInt32(2);
             return comp;
         }

@@ -14,7 +14,7 @@ namespace RoomByRoom
         public void Run(IEcsSystems systems)
         {
             EcsWorld world = systems.GetWorld();
-            
+
             foreach(var index in _player.Value)
             {
                 // Create player entity from save

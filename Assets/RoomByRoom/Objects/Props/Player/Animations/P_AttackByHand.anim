@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AttackByHand
+  m_Name: P_AttackByHand
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0

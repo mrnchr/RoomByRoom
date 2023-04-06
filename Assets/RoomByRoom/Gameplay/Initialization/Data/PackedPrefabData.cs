@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace RoomByRoom
 {
@@ -21,53 +20,49 @@ namespace RoomByRoom
 
         public ItemView[] GetItems(ItemType item, int type)
         {
-            switch(item)
+            return item switch
             {
-                case ItemType.Armor : return GetArmors((ArmorType)type);
-                case ItemType.Artifact : return Prefabs.Artifacts;
-                case ItemType.Weapon : return GetWeapons((WeaponType)type);
-
-                default: throw new ArgumentOutOfRangeException();
-            }
+                ItemType.Armor => GetArmors((ArmorType)type),
+                ItemType.Artifact => Prefabs.Artifacts,
+                ItemType.Weapon => GetWeapons((WeaponType)type),
+                _ => throw new ArgumentOutOfRangeException(),
+            };
         }
 
         private ItemView[] GetArmors(ArmorType type)
         {
-            switch(type)
+            return type switch
             {
-                case ArmorType.Boots : return Prefabs.Boots;
-                case ArmorType.BreastPlate : return Prefabs.Breastplates;
-                case ArmorType.Gloves : return Prefabs.Gloves;
-                case ArmorType.Helmet : return Prefabs.Helmets;
-                case ArmorType.Leggings : return Prefabs.Leggings;
-                case ArmorType.Shield : return Prefabs.Shields;
-
-                default: throw new ArgumentOutOfRangeException();
-            }
+                ArmorType.Boots => Prefabs.Boots,
+                ArmorType.BreastPlate => Prefabs.Breastplates,
+                ArmorType.Gloves => Prefabs.Gloves,
+                ArmorType.Helmet => Prefabs.Helmets,
+                ArmorType.Leggings => Prefabs.Leggings,
+                ArmorType.Shield => Prefabs.Shields,
+                _ => throw new ArgumentOutOfRangeException(),
+            };
         }
 
         private ItemView[] GetWeapons(WeaponType type)
         {
-            switch(type)
+            return type switch
             {
-                case WeaponType.Bow : return Prefabs.Bows;
-                case WeaponType.OneHand : return Prefabs.OneHandWeapons;
-                case WeaponType.TwoHand : return Prefabs.TwoHandsWeapons;
-
-                default: throw new ArgumentOutOfRangeException();
-            }
+                WeaponType.Bow => Prefabs.Bows,
+                WeaponType.OneHand => Prefabs.OneHandWeapons,
+                WeaponType.TwoHand => Prefabs.TwoHandsWeapons,
+                _ => throw new ArgumentOutOfRangeException(),
+            };
         }
-
 
         public UnitView[] GetEnemies(RaceType race)
         {
-            switch (race)
+            return race switch
             {
-                case RaceType.Sand: return Prefabs.SandEnemyUnits;
-                case RaceType.Water: return Prefabs.WaterEnemyUnits;
-                case RaceType.Dark: return Prefabs.DarkEnemyUnits;
-                default: throw new ArgumentOutOfRangeException();
-            }
+                RaceType.Sand => Prefabs.SandEnemyUnits,
+                RaceType.Water => Prefabs.WaterEnemyUnits,
+                RaceType.Dark => Prefabs.DarkEnemyUnits,
+                _ => throw new ArgumentOutOfRangeException(),
+            };
         }
     }
 }

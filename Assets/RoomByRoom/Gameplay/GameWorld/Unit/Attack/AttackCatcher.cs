@@ -27,11 +27,12 @@ namespace RoomByRoom
             _attackSvc.SetAttackTriggers(_ownView.Entity, false);
         }
 
+        // must catch damaged unit
         public void OnTriggerEnter(Collider other)
         {
-            if (!other.isTrigger && other.TryGetComponent<UnitView>(out UnitView unit))
+            if (other.isTrigger && other.TryGetComponent(out WeaponView weapon))
             {
-                _attackSvc.Damage(_ownView.Entity, unit.Entity);
+                _attackSvc.Damage(_ownView.Entity, weapon.Entity);
             }
         }
     }

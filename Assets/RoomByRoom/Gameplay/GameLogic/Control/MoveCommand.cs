@@ -4,6 +4,6 @@ namespace RoomByRoom
 {
     public struct MoveCommand
     {
-        public Vector3Int MoveDirection;
+        public Vector3 MoveDirection;
     }
 }

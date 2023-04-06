@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8847455991867611977}
   - component: {fileID: 1271579379973155671}
+  - component: {fileID: 5709295261847594490}
   m_Layer: 3
   m_Name: EnemyRoom
   m_TagString: Untagged
@@ -91,37 +92,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514d4f5ce4d2dbd48adbc4533de35ffc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Entity: 0
   SpawnPoints:
-  - UnitSpawn: {fileID: 1775296196441946044}
-    UnitType: 0
-  - UnitSpawn: {fileID: 3305825972727006552}
-    UnitType: 1
-  - UnitSpawn: {fileID: 5983455011120696168}
-    UnitType: 1
-  - UnitSpawn: {fileID: 5831385764834702028}
-    UnitType: 1
-  - UnitSpawn: {fileID: 5991405655921325383}
-    UnitType: 1
-  - UnitSpawn: {fileID: 5118372423357655714}
-    UnitType: 1
-  - UnitSpawn: {fileID: 5672008744317348420}
-    UnitType: 1
-  - UnitSpawn: {fileID: 846706712753358941}
-    UnitType: 1
-  - UnitSpawn: {fileID: 5487285556290479033}
-    UnitType: 1
-  - UnitSpawn: {fileID: 2694971524623703712}
-    UnitType: 1
-  - UnitSpawn: {fileID: 351105968184292115}
-    UnitType: 1
-  - UnitSpawn: {fileID: 2223457956432068453}
-    UnitType: 1
-  - UnitSpawn: {fileID: 7825833457001405800}
-    UnitType: 1
-  - UnitSpawn: {fileID: 3677227702829699078}
-    UnitType: 1
-  - UnitSpawn: {fileID: 8959532056456896171}
-    UnitType: 1
+  - UnitType: 0
+    UnitSpawn: {fileID: 1775296196441946044}
+  - UnitType: 1
+    UnitSpawn: {fileID: 3305825972727006552}
+  - UnitType: 1
+    UnitSpawn: {fileID: 5983455011120696168}
+  - UnitType: 1
+    UnitSpawn: {fileID: 5831385764834702028}
+  - UnitType: 1
+    UnitSpawn: {fileID: 5991405655921325383}
+  - UnitType: 1
+    UnitSpawn: {fileID: 5118372423357655714}
+  - UnitType: 1
+    UnitSpawn: {fileID: 5672008744317348420}
+  - UnitType: 1
+    UnitSpawn: {fileID: 846706712753358941}
+  - UnitType: 1
+    UnitSpawn: {fileID: 5487285556290479033}
+  - UnitType: 1
+    UnitSpawn: {fileID: 2694971524623703712}
+  - UnitType: 1
+    UnitSpawn: {fileID: 351105968184292115}
+  - UnitType: 1
+    UnitSpawn: {fileID: 2223457956432068453}
+  - UnitType: 1
+    UnitSpawn: {fileID: 7825833457001405800}
+  - UnitType: 1
+    UnitSpawn: {fileID: 3677227702829699078}
+  - UnitType: 1
+    UnitSpawn: {fileID: 8959532056456896171}
+--- !u!114 &5709295261847594490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994769808758116209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.083333336
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 4fa629c3ccdd933479bca5a40b7feb90, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &1040013714841053692
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AttackByOneHandWeapon
+  m_Name: H_AttackByOneHandWeapon
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -28,7 +28,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.05
-        value: {x: -134.6298, y: 18.72, z: 0}
+        value: {x: -134.63, y: 18.72, z: 0}
         inSlope: {x: 86.839905, y: 748.7999, z: 0}
         outSlope: {x: 86.839905, y: 748.7999, z: 0}
         tangentMode: 0
@@ -38,8 +38,8 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.1
         value: {x: -131.126, y: 79.551, z: 0}
-        inSlope: {x: 70.07599, y: 806.39996, z: 0}
-        outSlope: {x: 70.07599, y: 806.39996, z: 0}
+        inSlope: {x: 70.079956, y: 806.39996, z: 0}
+        outSlope: {x: 70.079956, y: 806.39996, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
@@ -83,7 +83,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Character/OneHandPoint
+    path: OneHandPoint
   m_PositionCurves:
   - curve:
       serializedVersion: 2
@@ -154,7 +154,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Character/OneHandPoint
+    path: OneHandPoint
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves: []
@@ -166,14 +166,14 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1625335609
+      path: 2381302807
       attribute: 1
       script: {fileID: 0}
       typeID: 4
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 1625335609
+      path: 2381302807
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -271,7 +271,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Character/OneHandPoint
+    path: OneHandPoint
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -344,7 +344,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Character/OneHandPoint
+    path: OneHandPoint
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -417,7 +417,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Character/OneHandPoint
+    path: OneHandPoint
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -434,7 +434,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.05
-        value: -134.6298
+        value: -134.63
         inSlope: 86.839905
         outSlope: 86.839905
         tangentMode: 136
@@ -444,8 +444,8 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.1
         value: -131.126
-        inSlope: 70.07599
-        outSlope: 70.07599
+        inSlope: 70.079956
+        outSlope: 70.079956
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
@@ -490,7 +490,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Character/OneHandPoint
+    path: OneHandPoint
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -563,7 +563,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Character/OneHandPoint
+    path: OneHandPoint
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -636,7 +636,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Character/OneHandPoint
+    path: OneHandPoint
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves:
@@ -646,8 +646,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: Character/OneHandPoint
+    attribute: m_LocalEulerAngles.z
+    path: OneHandPoint
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -657,7 +657,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Character/OneHandPoint
+    path: OneHandPoint
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -666,8 +666,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: Character/OneHandPoint
+    attribute: m_LocalEulerAngles.x
+    path: OneHandPoint
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0
@@ -676,14 +676,14 @@ AnimationClip:
   - time: 0.1
     functionName: OnStartAttackAnimation
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 8535636547081096538, guid: 0ab915d8e6d70bb4a83d97116ef2c63f, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.41666666
     functionName: OnStopAttackAnimation
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 8535636547081096538, guid: 0ab915d8e6d70bb4a83d97116ef2c63f, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
