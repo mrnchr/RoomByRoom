@@ -10,13 +10,14 @@ using RoomByRoom.Utility;
 
 namespace RoomByRoom
 {
-    sealed class BootStrap : MonoBehaviour
+    public sealed class Engine : MonoBehaviour
     {
         // TODO: change to external injection
         [SerializeField] private DefaultData _defaultData;
         [SerializeField] private SceneData _sceneData;
         [SerializeField] private PrefabData _prefabData;
         [SerializeField] private Configuration _configuration;
+        [SerializeField] private EnemyConfig _enemyConfig;
         private SavedData _savedData;
         private GameInfo _gameInfo;
         private PackedPrefabData _packedPrefabData;
@@ -26,7 +27,6 @@ namespace RoomByRoom
 
         private void Start () {
             _savedData = new SavedData();
-
             var savingSvc = new SavingService(_configuration.DefaultSaveName, _configuration.SaveInFile);
             _packedPrefabData = new PackedPrefabData(_prefabData);
 
@@ -87,7 +87,7 @@ namespace RoomByRoom
                 .Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif
                 .Inject(_sceneData, _savedData, _packedPrefabData, _configuration,
-                savingSvc, _defaultData, _gameInfo, attackSvc)
+                savingSvc, _defaultData, _gameInfo, attackSvc, _enemyConfig)
                 .Init();
 
             // _fixedUpdateSystems = new EcsSystems(_world);
@@ -103,10 +103,10 @@ namespace RoomByRoom
             _updateSystems?.Run();
         }
 
-        private void FixedUpdate()
-        {
-            // _fixedUpdateSystems?.Run();
-        }
+        // private void FixedUpdate()
+        // {
+        //     _fixedUpdateSystems?.Run();
+        // }
 
         private void OnDestroy () {
             if (_updateSystems != null)

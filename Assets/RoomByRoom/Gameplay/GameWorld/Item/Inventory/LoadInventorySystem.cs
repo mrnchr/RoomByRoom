@@ -35,7 +35,7 @@ namespace RoomByRoom
             foreach(int itemEntity in _boundItems.Values)
             {
                 _world.AddComponent<Owned>(itemEntity)
-                    .Initialize(x => { x.Owner = _player.Value.GetRawEntities()[0]; return x; });
+                    .Assign(x => { x.Owner = _player.Value.GetRawEntities()[0]; return x; });
             }
         }
 
@@ -68,7 +68,7 @@ namespace RoomByRoom
             where T : struct
             {
                 _world.AddComponent<T>(_boundItems[component.BoundEntity])
-                    .Initialize(x => x = component.ComponentInfo);
+                    .Assign(x => x = component.ComponentInfo);
             }
 
             ProcessComponents(_savedInventory.Item, LoadComponent);

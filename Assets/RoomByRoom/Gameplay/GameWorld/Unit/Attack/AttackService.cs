@@ -30,7 +30,7 @@ namespace RoomByRoom
                 return;
 
             _world.AddComponent<GetDamageCommand>(damaged)
-                .Initialize(x => { x.Entity = weapon; return x; });
+                .Assign(x => { x.Entity = weapon; return x; });
         }
 
         protected bool CanFight(int a, int b) => IsPlayer(a) || IsPlayer(b);

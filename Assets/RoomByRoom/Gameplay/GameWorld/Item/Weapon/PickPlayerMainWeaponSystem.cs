@@ -19,7 +19,7 @@ namespace RoomByRoom
                 {
                     world.AddComponent<InHands>(index);
                     world.AddComponent<MainWeapon>(world.GetComponent<Owned>(index).Owner)
-                        .Initialize(x => { x.Entity = index; return x; });
+                        .Assign(x => { x.Entity = index; return x; });
                 }
             }
         }

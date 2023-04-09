@@ -22,7 +22,7 @@ namespace RoomByRoom.Utility
         public static void DelComponent<T>(this EcsWorld world, int entity)
         where T : struct => world.GetPool<T>().Del(entity);
 
-        public static ref T Initialize<T>(this ref T obj, Func<T, T> action)
+        public static ref T Assign<T>(this ref T obj, Func<T, T> action)
         where T : struct
         {
             if(action != null)

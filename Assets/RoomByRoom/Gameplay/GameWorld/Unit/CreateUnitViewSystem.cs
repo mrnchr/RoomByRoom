@@ -1,5 +1,5 @@
-
 using UnityEngine;
+using UnityEngine.AI;
 
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
@@ -10,10 +10,10 @@ namespace RoomByRoom
 {
     public class CreateUnitViewSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<Health, UnitInfo, RaceInfo>, Exc<UnitViewRef>> _units = default;
-        private EcsCustomInject<SavedData> _savedData = default;
-        private EcsCustomInject<AttackService> _attackSvc = default;
-        private EcsCustomInject<PackedPrefabData> _prefabData = default;
+        private readonly EcsFilterInject<Inc<Health, UnitInfo, RaceInfo>, Exc<UnitViewRef>> _units = default;
+        private readonly EcsCustomInject<SavedData> _savedData = default;
+        private readonly EcsCustomInject<AttackService> _attackSvc = default;
+        private readonly EcsCustomInject<PackedPrefabData> _prefabData = default;
         private EcsWorld _world;
         private int _playerEntity;
 
@@ -29,21 +29,39 @@ namespace RoomByRoom
                 unitView.AttackCtr.SetService(_attackSvc.Value);
 
                 _world.AddComponent<UnitViewRef>(index)
-                    .Initialize(x => { x.Value = unitView; return x; });
+                    .Assign(x => { x.Value = unitView; return x; });
 
                 _world.AddComponent<Moving>(index)
-                    .Initialize(x => x = GetMoving(index, unitView));
+                    .Assign(x => GetMoving(index, unitView));
 
-                if (unitView is GroundUnitView groundUnit)
+                if(!IsPlayer(index))
+                    SetNavMeshAgent(index, unitView);
+
+                switch (unitView)
                 {
-                    _world.AddComponent<Jumping>(index)
-                        .Initialize(x => x = GetJumping(index, groundUnit));
-                }
-                else if (unitView is FlyingUnitView)
-                {
-                    _world.AddComponent<Flying>(index);
+                    case GroundUnitView groundUnit:
+                        _world.AddComponent<Jumping>(index)
+                            .Assign(x => GetJumping(index, groundUnit));
+                        break;
+                    case FlyingUnitView:
+                        _world.AddComponent<Flying>(index);
+                        break;
                 }
             }
+        }
+
+        private void SetNavMeshAgent(int index, UnitView unitView)
+        {
+            NavMeshAgent agent = unitView.GetComponent<NavMeshAgent>();
+            agent.updateRotation = false;
+            agent.speed = GetMoving(index, unitView).Speed;
+            
+            _world.GetComponent<ControllerByAI>(index)
+                .Assign(x =>
+                {
+                    x.Agent = agent;
+                    return x;
+                });
         }
 
         private Moving GetMoving(int entity, UnitView unit)
@@ -62,7 +80,7 @@ namespace RoomByRoom
 
         private UnitView InstantiateUnit(int entity)
         {
-            return GameObject.Instantiate(
+            return Object.Instantiate(
                 GetUnitPrefab(entity))
                 .GetComponent<UnitView>();
         }

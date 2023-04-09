@@ -16,13 +16,13 @@ namespace RoomByRoom
             PlayerEntity playerEntity = _savedData.Value.Player;
 
             world.AddComponent<RaceInfo>(player)
-                .Initialize(x => x = playerEntity.Race);
+                .Assign(x => x = playerEntity.Race);
 
             world.AddComponent<Health>(player)
-                .Initialize(x => x = playerEntity.HealthCmp);
+                .Assign(x => x = playerEntity.HealthCmp);
 
             world.AddComponent<UnitInfo>(player)
-                .Initialize(x => { x.Type = UnitType.Player; return x; });
+                .Assign(x => { x.Type = UnitType.Player; return x; });
 
             // // TODO: remove after tests
             world.AddComponent<Opener>(player);

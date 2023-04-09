@@ -27,7 +27,7 @@ namespace RoomByRoom
                 roomView.Entity = index;
 
                 _world.AddComponent<RoomViewRef>(index)
-                    .Initialize(x => { x.Value = roomView; return x; });
+                    .Assign(x => { x.Value = roomView; return x; });
 
                 _world.AddComponent<AddPlayerCommand>(index);
             }

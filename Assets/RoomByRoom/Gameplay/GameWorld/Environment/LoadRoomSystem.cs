@@ -17,10 +17,10 @@ namespace RoomByRoom
             RoomEntity roomEntity = _savedData.Value.Room;
 
             world.AddComponent<RaceInfo>(room)
-                .Initialize(x => x = roomEntity.Race);
+                .Assign(x => x = roomEntity.Race);
 
             world.AddComponent<RoomInfo>(room)
-                .Initialize(x => x = roomEntity.Info);
+                .Assign(x => x = roomEntity.Info);
         }
     }
 }

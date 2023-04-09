@@ -27,7 +27,7 @@ namespace RoomByRoom
         {
             int entity = _world.NewEntity();
             _world.AddComponent<SpawnPoint>(entity)
-                .Initialize(x => x = spawn);
+                .Assign(x => x = spawn);
         }
     }
 }

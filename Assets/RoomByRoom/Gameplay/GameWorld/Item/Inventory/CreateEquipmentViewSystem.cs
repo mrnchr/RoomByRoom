@@ -31,7 +31,7 @@ namespace RoomByRoom
                 itemView.Entity = index;
 
                 _world.AddComponent<ItemViewRef>(index)
-                    .Initialize(x => { x.Value = itemView; return x; });
+                    .Assign(x => { x.Value = itemView; return x; });
 
                 WearItem(index, itemInfo.Type, itemView);
 

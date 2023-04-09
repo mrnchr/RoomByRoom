@@ -35,7 +35,7 @@ namespace RoomByRoom
         {
             int entity = _message.NewEntity();
             _message.AddComponent<RotateCameraMessage>(entity)
-                .Initialize(x => { x.RotateDirection = GetRotationInput(); return x; });
+                .Assign(x => { x.RotateDirection = GetRotationInput(); return x; });
         }
 
         private static Vector2Int GetRotationInput()
@@ -53,9 +53,9 @@ namespace RoomByRoom
         {
             Vector3 dir = GetMovementInput();
             _world.AddComponent<MoveCommand>(entity)
-                .Initialize(x => { x.MoveDirection = dir; return x; });
+                .Assign(x => { x.MoveDirection = dir; return x; });
             _world.AddComponent<RotateCommand>(entity)
-                .Initialize(x => { x.RotateDirection = dir; return x; });
+                .Assign(x => { x.RotateDirection = dir; return x; });
         }
 
         private static Vector3 GetMovementInput()

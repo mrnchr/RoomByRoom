@@ -28,10 +28,10 @@ namespace RoomByRoom
             int roomEntity = _world.NewEntity();
 
             _world.AddComponent<RaceInfo>(roomEntity)
-                .Initialize(x => x = nextRoom.Race);
+                .Assign(x => x = nextRoom.Race);
 
             _world.AddComponent<RoomInfo>(roomEntity)
-                .Initialize(x => x = nextRoom.Room);
+                .Assign(x => x = nextRoom.Room);
         }
 
         private void DeleteRoom()

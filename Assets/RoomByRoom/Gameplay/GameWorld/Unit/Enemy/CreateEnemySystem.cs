@@ -1,5 +1,3 @@
-using UnityEngine;
-
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 
@@ -9,8 +7,8 @@ namespace RoomByRoom
 {
     public class CreateEnemySystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<NextRoomMessage>> _nextRoomMsgs = Idents.Worlds.MessageWorld;
-        private EcsCustomInject<GameInfo> _gameInfo = default;
+        private readonly EcsFilterInject<Inc<NextRoomMessage>> _nextRoomMsgs = Idents.Worlds.MessageWorld;
+        private readonly EcsCustomInject<GameInfo> _gameInfo = default;
         private EcsWorld _world;
 
         public void Run(IEcsSystems systems)
@@ -36,7 +34,7 @@ namespace RoomByRoom
 
             while (numberOfEnemies < 11 && enemySize < 21)
             {
-                UnitType enemyType = FastRandom.EnemyType;
+                UnitType enemyType = UnitType.Humanoid; // FastRandom.EnemyType;
                 CreateEnemy(enemyType, FastRandom.EnemyRace);
 
                 numberOfEnemies++;
@@ -49,18 +47,18 @@ namespace RoomByRoom
             int enemy = _world.NewEntity();
 
             _world.AddComponent<UnitInfo>(enemy)
-                .Initialize(x => { x.Type = type; return x; });
+                .Assign(x => { x.Type = type; return x; });
 
             _world.AddComponent<RaceInfo>(enemy)
-                .Initialize(x => { x.Type = race; return x; });
+                .Assign(x => { x.Type = race; return x; });
 
             _world.AddComponent<ControllerByAI>(enemy);
 
             if(type == UnitType.Humanoid)
                 _world.AddComponent<Bare>(enemy);
 
-            _ = _world.AddComponent<Health>(enemy)
-                .Initialize(x =>
+            _world.AddComponent<Health>(enemy)
+                .Assign(x =>
                     {
                         x.Point = FastRandom.GetUnitHP(_gameInfo.Value.RoomCount, type);
                         return x;

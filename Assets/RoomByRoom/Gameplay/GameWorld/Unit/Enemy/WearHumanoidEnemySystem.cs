@@ -48,10 +48,10 @@ namespace RoomByRoom
             int armor = CreateItemEntity(ItemType.Armor, (int)armorType, entity);
 
             _world.AddComponent<ArmorInfo>(armor)
-                .Initialize(x => { x.Type = armorType; return x; });
+                .Assign(x => { x.Type = armorType; return x; });
 
             _world.AddComponent<Protection>(armor)
-                .Initialize(x =>
+                .Assign(x =>
                 {
                     x.Point = FastRandom.GetArmorProtection(armorType, _gameInfo.Value.RoomCount);
                     return x;
@@ -66,10 +66,10 @@ namespace RoomByRoom
             int weapon = CreateItemEntity(ItemType.Weapon, (int)weaponType, entity);
 
             _world.AddComponent<WeaponInfo>(weapon)
-                .Initialize(x => { x.Type = weaponType; return x; });
+                .Assign(x => { x.Type = weaponType; return x; });
 
             _world.AddComponent<PhysicalDamage>(weapon)
-                .Initialize(x =>
+                .Assign(x =>
                 {
                     x.Point = FastRandom.GetPhysicalDamage(weaponType, _gameInfo.Value.RoomCount);
                     return x;
@@ -78,7 +78,7 @@ namespace RoomByRoom
             _world.AddComponent<InHands>(weapon);
 
             _world.AddComponent<MainWeapon>(entity)
-                .Initialize(x => { x.Entity = weapon; return x; });
+                .Assign(x => { x.Entity = weapon; return x; });
 
             if(weaponType == WeaponType.OneHand)
                 CreateShield(entity);
@@ -92,19 +92,19 @@ namespace RoomByRoom
             int item = _world.NewEntity();
 
             _world.AddComponent<ItemInfo>(item)
-                .Initialize(x => { x.Type = itemType; return x; });
+                .Assign(x => { x.Type = itemType; return x; });
 
             _world.AddComponent<Equipped>(item);
 
             _world.AddComponent<Shape>(item)
-                .Initialize(x =>
+                .Assign(x =>
                 {
                     x.PrefabIndex = GetRandomPrefabIndex(itemType, equipmentType);
                     return x;
                 });
 
             _world.AddComponent<Owned>(item)
-                .Initialize(x => { x.Owner = unitEntity; return x; });
+                .Assign(x => { x.Owner = unitEntity; return x; });
 
             return item;
         }

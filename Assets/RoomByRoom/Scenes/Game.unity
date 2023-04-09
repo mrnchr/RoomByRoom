@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 1514862460}
   - component: {fileID: 1514862461}
   m_Layer: 0
-  m_Name: BootStrap
+  m_Name: Engine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -338,6 +338,7 @@ MonoBehaviour:
   _sceneData: {fileID: 65209845}
   _prefabData: {fileID: 11400000, guid: d39d563c980198c488935c6529f8b5c3, type: 2}
   _configuration: {fileID: 11400000, guid: d18482ebc8e5cdf458dae86145d75263, type: 2}
+  _enemyConfig: {fileID: 11400000, guid: 1c55b1590c066804da033d2defd5487b, type: 2}
 --- !u!1 &1897892192
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,7 +349,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1897892193}
   m_Layer: 0
-  m_Name: ---MANAGERS
+  m_Name: ---HUB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
