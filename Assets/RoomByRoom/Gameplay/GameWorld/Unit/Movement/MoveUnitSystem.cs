@@ -9,7 +9,7 @@ namespace RoomByRoom
 {
     public class MoveUnitSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<MoveCommand, UnitViewRef, Moving>> _units = default;
+        private EcsFilterInject<Inc<MoveCommand, UnitViewRef, Movable>> _units = default;
         private EcsWorld _world;
 
         public void Run(IEcsSystems systems)
@@ -34,7 +34,7 @@ namespace RoomByRoom
 
         private float GetSpeed(int entity)
         {
-            return _world.GetComponent<Moving>(entity).Speed;
+            return _world.GetComponent<Movable>(entity).Speed;
         }
 
         private Vector3 GetRawDirection(int entity, UnitView unitView)

@@ -7,7 +7,7 @@ namespace RoomByRoom
 {
     public class AfterJumpUnitSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<Jumping, UnitViewRef, CantJump>> _units = default;
+        private EcsFilterInject<Inc<Jumpable, UnitViewRef, CantJump>> _units = default;
 
         public void Run(IEcsSystems systems)
         {

@@ -39,8 +39,8 @@ namespace RoomByRoom.Database
             savedData.GameSave.RoomCount = profileRow.GetInt32(index++);
             savedData.Player.Race.Type = (RaceType)profileRow.GetInt32(index++);
             savedData.Player.HealthCmp.Point = profileRow.GetFloat(index++);
-            savedData.Player.MovingCmp.Speed = profileRow.GetFloat(index++);
-            savedData.Player.JumpingCmp.JumpForce = profileRow.GetFloat(index++);
+            savedData.Player.MovableCmp.Speed = profileRow.GetFloat(index++);
+            savedData.Player.JumpableCmp.JumpForce = profileRow.GetFloat(index++);
             savedData.Room.Info.Type = (RoomType)profileRow.GetInt32(index++);
             savedData.Room.Race.Type = (RaceType)profileRow.GetInt32(index++);
 
@@ -92,8 +92,8 @@ namespace RoomByRoom.Database
             $"{savedData.GameSave.RoomCount}, " +
             $"{(int)savedData.Player.Race.Type}, " +
             $"{savedData.Player.HealthCmp.Point}, " +
-            $"{savedData.Player.MovingCmp.Speed}, " +
-            $"{savedData.Player.JumpingCmp.JumpForce}, " +
+            $"{savedData.Player.MovableCmp.Speed}, " +
+            $"{savedData.Player.JumpableCmp.JumpForce}, " +
             $"{(int)savedData.Room.Info.Type}, " +
             $"{(int)savedData.Room.Race.Type} " +
             ");";

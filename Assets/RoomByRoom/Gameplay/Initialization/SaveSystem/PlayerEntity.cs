@@ -1,4 +1,5 @@
 using System;
+using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
@@ -7,7 +8,7 @@ namespace RoomByRoom
     {
         public RaceInfo Race;
         public Health HealthCmp;
-        public Moving MovingCmp;
-        public Jumping JumpingCmp;
+        [FormerlySerializedAs("MovingCmp")] public Movable MovableCmp;
+        [FormerlySerializedAs("JumpingCmp")] public Jumpable JumpableCmp;
     }
 }

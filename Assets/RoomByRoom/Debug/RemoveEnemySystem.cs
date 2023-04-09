@@ -10,22 +10,30 @@ namespace RoomByRoom.Debugging
     /// </summary>
     public class RemoveEnemySystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<UnitViewRef, CanBeDeleted>> _enemies = default;
-        private EcsFilterInject<Inc<NextRoomMessage>> _nextRoom = Idents.Worlds.MessageWorld;
+        private readonly EcsFilterInject<Inc<UnitViewRef, CanBeDeleted>> _enemies = default;
+        private readonly EcsFilterInject<Inc<ItemViewRef, CanBeDeleted>> _items = default;
+        private readonly EcsFilterInject<Inc<NextRoomMessage>> _nextRoom = Idents.Worlds.MessageWorld;
+        private EcsWorld _world;
 
         public void Run(IEcsSystems systems)
         {
-            EcsWorld world = systems.GetWorld();
+            _world = systems.GetWorld();
 
-            foreach(var index1 in _nextRoom.Value)
-            {
-                foreach(var index2 in _enemies.Value)
-                {
-                    ref UnitViewRef unitRef = ref _enemies.Pools.Inc1.Get(index2);
-                    UnityEngine.GameObject.Destroy(unitRef.Value.gameObject);
-                    world.DelEntity(index2);
-                }
-            }
+            if (_nextRoom.Value.GetEntitiesCount() == 0)
+                return;
+
+            foreach(int index in _enemies.Value)
+                DestroyEntityByView(_enemies.Pools.Inc1.Get(index).Value, index);
+
+            foreach (int index in _items.Value)
+                DestroyEntityByView(_items.Pools.Inc1.Get(index).Value, index);
+        }
+
+        private void DestroyEntityByView<TView>(TView view, int entity)
+        where TView : View
+        {
+            UnityEngine.Object.Destroy(view.gameObject);
+            _world.DelEntity(entity);
         }
     }
 }

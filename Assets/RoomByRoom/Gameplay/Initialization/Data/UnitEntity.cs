@@ -1,4 +1,5 @@
 using System;
+using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
@@ -7,6 +8,6 @@ namespace RoomByRoom
     {
         // TODO: remove!!! Health is calculated randomly
         public Health Health;
-        public Moving Moving;
+        [FormerlySerializedAs("Moving")] public Movable Movable;
     }
 }

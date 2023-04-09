@@ -4,8 +4,8 @@ using UnityEngine;
 namespace RoomByRoom
 {
     [Serializable]
-    public struct Moving
+    public struct Jumpable
     {
-        public float Speed;
+        public float JumpForce;
     }
 }

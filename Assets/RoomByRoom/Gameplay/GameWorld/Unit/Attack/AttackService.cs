@@ -6,11 +6,13 @@ namespace RoomByRoom
 {
     public class AttackService
     {
-        private EcsWorld _world;
+        private readonly EcsWorld _world;
+        private readonly EcsWorld _message;
 
-        public AttackService(EcsWorld world)
+        public AttackService(EcsWorld world, EcsWorld message)
         {
             _world = world;
+            _message = message;
         }
 
         public void SetAttackTriggers(int unit, bool isAttack)
@@ -29,12 +31,17 @@ namespace RoomByRoom
             if(!CanFight(damaged, owner))
                 return;
 
-            _world.AddComponent<GetDamageCommand>(damaged)
-                .Assign(x => { x.Entity = weapon; return x; });
+            _message.AddComponent<GetDamageMessage>(_message.NewEntity())
+                .Assign(x => 
+                    { 
+                        x.Damaged = damaged;
+                        x.Weapon = weapon; 
+                        return x; 
+                    });
         }
 
-        protected bool CanFight(int a, int b) => IsPlayer(a) || IsPlayer(b);
-        protected bool IsPlayer(int entity) => GetUnitType(entity) == UnitType.Player;
-        protected UnitType GetUnitType(int entity) => _world.GetComponent<UnitInfo>(entity).Type;
+        private bool CanFight(int a, int b) => IsPlayer(a) || IsPlayer(b);
+        private bool IsPlayer(int entity) => GetUnitType(entity) == UnitType.Player;
+        private UnitType GetUnitType(int entity) => _world.GetComponent<UnitInfo>(entity).Type;
     }
 }

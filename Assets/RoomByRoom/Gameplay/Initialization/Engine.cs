@@ -24,6 +24,7 @@ namespace RoomByRoom
         private IEcsSystems _updateSystems;
         // private IEcsSystems _fixedUpdateSystems;
         private EcsWorld _world;
+        private EcsWorld _message;
 
         private void Start () {
             _savedData = new SavedData();
@@ -36,11 +37,12 @@ namespace RoomByRoom
             _sceneData.CurrentSave = _savedData;
 
             _world = new EcsWorld();
+            _message = new EcsWorld();
             _updateSystems = new EcsSystems(_world);
-            var attackSvc = new AttackService(_world);
+            var attackSvc = new AttackService(_world, _message);
 
             _updateSystems
-                .AddWorld(new EcsWorld(), Idents.Worlds.MessageWorld)
+                .AddWorld(_message, Idents.Worlds.MessageWorld)
 
                 .Add(new LoadSaveSystem())
                 .Add(new LoadRoomSystem())
@@ -119,7 +121,13 @@ namespace RoomByRoom
             // {
             //     _fixedUpdateSystems.Destroy();
             //     _fixedUpdateSystems = null;
-            // }      
+            // } 
+            
+            if (_message != null)
+            {
+                _message.Destroy();
+                _message = null;
+            }
 
             if (_world != null)
             {

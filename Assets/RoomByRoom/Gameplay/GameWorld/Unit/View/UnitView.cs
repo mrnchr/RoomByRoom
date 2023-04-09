@@ -1,13 +1,14 @@
 using System;
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
     [RequireComponent(typeof(Rigidbody), typeof(Animator), typeof(AttackCatcher))]
     public class UnitView : View
     {
-        public Moving MovingCmp;
+        [FormerlySerializedAs("MovingCmp")] public Movable MovableCmp;
         [HideInInspector] public Animator Anim;
         [HideInInspector] public AttackCatcher AttackCtr;
         [HideInInspector] public Rigidbody Rb;

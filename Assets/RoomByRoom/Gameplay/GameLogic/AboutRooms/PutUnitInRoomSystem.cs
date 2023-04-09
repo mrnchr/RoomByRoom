@@ -11,8 +11,8 @@ namespace RoomByRoom
 {
     internal class PutUnitInRoomSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<UnitViewRef, UnitInfo>> _units = default;
-        private EcsFilterInject<Inc<SpawnPoint>> _points = default;
+        private readonly EcsFilterInject<Inc<UnitViewRef, UnitInfo>> _units = default;
+        private readonly EcsFilterInject<Inc<SpawnPoint>> _points = default;
         private EcsWorld _world;
 
         public void Run(IEcsSystems systems)
@@ -26,7 +26,7 @@ namespace RoomByRoom
             int bossPoint = 0;
             List<int> allEnemyPoints = new();
 
-            foreach (var index in _points.Value)
+            foreach (int index in _points.Value)
             {
                 UnitType unitType = _world.GetComponent<SpawnPoint>(index).UnitType;
                 switch (unitType)
@@ -48,14 +48,14 @@ namespace RoomByRoom
             foreach (int index in _units.Value)
             {
                 UnitType unitType = _world.GetComponent<UnitInfo>(index).Type;
-                int spawnEntity = GetSpawnEntity(enemyPoints, unitType);
+                int spawnEntity = GetSpawnEntity(unitType);
                 PutInSpawn(index, GetSpawn(spawnEntity));
             }
 
             foreach (int index in _points.Value)
                 _world.DelEntity(index);
 
-            int GetSpawnEntity(List<int> enemyPoints, UnitType unitType)
+            int GetSpawnEntity(UnitType unitType)
             {
                 int spawnEntity;
                 switch (unitType)

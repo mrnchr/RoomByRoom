@@ -30,12 +30,12 @@ namespace RoomByRoom
                 playerRef.Value = playerView;
 
                 // Add Moving component
-                ref Moving moving = ref world.GetPool<Moving>().Add(index);
-                moving = playerEntity.MovingCmp;
+                ref Movable movable = ref world.GetPool<Movable>().Add(index);
+                movable = playerEntity.MovableCmp;
 
                 // Add Jumping component
-                ref Jumping jumping = ref world.GetPool<Jumping>().Add(index);
-                jumping = playerEntity.JumpingCmp;
+                ref Jumpable jumpable = ref world.GetPool<Jumpable>().Add(index);
+                jumpable = playerEntity.JumpableCmp;
             }
         }
     }

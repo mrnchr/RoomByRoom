@@ -31,7 +31,7 @@ namespace RoomByRoom
                 _world.AddComponent<UnitViewRef>(index)
                     .Assign(x => { x.Value = unitView; return x; });
 
-                _world.AddComponent<Moving>(index)
+                _world.AddComponent<Movable>(index)
                     .Assign(x => GetMoving(index, unitView));
 
                 if(!IsPlayer(index))
@@ -40,11 +40,11 @@ namespace RoomByRoom
                 switch (unitView)
                 {
                     case GroundUnitView groundUnit:
-                        _world.AddComponent<Jumping>(index)
+                        _world.AddComponent<Jumpable>(index)
                             .Assign(x => GetJumping(index, groundUnit));
                         break;
                     case FlyingUnitView:
-                        _world.AddComponent<Flying>(index);
+                        _world.AddComponent<Flyable>(index);
                         break;
                 }
             }
@@ -64,18 +64,18 @@ namespace RoomByRoom
                 });
         }
 
-        private Moving GetMoving(int entity, UnitView unit)
+        private Movable GetMoving(int entity, UnitView unit)
         {
             return IsPlayer(entity)
-                ? _savedData.Value.Player.MovingCmp
-                : unit.MovingCmp;
+                ? _savedData.Value.Player.MovableCmp
+                : unit.MovableCmp;
         }
 
-        private Jumping GetJumping(int entity, GroundUnitView unit)
+        private Jumpable GetJumping(int entity, GroundUnitView unit)
         {
             return IsPlayer(entity)
-                ? _savedData.Value.Player.JumpingCmp
-                : unit.JumpingCmp;
+                ? _savedData.Value.Player.JumpableCmp
+                : unit.JumpableCmp;
         }
 
         private UnitView InstantiateUnit(int entity)

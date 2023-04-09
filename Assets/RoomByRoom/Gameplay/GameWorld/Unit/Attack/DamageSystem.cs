@@ -7,35 +7,36 @@ namespace RoomByRoom
 {
     public class DamageSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<GetDamageCommand>> _commands = default;
-        private EcsFilterInject<Inc<ArmorInfo, Equipped, ItemViewRef>> _armors = default;
+        private readonly EcsFilterInject<Inc<GetDamageMessage>> _messages = Idents.Worlds.MessageWorld;
+        private readonly EcsFilterInject<Inc<ArmorInfo, Equipped, ItemViewRef>> _armors = default;
         private EcsWorld _world;
 
         public void Run(IEcsSystems systems)
         {
             _world = systems.GetWorld();
 
-            foreach(var index in _commands.Value)
+            foreach(int index in _messages.Value)
             {
-                float protection = GetTotalProtection(index);
-                ref Health health = ref _world.GetComponent<Health>(index);
-                ref GetDamageCommand damageCmd = ref _commands.Pools.Inc1.Get(index);
-                ref PhysicalDamage physDamage = ref _world.GetComponent<PhysicalDamage>(damageCmd.Entity);
+                ref GetDamageMessage message = ref _messages.Pools.Inc1.Get(index);
+                float protection = GetTotalProtection(message.Damaged);
+                ref Health health = ref _world.GetComponent<Health>(message.Damaged);
+                ref PhysicalDamage physDamage = ref _world.GetComponent<PhysicalDamage>(message.Weapon);
 
-                UnityEngine.Debug.Log($"Damage: {physDamage.Point}, protection: {protection}, health: {health.Point}");
+                // UnityEngine.Debug.Log($"Damage: {physDamage.Point}, protection: {protection}, health: {health.Point}");
                 if (physDamage.Point > protection)
                 {
                     health.Point -= physDamage.Point - protection;
                     if(health.Point < 0)
                         health.Point = 0;
-                    UnityEngine.Debug.Log($"Health after damage: {health.Point}");
+                    // UnityEngine.Debug.Log($"Health after damage: {health.Point}");
                 }
-
-                _commands.Pools.Inc1.Del(index);
+                    
+                // To be created from the service because not to be deleted by DelHere
+                _messages.Pools.Inc1.Del(index);
             }
         }
 
-        public float GetTotalProtection(int entity)
+        private float GetTotalProtection(int entity)
         {
             float total = 0;
 

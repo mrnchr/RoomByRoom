@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
     public class GroundUnitView : UnitView
     {
-        public Jumping JumpingCmp;
+        [FormerlySerializedAs("JumpingCmp")] public Jumpable JumpableCmp;
         public LayerMask GroundMask;
     }
 }
