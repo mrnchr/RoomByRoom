@@ -1,6 +1,6 @@
 namespace RoomByRoom.Debugging
 {
-    public struct CanBeDeleted
-    {
-    }
+	public struct CanBeDeleted
+	{
+	}
 }

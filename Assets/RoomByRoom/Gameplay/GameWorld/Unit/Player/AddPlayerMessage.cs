@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-    internal struct AddPlayerMessage
-    {
-    }
+	internal struct AddPlayerMessage
+	{
+	}
 }

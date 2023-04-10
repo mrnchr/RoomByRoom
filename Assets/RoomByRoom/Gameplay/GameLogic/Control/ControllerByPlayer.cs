@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-    public struct ControllerByPlayer
-    {
-    }
+	public struct ControllerByPlayer
+	{
+	}
 }

@@ -1,7 +1,7 @@
 namespace RoomByRoom
 {
-    public struct MainWeapon
-    {
-        public int Entity;
-    }
+	public struct MainWeapon
+	{
+		public int Entity;
+	}
 }

@@ -1,33 +1,32 @@
 using System;
-
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
-    [RequireComponent(typeof(Rigidbody), typeof(Animator), typeof(AttackCatcher))]
-    public class UnitView : View
-    {
-        [FormerlySerializedAs("MovingCmp")] public Movable MovableCmp;
-        [HideInInspector] public Animator Anim;
-        [HideInInspector] public AttackCatcher AttackCtr;
-        [HideInInspector] public Rigidbody Rb;
+	[RequireComponent(typeof(Rigidbody), typeof(Animator), typeof(AttackCatcher))]
+	public class UnitView : View
+	{
+		[FormerlySerializedAs("MovingCmp")] public Movable MovableCmp;
+		[HideInInspector] public Animator Anim;
+		[HideInInspector] public AttackCatcher AttackCtr;
+		[HideInInspector] public Rigidbody Rb;
 
-        protected virtual void Awake()
-        {
-            Rb = GetComponent<Rigidbody>();
-            Anim = GetComponent<Animator>();
-            AttackCtr = GetComponent<AttackCatcher>();
+		protected virtual void Awake()
+		{
+			Rb = GetComponent<Rigidbody>();
+			Anim = GetComponent<Animator>();
+			AttackCtr = GetComponent<AttackCatcher>();
 
-            OnAwake();
-        }
+			OnAwake();
+		}
 
-        protected virtual void OnAwake()
-        {
-        }
+		protected virtual void OnAwake()
+		{
+		}
 
-        public virtual void PlayAttackAnimation(WeaponType weaponType)
-        {
-        }
-    }
+		public virtual void PlayAttackAnimation(WeaponType weaponType)
+		{
+		}
+	}
 }

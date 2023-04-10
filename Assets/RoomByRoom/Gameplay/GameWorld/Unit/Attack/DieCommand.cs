@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-    public struct DieCommand
-    {
-    }
+	public struct DieCommand
+	{
+	}
 }

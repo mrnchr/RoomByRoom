@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-    public class ItemView : View
-    {
-    }
+	public class ItemView : View
+	{
+	}
 }

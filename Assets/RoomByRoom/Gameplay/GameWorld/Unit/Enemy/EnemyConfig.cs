@@ -7,6 +7,7 @@ namespace RoomByRoom
 	{
 		[Header("Humanoid")]
 		public float AfterAttackWaitingTime;
+
 		public float AttackDistance;
 	}
 }

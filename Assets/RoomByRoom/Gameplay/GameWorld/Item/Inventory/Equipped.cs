@@ -2,8 +2,8 @@ using System;
 
 namespace RoomByRoom
 {
-    [Serializable]
-    public struct Equipped
-    {
-    }
+	[Serializable]
+	public struct Equipped
+	{
+	}
 }

@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-    public class FlyingUnitView : UnitView
-    {
-    }
+	public class FlyingUnitView : UnitView
+	{
+	}
 }

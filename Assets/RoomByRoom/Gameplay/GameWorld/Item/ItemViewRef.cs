@@ -1,7 +1,7 @@
 namespace RoomByRoom
 {
-    public struct ItemViewRef
-    {
-        public ItemView Value;
-    }
+	public struct ItemViewRef
+	{
+		public ItemView Value;
+	}
 }

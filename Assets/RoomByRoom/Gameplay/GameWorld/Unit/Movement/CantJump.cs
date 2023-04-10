@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-    public struct CantJump
-    {
-    }
+	public struct CantJump
+	{
+	}
 }

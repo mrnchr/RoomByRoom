@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-    public struct JumpCommand
-    {
-    }
+	public struct JumpCommand
+	{
+	}
 }

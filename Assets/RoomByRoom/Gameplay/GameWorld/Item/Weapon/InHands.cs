@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-    public struct InHands
-    {
-    }
+	public struct InHands
+	{
+	}
 }

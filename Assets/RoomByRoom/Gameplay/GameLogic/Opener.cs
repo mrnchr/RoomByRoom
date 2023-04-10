@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-    public struct Opener
-    {
-    }
+	public struct Opener
+	{
+	}
 }

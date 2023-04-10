@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-    public struct AttackCommand
-    {
-    }
+	public struct AttackCommand
+	{
+	}
 }

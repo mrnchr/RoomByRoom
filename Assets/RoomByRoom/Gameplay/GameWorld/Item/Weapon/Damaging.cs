@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-    public struct Damaging
-    {
-    }
+	public struct Damaging
+	{
+	}
 }
