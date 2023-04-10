@@ -19,6 +19,16 @@ namespace RoomByRoom
 			ref MainWeapon mainWeapon = ref _world.GetComponent<MainWeapon>(unit);
 			WeaponView weapon = (WeaponView)_world.GetComponent<ItemViewRef>(mainWeapon.Entity).Value;
 			weapon.SetActiveAttackTriggers(isAttack);
+
+			if (!isAttack && Utils.IsUnit(_world, unit, UnitType.Humanoid))
+			{
+				_message.AddComponent<DelayAttackMessage>(_message.NewEntity())
+					.Assign(x =>
+					{
+						x.Unit = unit;
+						return x;
+					});
+			}
 		}
 
 		public void Damage(int damaged, int weapon)
@@ -39,8 +49,6 @@ namespace RoomByRoom
 				});
 		}
 
-		private bool CanFight(int a, int b) => IsPlayer(a) || IsPlayer(b);
-		private bool IsPlayer(int entity) => GetUnitType(entity) == UnitType.Player;
-		private UnitType GetUnitType(int entity) => _world.GetComponent<UnitInfo>(entity).Type;
+		private bool CanFight(int a, int b) => Utils.IsUnit(_world, a, UnitType.Player) || Utils.IsUnit(_world, b, UnitType.Player);
 	}
 }

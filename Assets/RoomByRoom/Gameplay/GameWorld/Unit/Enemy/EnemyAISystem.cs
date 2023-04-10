@@ -32,10 +32,16 @@ namespace RoomByRoom
 				agent.updatePosition = true;
 				if (IsNearPlayer(humanoidPos, player.position))
 				{
-					_world.AddComponent<AttackCommand>(index);
+					if(CanAttack(index))
+						_world.AddComponent<AttackCommand>(index);
 					agent.updatePosition = false;
 				}
 			}
+		}
+
+		private bool CanAttack(int unit)
+		{
+			return !_world.HasComponent<CantAttack>(unit);
 		}
 
 		private void AddRotateComponent(int index, Vector3 rotateDirection)

@@ -169,6 +169,9 @@ MonoBehaviour:
         Speed: 0
       JumpableCmp:
         JumpForce: 0
+      UnitPhysProtectionCmp:
+        CurrentPoint: 0
+        MaxPoint: 0
     Room:
       Info:
         Type: 0
@@ -179,7 +182,7 @@ MonoBehaviour:
       Weapon: []
       Armor: []
       PhysDamage: []
-      Protection: []
+      PhysProtection: []
       Equipped: []
       Shape: []
 --- !u!4 &65209846
@@ -197,6 +200,50 @@ Transform:
   m_Father: {fileID: 1897892193}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &512437108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 512437109}
+  - component: {fileID: 512437110}
+  m_Layer: 0
+  m_Name: CoroutineStarter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &512437109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512437108}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1897892193}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &512437110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512437108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be49845cf05e4ffa9338d19f8cb9ecfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,9 +384,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultData: {fileID: 11400000, guid: 459d3dc4785704147a404de04da7ed2b, type: 2}
   _sceneData: {fileID: 65209845}
+  _coroutineStarter: {fileID: 512437110}
   _prefabData: {fileID: 11400000, guid: d39d563c980198c488935c6529f8b5c3, type: 2}
   _configuration: {fileID: 11400000, guid: d18482ebc8e5cdf458dae86145d75263, type: 2}
-  _enemyConfig: {fileID: 11400000, guid: 1c55b1590c066804da033d2defd5487b, type: 2}
+  _enemyCfg: {fileID: 11400000, guid: 1c55b1590c066804da033d2defd5487b, type: 2}
 --- !u!1 &1897892192
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,6 +418,7 @@ Transform:
   m_Children:
   - {fileID: 65209846}
   - {fileID: 1514862460}
+  - {fileID: 512437109}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

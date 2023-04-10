@@ -4,8 +4,8 @@ namespace RoomByRoom
 {
 	public class AttackCatcher : MonoBehaviour
 	{
-		protected UnitView _ownView;
-		protected AttackService _attackSvc;
+		private UnitView _ownView;
+		private AttackService _attackSvc;
 
 		protected void Awake()
 		{

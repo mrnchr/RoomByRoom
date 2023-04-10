@@ -14,6 +14,7 @@ namespace RoomByRoom
 		// TODO: change to external injection
 		[SerializeField] private DefaultData _defaultData;
 		[SerializeField] private SceneData _sceneData;
+		[SerializeField] private CoroutineStarter _coroutineStarter;
 		[SerializeField] private PrefabData _prefabData;
 		[SerializeField] private Configuration _configuration;
 		[FormerlySerializedAs("_enemyConfig")] [SerializeField] private EnemyConfig _enemyCfg;
@@ -73,6 +74,7 @@ namespace RoomByRoom
 				.DelHere<AttackCommand>()
 				.Add(new InputSystem())
 				.Add(new EnemyAISystem())
+				.Add(new DelayAttackSystem())
 				.Add(new MoveUnitSystem())
 				.Add(new RotateUnitSystem())
 				.Add(new JumpUnitSystem())
@@ -94,7 +96,7 @@ namespace RoomByRoom
 				.Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif
 				.Inject(_sceneData, _savedData, _packedPrefabData, _configuration,
-					savingSvc, _defaultData, _gameInfo, attackSvc, _enemyCfg, charSvc)
+					savingSvc, _defaultData, _gameInfo, attackSvc, _enemyCfg, charSvc, _coroutineStarter)
 				.Init();
 
 			// _fixedUpdateSystems = new EcsSystems(_world);

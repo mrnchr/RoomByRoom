@@ -44,9 +44,9 @@ namespace RoomByRoom.Utility
 		public static int GetEnumLength<T>()
 			where T : Enum => Enum.GetNames(typeof(T)).Length;
 
-		public static bool IsPlayer(EcsWorld world, int index)
+		public static bool IsUnit(EcsWorld world, int index, UnitType type)
 		{
-			return world.GetComponent<UnitInfo>(index).Type == UnitType.Player;
+			return world.GetComponent<UnitInfo>(index).Type == type;
 		}
 
 		public static void AddItemToList(List<int> list, int item)
