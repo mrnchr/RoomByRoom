@@ -8,7 +8,7 @@ namespace RoomByRoom
 {
 	public class CreateUnitViewSystem : IEcsRunSystem
 	{
-		private readonly EcsFilterInject<Inc<Health, UnitInfo, RaceInfo>, Exc<UnitViewRef>> _units = default;
+		private readonly EcsFilterInject<Inc<UnitInfo>, Exc<UnitViewRef>> _units = default;
 		private readonly EcsCustomInject<SavedData> _savedData = default;
 		private readonly EcsCustomInject<AttackService> _attackSvc = default;
 		private readonly EcsCustomInject<PackedPrefabData> _prefabData = default;
@@ -39,15 +39,14 @@ namespace RoomByRoom
 				if (!IsPlayer(index))
 					SetNavMeshAgent(index, unitView);
 
-				switch (unitView)
+				if (unitView is GroundUnitView groundUnit)
 				{
-					case GroundUnitView groundUnit:
-						_world.AddComponent<Jumpable>(index)
-							.Assign(x => GetJumping(index, groundUnit));
-						break;
-					case FlyingUnitView:
-						_world.AddComponent<Flyable>(index);
-						break;
+					_world.AddComponent<Jumpable>(index)
+						.Assign(x => GetJumping(index, groundUnit));
+				}
+				else if (unitView is FlyingUnitView)
+				{
+					_world.AddComponent<Flyable>(index);
 				}
 			}
 		}

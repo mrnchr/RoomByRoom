@@ -5,6 +5,7 @@ using Leopotam.EcsLite.ExtendedSystems;
 using Leopotam.EcsLite.UnityEditor;
 using RoomByRoom.Debugging;
 using RoomByRoom.Utility;
+using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
@@ -15,7 +16,7 @@ namespace RoomByRoom
 		[SerializeField] private SceneData _sceneData;
 		[SerializeField] private PrefabData _prefabData;
 		[SerializeField] private Configuration _configuration;
-		[SerializeField] private EnemyConfig _enemyConfig;
+		[FormerlySerializedAs("_enemyConfig")] [SerializeField] private EnemyConfig _enemyCfg;
 		private SavedData _savedData;
 		private GameInfo _gameInfo;
 		private PackedPrefabData _packedPrefabData;
@@ -41,6 +42,7 @@ namespace RoomByRoom
 			_message = new EcsWorld();
 			_updateSystems = new EcsSystems(_world);
 			var attackSvc = new AttackService(_world, _message);
+			var charSvc = new CharacteristicService(_world);
 
 			_updateSystems
 				.AddWorld(_message, Idents.Worlds.MessageWorld)
@@ -49,15 +51,20 @@ namespace RoomByRoom
 				.Add(new LoadPlayerSystem())
 				.Add(new LoadInventorySystem())
 				.Add(new PickPlayerMainWeaponSystem())
+				
 				.Add(new CreateEnemySystem())
 				.Add(new WearHumanoidEnemySystem())
-				.Add(new BoundItemWithUnitSystem())
+				.Add(new FillEnemyEquipmentSystem())
+				.DelHere<Bare>()
+				
 				.DelHere<AddPlayerCommand>()
 				.Add(new CreateRoomViewSystem())
 				.Add(new CreateUnitViewSystem())
 				.Add(new CreateEquipmentViewSystem())
+				
 				.Add(new CreateSpawnPointSystem())
 				.Add(new PutUnitInRoomSystem())
+				
 				.DelHere<OpenDoorMessage>(Idents.Worlds.MessageWorld)
 				.DelHere<RotateCameraMessage>(Idents.Worlds.MessageWorld)
 				.DelHere<MoveCommand>()
@@ -72,10 +79,12 @@ namespace RoomByRoom
 				.Add(new AfterJumpUnitSystem())
 				.Add(new RotateCameraSystem())
 				.Add(new AttackSystem())
+				
 				.DelHere<StartGameMessage>(Idents.Worlds.MessageWorld)
 				.DelHere<NextRoomMessage>(Idents.Worlds.MessageWorld)
 				.Add(new OpenDoorSystem())
 				.Add(new RecreateRoomSystem())
+				
 				.Add(new DamageSystem())
 				.Add(new DieSystem())
 #if UNITY_EDITOR
@@ -85,7 +94,7 @@ namespace RoomByRoom
 				.Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif
 				.Inject(_sceneData, _savedData, _packedPrefabData, _configuration,
-					savingSvc, _defaultData, _gameInfo, attackSvc, _enemyConfig)
+					savingSvc, _defaultData, _gameInfo, attackSvc, _enemyCfg, charSvc)
 				.Init();
 
 			// _fixedUpdateSystems = new EcsSystems(_world);

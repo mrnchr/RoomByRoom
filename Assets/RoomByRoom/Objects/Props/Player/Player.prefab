@@ -473,14 +473,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4999021048255259810}
-  m_LocalRotation: {x: -0.9391249, y: -0, z: -0, w: 0.34357616}
-  m_LocalPosition: {x: -0.541, y: -0.427, z: -0.163}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0.4142349, z: -0.9101701, w: 0}
+  m_LocalPosition: {x: -0.58, y: -0.06, z: 0.221}
+  m_LocalScale: {x: 1, y: 1, z: 0.90999985}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6060062670578281900}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: -139.81, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 131.058, y: 180, z: 0}
 --- !u!1 &5010717145897597448
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,12 +658,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Entity: 0
-  MovingCmp:
+  MovableCmp:
     Speed: 5
   Anim: {fileID: 0}
   AttackCtr: {fileID: 2941326413648381322}
   Rb: {fileID: 2896429287602711574}
-  JumpingCmp:
+  JumpableCmp:
     JumpForce: 5
   GroundMask:
     serializedVersion: 2

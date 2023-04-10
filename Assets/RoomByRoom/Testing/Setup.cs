@@ -1,16 +1,20 @@
 ﻿using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-
+using NUnit.Framework;
 using RoomByRoom.Utility;
 
-public static class Setup
+namespace RoomByRoom.Testing
 {
-	public static IEcsSystems Systems<TSystem>(IEcsSystems systems, EcsWorld oneMoreWorld, TSystem testSystem)
-		where TSystem : IEcsSystem
+	public static class Setup
 	{
-		return systems
-			.AddWorld(oneMoreWorld, Idents.Worlds.MessageWorld)
-			.Add(testSystem)
-			.Inject();
+		public static IEcsSystems Systems<TSystem>(IEcsSystems systems, TSystem testSystem, EcsWorld oneMoreWorld = null)
+			where TSystem : IEcsSystem
+		{
+			if (oneMoreWorld != null)
+				systems.AddWorld(oneMoreWorld, Idents.Worlds.MessageWorld);
+			return systems
+				.Add(testSystem)
+				.Inject();
+		}
 	}
 }

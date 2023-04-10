@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 
@@ -26,11 +28,7 @@ namespace RoomByRoom
 #endif
 
 			world.AddComponent<Health>(player)
-				.Assign(x =>
-				{
-					x.CurrentPoint = playerEntity.HealthCmp.CurrentPoint;
-					return x;
-				});
+				.Assign(x => playerEntity.HealthCmp);
 
 			world.AddComponent<UnitInfo>(player)
 				.Assign(x =>
@@ -38,6 +36,30 @@ namespace RoomByRoom
 					x.Type = UnitType.Player;
 					return x;
 				});
+
+			world.AddComponent<Inventory>(player)
+				.Assign(x => 
+				{ 
+					x.ItemList = new List<int>(); 
+					return x; 
+				});
+				
+			world.AddComponent<Equipment>(player)
+				.Assign(x => 
+				{ 
+					x.ItemList = new List<int>(); 
+					return x; 
+				});
+				
+			world.AddComponent<Backpack>(player)
+				.Assign(x => 
+				{ 
+					x.ItemList = new List<int>(); 
+					return x; 
+				});
+
+			world.AddComponent<UnitPhysicalProtection>(player)
+				.Assign(x => playerEntity.UnitPhysProtectionCmp);
 
 			// // TODO: remove after tests
 			world.AddComponent<Opener>(player);

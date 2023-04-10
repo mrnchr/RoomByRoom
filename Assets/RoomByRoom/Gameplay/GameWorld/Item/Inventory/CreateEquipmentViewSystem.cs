@@ -7,8 +7,8 @@ namespace RoomByRoom
 {
 	public class CreateEquipmentViewSystem : IEcsRunSystem
 	{
-		private EcsFilterInject<Inc<Equipped>, Exc<ItemViewRef>> _equipments = default;
-		private EcsCustomInject<PackedPrefabData> _prefabData = default;
+		private readonly EcsFilterInject<Inc<Equipped>, Exc<ItemViewRef>> _equipments = default;
+		private readonly EcsCustomInject<PackedPrefabData> _prefabData = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
@@ -35,18 +35,18 @@ namespace RoomByRoom
 						return x;
 					});
 
-				WearItem(index, itemInfo.Type, itemView);
+				WearItem(index, itemInfo.Type, itemView.transform);
 
 				if (itemInfo.Type == ItemType.Weapon)
 					itemView.gameObject.SetActive(_world.HasComponent<InHands>(index));
 			}
 		}
 
-		private void WearItem(int index, ItemType itemType, ItemView itemView)
+		private void WearItem(int index, ItemType itemType, Transform item)
 		{
 			ItemPlace place = GetPlace(index, itemType);
-			itemView.transform.SetParent(place.Parent);
-			Utils.SetTransform(itemView.transform, place.Point);
+			item.SetParent(place.Parent);
+			Utils.SetTransform(item, place.Point);
 		}
 
 		private GameObject GetPrefab(int entity, ItemType itemType)
@@ -58,7 +58,7 @@ namespace RoomByRoom
 					? (int)_world.GetComponent<WeaponInfo>(entity).Type
 					: (int)_world.GetComponent<ArmorInfo>(entity).Type;
 
-			Debug.Log($"itemType: {itemType}, typeNumber: {typeNumber}, prefabIndex: {prefabIndex}");
+			// Debug.Log($"itemType: {itemType}, typeNumber: {typeNumber}, prefabIndex: {prefabIndex}");
 			return _prefabData.Value.GetItem(itemType, typeNumber, prefabIndex)
 				.gameObject;
 		}

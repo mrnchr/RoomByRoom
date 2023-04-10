@@ -163,10 +163,11 @@ MonoBehaviour:
       Race:
         Type: 0
       HealthCmp:
-        Point: 0
-      MovingCmp:
+        CurrentPoint: 0
+        MaxPoint: 0
+      MovableCmp:
         Speed: 0
-      JumpingCmp:
+      JumpableCmp:
         JumpForce: 0
     Room:
       Info:

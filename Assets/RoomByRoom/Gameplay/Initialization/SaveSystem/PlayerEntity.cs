@@ -8,7 +8,8 @@ namespace RoomByRoom
 	{
 		public RaceInfo Race;
 		public Health HealthCmp;
-		[FormerlySerializedAs("MovingCmp")] public Movable MovableCmp;
-		[FormerlySerializedAs("JumpingCmp")] public Jumpable JumpableCmp;
+		public Movable MovableCmp;
+		public Jumpable JumpableCmp;
+		public UnitPhysicalProtection UnitPhysProtectionCmp;
 	}
 }

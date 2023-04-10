@@ -9,8 +9,9 @@ namespace RoomByRoom.Utility
 		public static RaceType EnemyRace => (RaceType)Rand.Range(1, Utils.GetEnumLength<RaceType>());
 
 		public static UnitType EnemyType => (UnitType)Rand.Range(1, Utils.GetEnumLength<UnitType>() - 1);
+		public static ArmorType ArmorType => (ArmorType)Rand.Range(0, Utils.GetEnumLength<ArmorType>() - 1);
 
-		public static int GetUnitHP(int roomCount, UnitType type)
+		public static int GetUnitHp(int roomCount, UnitType type)
 		{
 			float min = 1f, max = 2f;
 			switch (type)

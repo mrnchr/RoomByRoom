@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
@@ -67,10 +68,19 @@ namespace RoomByRoom
 			_world.AddComponent<Health>(enemy)
 				.Assign(x =>
 				{
-					x.MaxPoint = FastRandom.GetUnitHP(_gameInfo.Value.RoomCount, type);
+					x.MaxPoint = FastRandom.GetUnitHp(_gameInfo.Value.RoomCount, type);
 					x.CurrentPoint = x.MaxPoint;
 					return x;
 				});
+
+			_world.AddComponent<Equipment>(enemy)
+				.Assign(x =>
+				{
+					x.ItemList = new List<int>();
+					return x;
+				});
+
+			_world.AddComponent<UnitPhysicalProtection>(enemy);
 		}
 	}
 }

@@ -8,8 +8,8 @@ namespace RoomByRoom
 {
 	internal class CreateRoomViewSystem : IEcsRunSystem
 	{
-		private EcsCustomInject<PackedPrefabData> _injectPrefabData = default;
-		private EcsFilterInject<Inc<RoomInfo, RaceInfo>, Exc<RoomViewRef>> _rooms = default;
+		private readonly EcsCustomInject<PackedPrefabData> _injectPrefabData = default;
+		private readonly EcsFilterInject<Inc<RoomInfo, RaceInfo>, Exc<RoomViewRef>> _rooms = default;
 		private PrefabData _prefabData;
 		private EcsWorld _world;
 
@@ -20,7 +20,7 @@ namespace RoomByRoom
 
 			foreach (var index in _rooms.Value)
 			{
-				RoomView.InstantiateView(SelectRoom(index), out RoomView roomView);
+				View.InstantiateView(SelectRoom(index), out RoomView roomView);
 				roomView.Entity = index;
 
 				_world.AddComponent<RoomViewRef>(index)

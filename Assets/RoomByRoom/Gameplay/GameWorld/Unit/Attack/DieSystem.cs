@@ -7,15 +7,15 @@ namespace RoomByRoom
 {
 	internal class DieSystem : IEcsRunSystem
 	{
-		private EcsFilterInject<Inc<Health>, Exc<DieCommand>> units = default;
+		private readonly EcsFilterInject<Inc<Health>, Exc<DieCommand>> units = default;
 
 		public void Run(IEcsSystems systems)
 		{
 			EcsWorld world = systems.GetWorld();
 
-			foreach (var index in units.Value)
+			foreach (int index in units.Value)
 			{
-				if (world.GetComponent<Health>(index).MaxPoint == 0)
+				if (world.GetComponent<Health>(index).CurrentPoint == 0)
 				{
 					world.AddComponent<DieCommand>(index);
 					UnityEngine.Debug.Log($"Entity {index} died");

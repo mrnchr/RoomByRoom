@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
+using UnityEngine;
 
 namespace RoomByRoom
 {
 	public class LoadInventorySystem : IEcsInitSystem
 	{
-		private readonly EcsCustomInject<SavedData> _savedData = default;
 		private readonly EcsFilterInject<Inc<ControllerByPlayer>> _player = default;
+		private readonly EcsCustomInject<SavedData> _savedData = default;
+		private readonly EcsCustomInject<CharacteristicService> _charSvc = default;
 		private readonly HashSet<int> _savedItems = new();
 		private readonly Dictionary<int, int> _boundItems = new();
 		private InventoryEntity _savedInventory;
@@ -30,15 +32,36 @@ namespace RoomByRoom
 
 			LoadEntities();
 
+			int player = _player.Value.GetRawEntities()[0];
 			foreach (int itemEntity in _boundItems.Values)
 			{
 				_world.AddComponent<Owned>(itemEntity)
 					.Assign(x =>
 					{
-						x.Owner = _player.Value.GetRawEntities()[0];
+						x.Owner = player;
 						return x;
 					});
+
+				AddItemToInventory(player, itemEntity);
 			}
+			
+			_charSvc.Value.Calculate(player);
+			_world.GetComponent<UnitPhysicalProtection>(player)
+				.Assign(x =>
+				{
+					if (x.CurrentPoint < 0)
+						x.CurrentPoint = x.MaxPoint;
+					return x;
+				});
+		}
+
+		private void AddItemToInventory(int player, int item)
+		{
+			Utils.AddItemToList(_world.GetComponent<Inventory>(player).ItemList, item);
+			Utils.AddItemToList(
+				_world.HasComponent<Equipped>(item)
+					? _world.GetComponent<Equipment>(player).ItemList
+					: _world.GetComponent<Backpack>(player).ItemList, item);
 		}
 
 		private void CollectEntities()
@@ -53,7 +76,7 @@ namespace RoomByRoom
 			ProcessComponents(_savedInventory.Weapon, CollectEntity);
 			ProcessComponents(_savedInventory.Armor, CollectEntity);
 			ProcessComponents(_savedInventory.PhysDamage, CollectEntity);
-			ProcessComponents(_savedInventory.Protection, CollectEntity);
+			ProcessComponents(_savedInventory.PhysProtection, CollectEntity);
 			ProcessComponents(_savedInventory.Equipped, CollectEntity);
 			ProcessComponents(_savedInventory.Shape, CollectEntity);
 		}
@@ -77,7 +100,7 @@ namespace RoomByRoom
 			ProcessComponents(_savedInventory.Weapon, LoadComponent);
 			ProcessComponents(_savedInventory.Armor, LoadComponent);
 			ProcessComponents(_savedInventory.PhysDamage, LoadComponent);
-			ProcessComponents(_savedInventory.Protection, LoadComponent);
+			ProcessComponents(_savedInventory.PhysProtection, LoadComponent);
 			ProcessComponents(_savedInventory.Equipped, LoadComponent);
 			ProcessComponents(_savedInventory.Shape, LoadComponent);
 		}

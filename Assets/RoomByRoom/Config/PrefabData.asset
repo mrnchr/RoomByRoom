@@ -41,7 +41,11 @@ MonoBehaviour:
   - {fileID: 1271579379973155671, guid: 043eba53d19d5fb48afab64c9182b6d2, type: 3}
   PlayerHand: {fileID: 4540532948907761103, guid: 8af8d21b0fa2d744285f63f336b94fe4, type: 3}
   OneHandWeapons:
-  - {fileID: 3142000838712670560, guid: 767cd857677e2ef4d8cd8a06100208d6, type: 3}
+  - {fileID: -5384822337177185588, guid: 7ee1d04ec1ccc2c4e94222ea307d53d0, type: 3}
+  - {fileID: 6267017079192915120, guid: 40c33cd60194cdb4c8b6b6ad32d21c5c, type: 3}
+  - {fileID: 7564859253179021260, guid: c6c4a59bdea11b5459523b0908f4c43f, type: 3}
+  - {fileID: 2327962723856243985, guid: 0123f3fdd850ecf43955bfe9778a87d2, type: 3}
+  - {fileID: 4704101219401302285, guid: a34432061fac1bf49b1af4fd96abd60a, type: 3}
   TwoHandsWeapons:
   - {fileID: 8935909954702642164, guid: 15fb228984a3c8e41b56c9f82bf180e8, type: 3}
   Bows:

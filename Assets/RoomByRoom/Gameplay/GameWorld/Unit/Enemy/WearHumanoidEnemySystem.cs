@@ -21,8 +21,6 @@ namespace RoomByRoom
 			{
 				CreateArmors(index);
 				CreateWeapon(index);
-
-				_world.DelComponent<Bare>(index);
 			}
 		}
 
@@ -41,9 +39,9 @@ namespace RoomByRoom
 			}
 		}
 
-		private void CreateArmor(ArmorType armorType, int entity)
+		private void CreateArmor(ArmorType armorType, int unit)
 		{
-			int armor = CreateItemEntity(ItemType.Armor, (int)armorType, entity);
+			int armor = CreateItemEntity(ItemType.Armor, (int)armorType, unit);
 
 			_world.AddComponent<ArmorInfo>(armor)
 				.Assign(x =>
@@ -60,12 +58,12 @@ namespace RoomByRoom
 				});
 		}
 
-		private void CreateWeapon(int entity)
+		private void CreateWeapon(int unit)
 		{
 			int maxWeaponNumber = Utils.GetEnumLength<WeaponType>() - 1;
 			WeaponType weaponType = (WeaponType)Rand.Range(1, maxWeaponNumber);
 
-			int weapon = CreateItemEntity(ItemType.Weapon, (int)weaponType, entity);
+			int weapon = CreateItemEntity(ItemType.Weapon, (int)weaponType, unit);
 
 			_world.AddComponent<WeaponInfo>(weapon)
 				.Assign(x =>
@@ -83,7 +81,7 @@ namespace RoomByRoom
 
 			_world.AddComponent<InHands>(weapon);
 
-			_world.AddComponent<MainWeapon>(entity)
+			_world.AddComponent<MainWeapon>(unit)
 				.Assign(x =>
 				{
 					x.Entity = weapon;
@@ -91,7 +89,7 @@ namespace RoomByRoom
 				});
 
 			if (weaponType == WeaponType.OneHand)
-				CreateShield(entity);
+				CreateShield(unit);
 		}
 
 		// TODO: shield has persistent rather than protection
