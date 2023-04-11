@@ -3,7 +3,22 @@ guid: 8ed7d9d5379e4724c8d6f1290d717671
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DarkMat
+    second: {fileID: 2100000, guid: 58107e3847e940f45ac23967c2b55623, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: METAL_Mat
+    second: {fileID: 2100000, guid: 3ccfebf828d1e74419de39742c24b2a5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StoneMat
+    second: {fileID: 2100000, guid: d84c0be0e23f07045bee7253e3afb4ba, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
