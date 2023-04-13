@@ -34,7 +34,7 @@ MonoBehaviour:
   - {fileID: 2876747702410217383, guid: 56495a09a682fa54eb59b0ae67c9248d, type: 3}
   StartRoom: {fileID: 1271579379973155671, guid: a1516e24b310a6742a4f161678409e59, type: 3}
   EnemyRooms:
-  - {fileID: 1271579379973155671, guid: cd615c3850e89194cbb07adac20d0aec, type: 3}
+  - {fileID: 8401588244689956274, guid: 9d902f263607b7e47812e34fd17739f3, type: 3}
   BossRooms:
   - {fileID: 1271579379973155671, guid: 043eba53d19d5fb48afab64c9182b6d2, type: 3}
   - {fileID: 1271579379973155671, guid: 043eba53d19d5fb48afab64c9182b6d2, type: 3}
