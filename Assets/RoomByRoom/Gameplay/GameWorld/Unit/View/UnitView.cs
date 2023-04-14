@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
-	[RequireComponent(typeof(Rigidbody), typeof(Animator), typeof(AttackCatcher))]
+	[RequireComponent(typeof(Animator), typeof(AttackCatcher))]
 	public class UnitView : View
 	{
 		[FormerlySerializedAs("MovingCmp")] public Movable MovableCmp;

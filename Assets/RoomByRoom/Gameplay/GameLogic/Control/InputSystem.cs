@@ -40,10 +40,7 @@ namespace RoomByRoom
 				});
 		}
 
-		private static Vector2Int GetRotationInput()
-		{
-			return new Vector2Int((int)Input.GetAxisRaw("Mouse X"), (int)Input.GetAxisRaw("Mouse Y"));
-		}
+		private static Vector2 GetRotationInput() => new((int)Input.GetAxisRaw("Mouse X"), (int)Input.GetAxisRaw("Mouse Y"));
 
 		private void Jump(int entity)
 		{
@@ -68,10 +65,7 @@ namespace RoomByRoom
 				});
 		}
 
-		private static Vector3 GetMovementInput()
-		{
-			return new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-		}
+		private static Vector3 GetMovementInput() => new(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
 		private void OpenDoor()
 		{

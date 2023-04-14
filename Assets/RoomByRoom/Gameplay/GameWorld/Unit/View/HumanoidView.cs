@@ -27,6 +27,7 @@ namespace RoomByRoom
 
 	public class HumanoidView : GroundUnitView
 	{
+		public Vector3[] points;
 		[SerializeField] protected WeaponPlace[] WeaponPlaces;
 		[SerializeField] protected ArmorPlace[] ArmorPlaces;
 

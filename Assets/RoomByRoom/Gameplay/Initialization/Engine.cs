@@ -1,11 +1,13 @@
 using UnityEngine;
+using UnityEngine.Serialization;
+
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
 using Leopotam.EcsLite.UnityEditor;
+
 using RoomByRoom.Debugging;
 using RoomByRoom.Utility;
-using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
@@ -48,6 +50,7 @@ namespace RoomByRoom
 			_updateSystems
 				.AddWorld(_message, Idents.Worlds.MessageWorld)
 				.Add(new LoadSaveSystem())
+				.Add(new EnterGameStateSystem())
 				.Add(new LoadRoomSystem())
 				.Add(new LoadPlayerSystem())
 				.Add(new LoadInventorySystem())
@@ -78,8 +81,9 @@ namespace RoomByRoom
 				.Add(new MoveUnitSystem())
 				.Add(new RotateUnitSystem())
 				.Add(new JumpUnitSystem())
-				.Add(new AfterJumpUnitSystem())
+				// .Add(new AfterJumpUnitSystem())
 				.Add(new RotateCameraSystem())
+				.Add(new KeepCameraSystem())
 				.Add(new AttackSystem())
 				
 				.DelHere<StartGameMessage>(Idents.Worlds.MessageWorld)

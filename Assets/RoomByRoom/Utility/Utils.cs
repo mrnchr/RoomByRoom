@@ -44,7 +44,7 @@ namespace RoomByRoom.Utility
 		public static int GetEnumLength<T>()
 			where T : Enum => Enum.GetNames(typeof(T)).Length;
 
-		public static bool IsUnit(EcsWorld world, int index, UnitType type)
+		public static bool IsUnitOf(EcsWorld world, int index, UnitType type)
 		{
 			return world.GetComponent<UnitInfo>(index).Type == type;
 		}
@@ -54,6 +54,11 @@ namespace RoomByRoom.Utility
 			if (list.Contains(item))
 				throw new ArgumentException("You try to add an item which is in the item list");
 			list.Add(item);
+		}
+
+		public static bool IsEnemy(UnitType type)
+		{
+			return type != UnitType.Player && type != UnitType.Boss;
 		}
 	}
 }

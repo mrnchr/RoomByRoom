@@ -22,20 +22,39 @@ namespace RoomByRoom
 				// TODO: to execute for all enemies
 				if (!IsHumanoid(index))
 					continue;
-
+				
 				Vector3 humanoidPos = GetHumanoidPosition(index);
+				Vector3 moveDir;
+				Vector3 rotateDir;
 				NavMeshAgent agent = _world.GetComponent<ControllerByAI>(index).Agent;
-				agent.SetDestination(player.position);
-
-				AddRotateComponent(index, ConvertToDirection(agent.steeringTarget - humanoidPos));
-
-				agent.updatePosition = true;
-				if (IsNearPlayer(humanoidPos, player.position))
+				if (!IsNearPlayer(humanoidPos, player.position))
 				{
+					agent.SetDestination(player.position);
+					GetHumanoidView(index).points = agent.path.corners;
+					
+					moveDir = (agent.nextPosition - humanoidPos).normalized;
+					rotateDir = ConvertToDirection(agent.steeringTarget - humanoidPos);
+					// agent.updatePosition = true;
+				}
+				else
+				{
+					agent.ResetPath();	
+					agent.Warp(humanoidPos);
 					if(CanAttack(index))
 						_world.AddComponent<AttackCommand>(index);
-					agent.updatePosition = false;
+					// agent.updatePosition = false;
+					moveDir = Vector3.zero;
+					rotateDir = ConvertToDirection(player.position - humanoidPos);
 				}
+				
+				AddRotateComponent(index, rotateDir);
+
+				_world.AddComponent<MoveCommand>(index)
+					.Assign(x =>
+					{
+						x.MoveDirection = moveDir;
+						return x;
+					});
 			}
 		}
 
@@ -59,7 +78,6 @@ namespace RoomByRoom
 		private bool IsNearPlayer(Vector3 humanoidPosition, Vector3 playerPosition)
 		{
 			Vector3 distToPlayer = playerPosition - humanoidPosition;
-			distToPlayer.y = 0;
 			return distToPlayer.sqrMagnitude <= _enemyCfg.Value.AttackDistance * _enemyCfg.Value.AttackDistance;
 		}
 

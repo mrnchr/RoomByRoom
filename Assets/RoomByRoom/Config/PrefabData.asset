@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d84e4a7f9cecaaa4aa66936c3c99f941, type: 3}
   m_Name: PrefabData
   m_EditorClassIdentifier: 
-  BasePlayerUnit: {fileID: 5713328748562558450, guid: 34bd781d76436834fa1859ce2a98c28e, type: 3}
+  BasePlayerUnit: {fileID: 206335332475729657, guid: 34bd781d76436834fa1859ce2a98c28e, type: 3}
   SandEnemyUnits:
   - {fileID: 8913221279979037166, guid: cff54a832bf9fb94da830dee2045f068, type: 3}
   - {fileID: 6961861350650080126, guid: b373d69a565b4f244bfab63bf493d1b4, type: 3}
@@ -42,6 +42,7 @@ MonoBehaviour:
   PlayerHand: {fileID: 4540532948907761103, guid: 8af8d21b0fa2d744285f63f336b94fe4, type: 3}
   OneHandWeapons:
   - {fileID: -5384822337177185588, guid: 7ee1d04ec1ccc2c4e94222ea307d53d0, type: 3}
+  - {fileID: -3941998482602202731, guid: c54310402623dac44af6961c2c3ccdb9, type: 3}
   - {fileID: 6267017079192915120, guid: 40c33cd60194cdb4c8b6b6ad32d21c5c, type: 3}
   - {fileID: 7564859253179021260, guid: c6c4a59bdea11b5459523b0908f4c43f, type: 3}
   - {fileID: 2327962723856243985, guid: 0123f3fdd850ecf43955bfe9778a87d2, type: 3}

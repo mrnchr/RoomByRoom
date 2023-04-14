@@ -60,8 +60,8 @@ namespace RoomByRoom
 
 		private void CreateWeapon(int unit)
 		{
-			int maxWeaponNumber = Utils.GetEnumLength<WeaponType>() - 1;
-			WeaponType weaponType = (WeaponType)Rand.Range(1, maxWeaponNumber);
+			// TODO: change to random
+			WeaponType weaponType = WeaponType.OneHand; // FastRandom.GetWeaponType();
 
 			int weapon = CreateItemEntity(ItemType.Weapon, (int)weaponType, unit);
 
@@ -125,7 +125,7 @@ namespace RoomByRoom
 			return item;
 		}
 
-		int GetRandomPrefabIndex(ItemType item, int equipmentType)
+		private int GetRandomPrefabIndex(ItemType item, int equipmentType)
 		{
 			return Rand.Range(0, _prefabData.Value.GetItems(item, equipmentType).Length);
 		}

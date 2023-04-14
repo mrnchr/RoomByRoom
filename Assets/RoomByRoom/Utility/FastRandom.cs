@@ -6,10 +6,10 @@ namespace RoomByRoom.Utility
 {
 	public static class FastRandom
 	{
-		public static RaceType EnemyRace => (RaceType)Rand.Range(1, Utils.GetEnumLength<RaceType>());
-
-		public static UnitType EnemyType => (UnitType)Rand.Range(1, Utils.GetEnumLength<UnitType>() - 1);
-		public static ArmorType ArmorType => (ArmorType)Rand.Range(0, Utils.GetEnumLength<ArmorType>() - 1);
+		public static RaceType GetEnemyRace() => (RaceType)Rand.Range(1, Utils.GetEnumLength<RaceType>());
+		public static UnitType GetEnemyType() => (UnitType)Rand.Range(1, Utils.GetEnumLength<UnitType>() - 1);
+		public static ArmorType GetArmorType() => (ArmorType)Rand.Range(0, Utils.GetEnumLength<ArmorType>() - 1);
+		public static WeaponType GetWeaponType() => (WeaponType)Rand.Range(1, Utils.GetEnumLength<WeaponType>());
 
 		public static int GetUnitHp(int roomCount, UnitType type)
 		{

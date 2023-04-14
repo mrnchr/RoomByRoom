@@ -55,6 +55,7 @@ namespace RoomByRoom
 		{
 			NavMeshAgent agent = unitView.GetComponent<NavMeshAgent>();
 			agent.updateRotation = false;
+			agent.updatePosition = false;
 			agent.speed = GetMoving(index, unitView).Speed;
 
 			_world.GetComponent<ControllerByAI>(index)

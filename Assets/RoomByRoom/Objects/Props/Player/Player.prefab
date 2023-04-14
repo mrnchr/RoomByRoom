@@ -25,14 +25,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 277777070408811003}
-  m_LocalRotation: {x: 0.2164396, y: -0, z: -0, w: 0.97629607}
-  m_LocalPosition: {x: 0, y: 1.5, z: -3}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3459337283819569723}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &6184865016604399348
 Camera:
   m_ObjectHideFlags: 0
@@ -355,6 +355,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3455318241260398063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1758254799304569250}
+  m_Layer: 0
+  m_Name: UpperStepChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1758254799304569250
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3455318241260398063}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8728705096820590502}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3782057019032448183
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,10 +648,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8728705096820590502}
-  - component: {fileID: 5713328748562558450}
-  - component: {fileID: 2941326413648381322}
-  - component: {fileID: 2896429287602711574}
-  - component: {fileID: 7518074114578690808}
+  - component: {fileID: 1050953153246855780}
+  - component: {fileID: 2806577205105744818}
+  - component: {fileID: 206335332475729657}
+  - component: {fileID: 2474382911784075222}
+  - component: {fileID: 1467864417996971255}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -642,10 +674,44 @@ Transform:
   m_Children:
   - {fileID: 6060062670578281900}
   - {fileID: 3459337283819569723}
+  - {fileID: 3255110502626272050}
+  - {fileID: 1758254799304569250}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5713328748562558450
+--- !u!95 &1050953153246855780
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028227670313272210}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bcafe2943e87c3944a80bc804a47b16c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &2806577205105744818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028227670313272210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 943763dc852f9004d8851ebf5d5f10a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &206335332475729657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -661,13 +727,14 @@ MonoBehaviour:
   MovableCmp:
     Speed: 5
   Anim: {fileID: 0}
-  AttackCtr: {fileID: 2941326413648381322}
-  Rb: {fileID: 2896429287602711574}
+  AttackCtr: {fileID: 0}
+  Rb: {fileID: 0}
   JumpableCmp:
     JumpForce: 5
   GroundMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 200
+  points: []
   WeaponPlaces:
   - Type: 0
     Place:
@@ -692,19 +759,12 @@ MonoBehaviour:
       Point: {fileID: 2539474546579511179}
   Character: {fileID: 6060062670578281900}
   CameraHolder: {fileID: 3459337283819569723}
---- !u!114 &2941326413648381322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8028227670313272210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 943763dc852f9004d8851ebf5d5f10a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!54 &2896429287602711574
+  Camera: {fileID: 7110909528767226035}
+  CameraDistance: 7
+  Wall:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!54 &2474382911784075222
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -720,26 +780,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!95 &7518074114578690808
-Animator:
-  serializedVersion: 5
+--- !u!114 &1467864417996971255
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8028227670313272210}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bcafe2943e87c3944a80bc804a47b16c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4f7944c5eea408b8d02cef25c6548e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lowerStepChecker: {fileID: 3255110502626272050}
+  _upperStepChecker: {fileID: 1758254799304569250}
+  _stepHeight: 0.4
+  _stepSmooth: 0.01
+  _stepDistance: 0.1
+  _footLength: 0.1
 --- !u!1 &8415529597070751290
 GameObject:
   m_ObjectHideFlags: 0
@@ -906,3 +964,34 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8884584072496469411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3255110502626272050}
+  m_Layer: 0
+  m_Name: LowerStepChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3255110502626272050
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8884584072496469411}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.49}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8728705096820590502}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -4,6 +4,6 @@ namespace RoomByRoom
 {
 	public struct RotateCameraMessage
 	{
-		public Vector2Int RotateDirection;
+		public Vector2 RotateDirection;
 	}
 }

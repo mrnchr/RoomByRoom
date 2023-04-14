@@ -34,8 +34,9 @@ namespace RoomByRoom
 
 			while (numberOfEnemies < 11 && enemySize < 21)
 			{
+				// TODO: change to random
 				UnitType enemyType = UnitType.Humanoid; // FastRandom.EnemyType;
-				CreateEnemy(enemyType, FastRandom.EnemyRace);
+				CreateEnemy(enemyType, FastRandom.GetEnemyRace());
 
 				numberOfEnemies++;
 				enemySize += enemyWeights[(int)enemyType - 1];

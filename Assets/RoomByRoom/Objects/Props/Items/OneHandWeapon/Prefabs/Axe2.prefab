@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1899035013001192423}
   - component: {fileID: 4449078150993270573}
   - component: {fileID: -3941998482602202731}
+  - component: {fileID: 5036802565483103305}
   m_Layer: 0
   m_Name: Axe2
   m_TagString: Untagged
@@ -100,7 +101,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Entity: 0
-  AttackTriggers: []
+  AttackTriggers:
+  - {fileID: 5036802565483103305}
+--- !u!65 &5036802565483103305
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2791863921014241016}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.37112373, y: 0.8185264, z: 0.058334935}
+  m_Center: {x: 0.056560114, y: 0.48913586, z: -0.0000000037252896}
 --- !u!1 &3939994387914483672
 GameObject:
   m_ObjectHideFlags: 0

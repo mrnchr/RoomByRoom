@@ -3,6 +3,7 @@ using UnityEngine;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
+using UnityEngine.AI;
 
 namespace RoomByRoom
 {
@@ -84,7 +85,17 @@ namespace RoomByRoom
 		private void PutInSpawn(int index, Transform spawn)
 		{
 			UnitView unitView = _world.GetComponent<UnitViewRef>(index).Value;
-			Utils.SetTransform(unitView.transform, spawn);
+			if (_world.GetComponent<UnitInfo>(index).Type != UnitType.Player)
+			{
+				NavMeshAgent agent = _world.GetComponent<ControllerByAI>(index).Agent;
+				agent.Warp(spawn.position);
+				agent.transform.rotation = spawn.rotation;
+			}
+			else
+			{
+				Utils.SetTransform(unitView.transform, spawn);
+			}
+
 			unitView.Rb.velocity = Vector3.zero;
 		}
 
@@ -94,7 +105,7 @@ namespace RoomByRoom
 
 			foreach (var unit in _units.Value)
 			{
-				if (IsEnemy(_world.GetComponent<UnitInfo>(unit).Type))
+				if (Utils.IsEnemy(_world.GetComponent<UnitInfo>(unit).Type))
 					numberOfEnemies++;
 			}
 
@@ -117,11 +128,6 @@ namespace RoomByRoom
 			}
 
 			return enemyPoints;
-		}
-
-		private static bool IsEnemy(UnitType type)
-		{
-			return type != UnitType.Player && type != UnitType.Boss;
 		}
 	}
 }

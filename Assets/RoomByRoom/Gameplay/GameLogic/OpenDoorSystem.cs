@@ -34,7 +34,7 @@ namespace RoomByRoom
 			_message.AddComponent<NextRoomMessage>(_message.NewEntity())
 				.Assign(x =>
 				{
-					x.Race.Type = FastRandom.EnemyRace;
+					x.Race.Type = FastRandom.GetEnemyRace();
 					x.Room.Type = GetRoomType(_gameInfo.Value.RoomCount);
 					return x;
 				});
