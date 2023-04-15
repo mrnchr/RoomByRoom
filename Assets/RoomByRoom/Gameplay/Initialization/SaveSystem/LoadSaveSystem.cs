@@ -6,7 +6,7 @@ namespace RoomByRoom
 {
 	internal class LoadSaveSystem : IEcsPreInitSystem
 	{
-		private EcsCustomInject<SavedData> _savedData = default;
+		private EcsCustomInject<Saving> _savedData = default;
 		private EcsCustomInject<DefaultData> _defaultData = default;
 		private EcsCustomInject<Configuration> _conf = default;
 		private EcsCustomInject<SavingService> _savingSvc = default;
@@ -14,7 +14,7 @@ namespace RoomByRoom
 
 		public void PreInit(IEcsSystems systems)
 		{
-			SavedData tempData = new SavedData();
+			Saving tempData = new Saving();
 			if (!_conf.Value.IsNewGame && _savingSvc.Value.LoadData(ref tempData))
 			{
 				_savedData.Value.CopyOf(tempData);

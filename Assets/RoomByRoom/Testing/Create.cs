@@ -16,13 +16,20 @@ namespace RoomByRoom.Testing
 				});
 		}
 
-		public static ref UnitPhysicalProtection UnitPhysicalProtectionCmp(EcsWorld world, int unit, int currPoint = 0, int maxPoint = 0)
+		public static ref UnitPhysicalProtection UnitPhysicalProtectionCmp(EcsWorld world,
+			int unit,
+			float currPoint = 0,
+			float maxPoint = 0,
+			float restoreSpeed = 0,
+			float cantRestoreTime = 0)
 		{
 			return ref world.AddComponent<UnitPhysicalProtection>(unit)
 				.Assign(x =>
 				{
 					x.MaxPoint = maxPoint;
 					x.CurrentPoint = currPoint;
+					x.RestoreSpeed = restoreSpeed;
+					x.CantRestoreTime = cantRestoreTime; 
 					return x;
 				});
 		}
@@ -89,6 +96,16 @@ namespace RoomByRoom.Testing
 				.Assign(x =>
 				{
 					x.Type = type;
+					return x;
+				});
+		}
+
+		public static ref CantRestore CantRestoreCmp(EcsWorld world, int unit, float timeLeft = 0)
+		{
+			return ref world.AddComponent<CantRestore>(unit)
+				.Assign(x =>
+				{
+					x.TimeLeft = timeLeft;
 					return x;
 				});
 		}

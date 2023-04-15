@@ -15,12 +15,13 @@ namespace RoomByRoom
 	{
 		// TODO: change to external injection
 		[SerializeField] private DefaultData _defaultData;
-		[SerializeField] private SceneData _sceneData;
+		[FormerlySerializedAs("_sceneData")] [SerializeField] private SceneInfo _sceneInfo;
 		[SerializeField] private CoroutineStarter _coroutineStarter;
 		[SerializeField] private PrefabData _prefabData;
 		[SerializeField] private Configuration _configuration;
-		[FormerlySerializedAs("_enemyConfig")] [SerializeField] private EnemyConfig _enemyCfg;
-		private SavedData _savedData;
+		[SerializeField] private EnemyData _enemyData;
+		[SerializeField] private PlayerData _playerData;
+		private Saving _saving;
 		private GameInfo _gameInfo;
 		private PackedPrefabData _packedPrefabData;
 
@@ -32,14 +33,14 @@ namespace RoomByRoom
 
 		private void Start()
 		{
-			_savedData = new SavedData();
+			_saving = new Saving();
 			var savingSvc = new SavingService(_configuration.DefaultSaveName, _configuration.SaveInFile);
 			_packedPrefabData = new PackedPrefabData(_prefabData);
 
 			_gameInfo = new GameInfo();
 
-			_sceneData.CurrentGame = _gameInfo;
-			_sceneData.CurrentSave = _savedData;
+			_sceneInfo.CurrentGame = _gameInfo;
+			_sceneInfo.CurrentSave = _saving;
 
 			_world = new EcsWorld();
 			_message = new EcsWorld();
@@ -91,7 +92,9 @@ namespace RoomByRoom
 				.Add(new OpenDoorSystem())
 				.Add(new RecreateRoomSystem())
 				
+				.Add(new TimerSystem<CantRestore>())
 				.Add(new DamageSystem())
+				.Add(new RestoreProtectionSystem())
 				.Add(new DieSystem())
 #if UNITY_EDITOR
 				.Add(new MarkEnemySystem())
@@ -99,8 +102,8 @@ namespace RoomByRoom
 				.Add(new EcsWorldDebugSystem())
 				.Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif
-				.Inject(_sceneData, _savedData, _packedPrefabData, _configuration,
-					savingSvc, _defaultData, _gameInfo, attackSvc, _enemyCfg, charSvc, _coroutineStarter)
+				.Inject(_sceneInfo, _saving, _packedPrefabData, _configuration,
+					savingSvc, _defaultData, _gameInfo, attackSvc, _enemyData, charSvc, _coroutineStarter, _playerData)
 				.Init();
 
 			// _fixedUpdateSystems = new EcsSystems(_world);

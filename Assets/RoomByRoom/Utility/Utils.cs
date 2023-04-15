@@ -60,5 +60,19 @@ namespace RoomByRoom.Utility
 		{
 			return type != UnitType.Player && type != UnitType.Boss;
 		}
+
+		public static float Clamp(this ref float obj, float min = float.MinValue, float max = float.MaxValue)
+		{
+			if (obj < min)
+				obj = min;
+			if (obj > max)
+				obj = max;
+			return obj;
+		}
+
+		public static float Clamp(float value, float min = float.MaxValue, float max = float.MaxValue)
+		{
+			return value.Clamp(min, max);
+		}
 	}
 }

@@ -9,7 +9,7 @@ namespace RoomByRoom
 {
 	internal class LoadPlayerSystem : IEcsInitSystem
 	{
-		private readonly EcsCustomInject<SavedData> _savedData = default;
+		private readonly EcsCustomInject<Saving> _savedData = default;
 
 		public void Init(IEcsSystems systems)
 		{

@@ -23,7 +23,7 @@ namespace RoomByRoom.Database
 			_comm.ExecuteNonQuery();
 		}
 
-		public bool LoadData(string profile, ref SavedData savedData)
+		public bool LoadData(string profile, ref Saving saving)
 		{
 			_comm.CommandText = $"select * from profile where name = \'{profile}\';";
 			SQLiteDataReader profileRow = _comm.ExecuteReader();
@@ -36,13 +36,13 @@ namespace RoomByRoom.Database
 
 			int index = 1;
 
-			savedData.GameSave.RoomCount = profileRow.GetInt32(index++);
-			savedData.Player.Race.Type = (RaceType)profileRow.GetInt32(index++);
-			savedData.Player.HealthCmp.MaxPoint = profileRow.GetFloat(index++);
-			savedData.Player.MovableCmp.Speed = profileRow.GetFloat(index++);
-			savedData.Player.JumpableCmp.JumpForce = profileRow.GetFloat(index++);
-			savedData.Room.Info.Type = (RoomType)profileRow.GetInt32(index++);
-			savedData.Room.Race.Type = (RaceType)profileRow.GetInt32(index++);
+			saving.GameSave.RoomCount = profileRow.GetInt32(index++);
+			saving.Player.Race.Type = (RaceType)profileRow.GetInt32(index++);
+			saving.Player.HealthCmp.MaxPoint = profileRow.GetFloat(index++);
+			saving.Player.MovableCmp.Speed = profileRow.GetFloat(index++);
+			saving.Player.JumpableCmp.JumpForce = profileRow.GetFloat(index++);
+			saving.Room.Info.Type = (RoomType)profileRow.GetInt32(index++);
+			saving.Room.Race.Type = (RaceType)profileRow.GetInt32(index++);
 
 			profileRow.Close();
 
@@ -64,13 +64,13 @@ namespace RoomByRoom.Database
 				return comps;
 			}
 
-			savedData.Inventory.Item = PullComponent<ItemTable, ItemInfo>();
-			savedData.Inventory.Weapon = PullComponent<WeaponTable, WeaponInfo>();
-			savedData.Inventory.Armor = PullComponent<ArmorTable, ArmorInfo>();
-			savedData.Inventory.PhysProtection = PullComponent<ProtectionTable, ItemPhysicalProtection>();
-			savedData.Inventory.PhysDamage = PullComponent<PhysicalDamageTable, ItemPhysicalDamage>();
-			savedData.Inventory.Equipped = PullComponent<EquippedTable, Equipped>();
-			savedData.Inventory.Shape = PullComponent<ShapeTable, Shape>();
+			saving.Inventory.Item = PullComponent<ItemTable, ItemInfo>();
+			saving.Inventory.Weapon = PullComponent<WeaponTable, WeaponInfo>();
+			saving.Inventory.Armor = PullComponent<ArmorTable, ArmorInfo>();
+			saving.Inventory.PhysProtection = PullComponent<ProtectionTable, ItemPhysicalProtection>();
+			saving.Inventory.PhysDamage = PullComponent<PhysicalDamageTable, ItemPhysicalDamage>();
+			saving.Inventory.Equipped = PullComponent<EquippedTable, Equipped>();
+			saving.Inventory.Shape = PullComponent<ShapeTable, Shape>();
 
 			return true;
 		}
@@ -81,7 +81,7 @@ namespace RoomByRoom.Database
 			_comm.ExecuteNonQuery();
 		}
 
-		public void SaveData(string profile, SavedData savedData)
+		public void SaveData(string profile, Saving saving)
 		{
 			DeleteData(profile);
 
@@ -89,13 +89,13 @@ namespace RoomByRoom.Database
 			_comm.CommandText = "insert or replace into profile values " +
 			                    $"(" +
 			                    $"\'{profile}\', " +
-			                    $"{savedData.GameSave.RoomCount}, " +
-			                    $"{(int)savedData.Player.Race.Type}, " +
-			                    $"{savedData.Player.HealthCmp.MaxPoint}, " +
-			                    $"{savedData.Player.MovableCmp.Speed}, " +
-			                    $"{savedData.Player.JumpableCmp.JumpForce}, " +
-			                    $"{(int)savedData.Room.Info.Type}, " +
-			                    $"{(int)savedData.Room.Race.Type} " +
+			                    $"{saving.GameSave.RoomCount}, " +
+			                    $"{(int)saving.Player.Race.Type}, " +
+			                    $"{saving.Player.HealthCmp.MaxPoint}, " +
+			                    $"{saving.Player.MovableCmp.Speed}, " +
+			                    $"{saving.Player.JumpableCmp.JumpForce}, " +
+			                    $"{(int)saving.Room.Info.Type}, " +
+			                    $"{(int)saving.Room.Race.Type} " +
 			                    ");";
 			_comm.ExecuteNonQuery();
 
@@ -112,13 +112,13 @@ namespace RoomByRoom.Database
 				}
 			}
 
-			PutComponent<ItemTable, ItemInfo>(savedData.Inventory.Item);
-			PutComponent<WeaponTable, WeaponInfo>(savedData.Inventory.Weapon);
-			PutComponent<ArmorTable, ArmorInfo>(savedData.Inventory.Armor);
-			PutComponent<ProtectionTable, ItemPhysicalProtection>(savedData.Inventory.PhysProtection);
-			PutComponent<PhysicalDamageTable, ItemPhysicalDamage>(savedData.Inventory.PhysDamage);
-			PutComponent<EquippedTable, Equipped>(savedData.Inventory.Equipped);
-			PutComponent<ShapeTable, Shape>(savedData.Inventory.Shape);
+			PutComponent<ItemTable, ItemInfo>(saving.Inventory.Item);
+			PutComponent<WeaponTable, WeaponInfo>(saving.Inventory.Weapon);
+			PutComponent<ArmorTable, ArmorInfo>(saving.Inventory.Armor);
+			PutComponent<ProtectionTable, ItemPhysicalProtection>(saving.Inventory.PhysProtection);
+			PutComponent<PhysicalDamageTable, ItemPhysicalDamage>(saving.Inventory.PhysDamage);
+			PutComponent<EquippedTable, Equipped>(saving.Inventory.Equipped);
+			PutComponent<ShapeTable, Shape>(saving.Inventory.Shape);
 		}
 	}
 }

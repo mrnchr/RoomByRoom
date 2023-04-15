@@ -9,7 +9,7 @@ namespace RoomByRoom
 	public class EnemyAISystem : IEcsRunSystem
 	{
 		private readonly EcsFilterInject<Inc<ControllerByAI, UnitViewRef>> _enemies = default;
-		private readonly EcsCustomInject<EnemyConfig> _enemyCfg = default;
+		private readonly EcsCustomInject<EnemyData> _enemyData = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
@@ -78,7 +78,7 @@ namespace RoomByRoom
 		private bool IsNearPlayer(Vector3 humanoidPosition, Vector3 playerPosition)
 		{
 			Vector3 distToPlayer = playerPosition - humanoidPosition;
-			return distToPlayer.sqrMagnitude <= _enemyCfg.Value.AttackDistance * _enemyCfg.Value.AttackDistance;
+			return distToPlayer.sqrMagnitude <= _enemyData.Value.AttackDistance * _enemyData.Value.AttackDistance;
 		}
 
 		private bool IsHumanoid(int index) => _world.GetComponent<UnitInfo>(index).Type == UnitType.Humanoid;

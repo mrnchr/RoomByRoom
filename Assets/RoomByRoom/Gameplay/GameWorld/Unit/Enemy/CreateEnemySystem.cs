@@ -9,6 +9,7 @@ namespace RoomByRoom
 	{
 		private readonly EcsFilterInject<Inc<NextRoomMessage>> _nextRoomMsgs = Idents.Worlds.MessageWorld;
 		private readonly EcsCustomInject<GameInfo> _gameInfo = default;
+		private readonly EcsCustomInject<EnemyData> _enemyData = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
@@ -81,7 +82,14 @@ namespace RoomByRoom
 					return x;
 				});
 
-			_world.AddComponent<UnitPhysicalProtection>(enemy);
+			_world.AddComponent<UnitPhysicalProtection>(enemy)
+				.Assign(
+					x =>
+					{
+						x.RestoreSpeed = _enemyData.Value.Armor.RestoreSpeed;
+						x.CantRestoreTime = _enemyData.Value.Armor.BreakRestoreTime;
+						return x;
+					});
 		}
 	}
 }

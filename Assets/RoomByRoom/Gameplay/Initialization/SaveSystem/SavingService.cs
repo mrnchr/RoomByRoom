@@ -11,8 +11,8 @@ namespace RoomByRoom
 			_profile = profile;
 		}
 
-		public bool LoadData(ref SavedData savedData) => _saver.LoadData(_profile, ref savedData);
+		public bool LoadData(ref Saving saving) => _saver.LoadData(_profile, ref saving);
 
-		public void SaveData(SavedData savedData) => _saver.SaveData(_profile, savedData);
+		public void SaveData(Saving saving) => _saver.SaveData(_profile, saving);
 	}
 }

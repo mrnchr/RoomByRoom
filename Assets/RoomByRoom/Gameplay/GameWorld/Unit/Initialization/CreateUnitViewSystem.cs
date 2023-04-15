@@ -9,7 +9,7 @@ namespace RoomByRoom
 	public class CreateUnitViewSystem : IEcsRunSystem
 	{
 		private readonly EcsFilterInject<Inc<UnitInfo>, Exc<UnitViewRef>> _units = default;
-		private readonly EcsCustomInject<SavedData> _savedData = default;
+		private readonly EcsCustomInject<Saving> _savedData = default;
 		private readonly EcsCustomInject<AttackService> _attackSvc = default;
 		private readonly EcsCustomInject<PackedPrefabData> _prefabData = default;
 		private EcsWorld _world;

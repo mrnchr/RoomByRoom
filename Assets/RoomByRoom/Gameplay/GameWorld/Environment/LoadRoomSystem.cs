@@ -6,7 +6,7 @@ namespace RoomByRoom
 {
 	internal class LoadRoomSystem : IEcsInitSystem
 	{
-		private EcsCustomInject<SavedData> _savedData = default;
+		private EcsCustomInject<Saving> _savedData = default;
 
 		public void Init(IEcsSystems systems)
 		{

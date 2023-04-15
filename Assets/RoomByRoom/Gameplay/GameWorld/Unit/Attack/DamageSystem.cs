@@ -1,5 +1,10 @@
+using System.Collections;
+using FluentAssertions;
+using UnityEngine;
+
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+
 using RoomByRoom.Utility;
 
 namespace RoomByRoom
@@ -20,22 +25,31 @@ namespace RoomByRoom
 				float physDamage = _world.GetComponent<ItemPhysicalDamage>(message.Weapon).Point;
 
 				// UnityEngine.Debug.Log($"Damage: {physDamage.Point}, protection: {protection}, health: {health.Point}");
+
+				UpdateCantRestoreTime(index, physProtection.CantRestoreTime);
 				physProtection.CurrentPoint -= physDamage;
 				if (physProtection.CurrentPoint < 0)
 				{
 					ref Health health = ref _world.GetComponent<Health>(message.Damaged);
 
 					health.CurrentPoint += physProtection.CurrentPoint;
-					if (health.CurrentPoint < 0)
-						health.CurrentPoint = 0;
-
+					health.CurrentPoint.Clamp(min: 0);
+					
 					physProtection.CurrentPoint = 0;
 					// UnityEngine.Debug.Log($"Health after damage: {health.Point}");
 				}
 
-				// To be created from the service because not to be deleted by DelHere
+				// is sended from the service so is not deleted by DelHere
 				_messages.Pools.Inc1.Del(index);
 			}
+		}
+
+		private void UpdateCantRestoreTime(int entity, float maxTime)
+		{
+			(_world.HasComponent<CantRestore>(entity)
+				? ref _world.GetComponent<CantRestore>(entity)
+				: ref _world.AddComponent<CantRestore>(entity))
+					.TimeLeft = maxTime;
 		}
 	}
 }

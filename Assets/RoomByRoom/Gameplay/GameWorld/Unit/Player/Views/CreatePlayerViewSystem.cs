@@ -7,7 +7,7 @@ namespace RoomByRoom
 	internal class CreatePlayerViewSystem : IEcsRunSystem
 	{
 		private EcsCustomInject<PackedPrefabData> _packedPrefabData = default;
-		private EcsCustomInject<SavedData> _savedData = default;
+		private EcsCustomInject<Saving> _savedData = default;
 		private EcsCustomInject<AttackService> _attackSvc = default;
 		private EcsFilterInject<Inc<ControllerByPlayer>, Exc<UnitViewRef>> _player = default;
 

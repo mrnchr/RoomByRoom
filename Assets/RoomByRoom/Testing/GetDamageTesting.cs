@@ -2,6 +2,7 @@ using NUnit.Framework;
 using FluentAssertions;
 
 using Leopotam.EcsLite;
+using RoomByRoom.Utility;
 
 namespace RoomByRoom.Testing
 {
@@ -128,6 +129,56 @@ namespace RoomByRoom.Testing
 		
 			// Assert
 			health.CurrentPoint.Should().Be(0);
+		}
+
+		[Test]
+		public void WhenGetDamage_AndProtectionRestores_ThenLeftTimeShouldBeMaxCantRestoreTime()
+		{
+			// Arrange
+			DamageSystem testSystem = new DamageSystem();
+			EcsWorld world = new EcsWorld();
+			EcsWorld message = new EcsWorld();
+			IEcsSystems systems = Setup.Systems(new EcsSystems(world), testSystem, message);
+
+			int unit = world.NewEntity();
+			int weapon = world.NewEntity();
+			Create.GetDamageMessageCmp(message, unit, weapon);
+			float maxTime = Create.UnitPhysicalProtectionCmp(world, unit).CantRestoreTime;
+			Create.ItemPhysicalDamageCmp(world, weapon);
+			Create.HealthCmp(world, unit);
+			
+			// Act
+			testSystem.Run(systems);
+			
+			// Assert
+			world.HasComponent<CantRestore>(unit).Should().Be(true);
+			world.GetComponent<CantRestore>(unit).TimeLeft.Should().Be(maxTime);
+		}
+
+		[Test]
+		public void WhenGetDamage_AndUnitHasCantRestoreCmp_ThenTimeLeftShouldBeMaxCantRestoreTime()
+		{
+			// Arrange
+			const float checkValue = 10;
+			const float currValue = 5;
+			DamageSystem testSystem = new DamageSystem();
+			EcsWorld world = new EcsWorld();
+			EcsWorld message = new EcsWorld();
+			IEcsSystems systems = Setup.Systems(new EcsSystems(world), testSystem, message);
+
+			int unit = world.NewEntity();
+			int weapon = world.NewEntity();
+			Create.GetDamageMessageCmp(message, unit, weapon);
+			Create.UnitPhysicalProtectionCmp(world, unit, cantRestoreTime: checkValue);
+			Create.ItemPhysicalDamageCmp(world, weapon);
+			Create.HealthCmp(world, unit);
+			ref CantRestore cantRestore = ref Create.CantRestoreCmp(world, unit, currValue);
+
+			// Act
+			testSystem.Run(systems);
+			
+			// Assert
+			cantRestore.TimeLeft.Should().Be(checkValue);
 		}
 	}
 }

@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f31962dfbc29430cbcc59985e2f03669, type: 3}
-  m_Name: EnemyConfig
+  m_Name: EnemyData
   m_EditorClassIdentifier: 
-  AfterAttackWaitingTime: 2
+  Armor: {fileID: 11400000, guid: ad386b7e4ea2bdb4d95baf53dff1944a, type: 2}
+  DelayAttackTime: 2
   AttackDistance: 1.5

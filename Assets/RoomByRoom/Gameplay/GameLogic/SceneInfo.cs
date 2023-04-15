@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace RoomByRoom
 {
-	public class SceneData : MonoBehaviour
+	public class SceneInfo : MonoBehaviour
 	{
 		public GameInfo CurrentGame;
-		public SavedData CurrentSave;
+		public Saving CurrentSave;
 	}
 }

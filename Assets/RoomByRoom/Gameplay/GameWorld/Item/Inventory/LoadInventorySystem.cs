@@ -10,7 +10,7 @@ namespace RoomByRoom
 	public class LoadInventorySystem : IEcsInitSystem
 	{
 		private readonly EcsFilterInject<Inc<ControllerByPlayer>> _player = default;
-		private readonly EcsCustomInject<SavedData> _savedData = default;
+		private readonly EcsCustomInject<Saving> _savedData = default;
 		private readonly EcsCustomInject<CharacteristicService> _charSvc = default;
 		private readonly HashSet<int> _savedItems = new();
 		private readonly Dictionary<int, int> _boundItems = new();

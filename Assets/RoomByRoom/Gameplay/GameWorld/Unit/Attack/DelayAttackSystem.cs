@@ -9,7 +9,7 @@ namespace RoomByRoom
 	public class DelayAttackSystem : IEcsRunSystem
 	{
 		private readonly EcsFilterInject<Inc<DelayAttackMessage>> _delayMsgs = Idents.Worlds.MessageWorld;
-		private readonly EcsCustomInject<EnemyConfig> _enemyCfg = default;
+		private readonly EcsCustomInject<EnemyData> _enemyCfg = default;
 		private readonly EcsCustomInject<CoroutineStarter> _coroutineStarter = default;
 		private EcsWorld _world;
 		private EcsWorld _message;
