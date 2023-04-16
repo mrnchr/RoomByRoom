@@ -17,39 +17,26 @@ namespace RoomByRoom
 
 			foreach (var index in _equipments.Value)
 			{
-				ref ItemInfo itemInfo = ref _world.GetComponent<ItemInfo>(index);
+				ItemType type = _world.GetComponent<ItemInfo>(index).Type;
 
-				if (itemInfo.Type == ItemType.Artifact)
+				// TODO: create view for all types of items
+				if (type == ItemType.Artifact)
 					continue;
 
-				if (itemInfo.Type == ItemType.Armor && _world.GetComponent<ArmorInfo>(index).Type != ArmorType.Shield)
-					continue;
-
-				View.InstantiateView(GetPrefab(index, itemInfo.Type), out ItemView itemView);
+				ItemView itemView = Object.Instantiate(GetPrefab(index, type));
 				itemView.Entity = index;
 
 				_world.AddComponent<ItemViewRef>(index)
-					.Assign(x =>
-					{
-						x.Value = itemView;
-						return x;
-					});
+					.Value = itemView;
 
-				WearItem(index, itemInfo.Type, itemView.transform);
+				Utils.PutItemInPlace(itemView.transform, GetPlace(index, type));
 
-				if (itemInfo.Type == ItemType.Weapon)
+				if (type == ItemType.Weapon)
 					itemView.gameObject.SetActive(_world.HasComponent<InHands>(index));
 			}
 		}
 
-		private void WearItem(int index, ItemType itemType, Transform item)
-		{
-			ItemPlace place = GetPlace(index, itemType);
-			item.SetParent(place.Parent);
-			Utils.SetTransform(item, place.Point);
-		}
-
-		private GameObject GetPrefab(int entity, ItemType itemType)
+		private ItemView GetPrefab(int entity, ItemType itemType)
 		{
 			int prefabIndex = _world.GetComponent<Shape>(entity).PrefabIndex;
 
@@ -59,8 +46,7 @@ namespace RoomByRoom
 					: (int)_world.GetComponent<ArmorInfo>(entity).Type;
 
 			// Debug.Log($"itemType: {itemType}, typeNumber: {typeNumber}, prefabIndex: {prefabIndex}");
-			return _prefabData.Value.GetItem(itemType, typeNumber, prefabIndex)
-				.gameObject;
+			return _prefabData.Value.GetItem(itemType, typeNumber, prefabIndex);
 		}
 
 		private ItemPlace GetPlace(int entity, ItemType itemType)

@@ -19,12 +19,17 @@ MonoBehaviour:
     Race:
       Type: 0
     HealthCmp:
-      CurrentPoint: 100
-      MaxPoint: 100
+      CurrentPoint: 1000
+      MaxPoint: 1000
     MovableCmp:
       Speed: 5
     JumpableCmp:
       JumpForce: 5
+    UnitPhysProtectionCmp:
+      CurrentPoint: 0
+      MaxPoint: 0
+      CantRestoreTime: 0
+      RestoreSpeed: 0
   Room:
     Info:
       Type: 0
@@ -53,7 +58,7 @@ MonoBehaviour:
     - BoundEntity: 1
       ComponentInfo:
         Point: 9
-    Protection: []
+    PhysProtection: []
     Equipped:
     - BoundEntity: 0
     - BoundEntity: 1

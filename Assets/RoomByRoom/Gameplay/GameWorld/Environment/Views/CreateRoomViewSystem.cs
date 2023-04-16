@@ -3,6 +3,7 @@ using UnityEngine;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
+using Object = System.Object;
 
 namespace RoomByRoom
 {
@@ -18,23 +19,19 @@ namespace RoomByRoom
 			_world = systems.GetWorld();
 			_prefabData = _injectPrefabData.Value.Prefabs;
 
-			foreach (var index in _rooms.Value)
+			foreach (int index in _rooms.Value)
 			{
-				View.InstantiateView(SelectRoom(index), out RoomView roomView);
+				RoomView roomView = UnityEngine.Object.Instantiate(SelectRoom(index));
 				roomView.Entity = index;
 
 				_world.AddComponent<RoomViewRef>(index)
-					.Assign(x =>
-					{
-						x.Value = roomView;
-						return x;
-					});
+					.Value = roomView;
 
 				_world.AddComponent<AddPlayerCommand>(index);
 			}
 		}
 
-		private GameObject SelectRoom(int room)
+		private RoomView SelectRoom(int room)
 		{
 			RoomType type = _world.GetComponent<RoomInfo>(room).Type;
 			RaceType race = _world.GetComponent<RaceInfo>(room).Type;
@@ -45,7 +42,7 @@ namespace RoomByRoom
 				RoomType.Start => _prefabData.StartRoom,
 				_ => throw new ArgumentException()
 			};
-			return roomView.gameObject;
+			return roomView;
 		}
 	}
 }

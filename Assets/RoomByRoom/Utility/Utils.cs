@@ -34,31 +34,19 @@ namespace RoomByRoom.Utility
 			s += " }";
 			return s;
 		}
-		
-		public static void SetTransform(Transform from, Transform to)
-		{
-			from.position = to.position;
-			from.rotation = to.rotation;
-		}
 
 		public static int GetEnumLength<T>()
 			where T : Enum => Enum.GetNames(typeof(T)).Length;
 
-		public static bool IsUnitOf(EcsWorld world, int index, UnitType type)
-		{
-			return world.GetComponent<UnitInfo>(index).Type == type;
-		}
+		public static bool IsUnitOf(EcsWorld world, int entity, UnitType type) => world.GetComponent<UnitInfo>(entity).Type == type;
+		public static bool IsEnemy(UnitType type) => type != UnitType.Player && type != UnitType.Boss;
+
 
 		public static void AddItemToList(List<int> list, int item)
 		{
 			if (list.Contains(item))
 				throw new ArgumentException("You try to add an item which is in the item list");
 			list.Add(item);
-		}
-
-		public static bool IsEnemy(UnitType type)
-		{
-			return type != UnitType.Player && type != UnitType.Boss;
 		}
 
 		public static float Clamp(this ref float obj, float min = float.MinValue, float max = float.MaxValue)
@@ -70,9 +58,27 @@ namespace RoomByRoom.Utility
 			return obj;
 		}
 
-		public static float Clamp(float value, float min = float.MaxValue, float max = float.MaxValue)
+		public static float Clamp(float value, float min = float.MaxValue, float max = float.MaxValue) => value.Clamp(min, max);
+
+		public static void SetTransform(Transform from, Transform to)
 		{
-			return value.Clamp(min, max);
+			from.position = to.position;
+			from.rotation = to.rotation;
+		}
+
+		public static void PutItemInPlace(Transform item, ItemPlace place)
+		{
+			item.SetParent(place.Parent);
+			SetTransform(item, place.Point);
+		}
+
+		public static void UpdateTimer<T>(EcsWorld world, int entity, float time)
+		where T : struct, ITimerable
+		{
+			(world.HasComponent<T>(entity)
+					? ref world.GetComponent<T>(entity)
+					: ref world.AddComponent<T>(entity))
+				.TimeLeft = time;
 		}
 	}
 }

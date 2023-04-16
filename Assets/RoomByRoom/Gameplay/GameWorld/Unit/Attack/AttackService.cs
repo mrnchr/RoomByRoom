@@ -1,5 +1,6 @@
 using Leopotam.EcsLite;
 using RoomByRoom.Utility;
+using UnityEngine;
 
 namespace RoomByRoom
 {
@@ -39,7 +40,7 @@ namespace RoomByRoom
 			int owner = _world.GetComponent<Owned>(weapon).Owner;
 			if (!CanFight(damaged, owner))
 				return;
-
+			
 			_message.AddComponent<GetDamageMessage>(_message.NewEntity())
 				.Assign(x =>
 				{

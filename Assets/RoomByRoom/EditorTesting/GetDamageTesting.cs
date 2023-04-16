@@ -16,10 +16,10 @@ namespace RoomByRoom.Testing
 			EcsWorld world = new EcsWorld();
 			EcsWorld message = new EcsWorld();
 			IEcsSystems systems = new EcsSystems(world);
-			Setup.Systems(systems, damageSystem, message);
+			Setup.Systems(systems, message, damageSystem);
 			int unit = world.NewEntity();
 			int weapon = world.NewEntity();
-			Create.GetDamageMessageCmp(message, unit, weapon);
+			Create.GetDamageMessageCmp(message, message.NewEntity(), unit, weapon);
 			UnitPhysicalProtection physProtection = Create.UnitPhysicalProtectionCmp(world, unit, 90, 90);
 
 			ref Health health = ref Create.HealthCmp(world, unit, 90, 90);
@@ -42,12 +42,12 @@ namespace RoomByRoom.Testing
 			DamageSystem damageSystem = new DamageSystem();
 			EcsWorld world = new EcsWorld();
 			EcsWorld message = new EcsWorld();
-			IEcsSystems systems = Setup.Systems(new EcsSystems(world), damageSystem, message);
+			IEcsSystems systems = Setup.Systems(new EcsSystems(world), message, damageSystem);
 		
 			int unit = world.NewEntity();
 			int weapon = world.NewEntity();
 		
-			Create.GetDamageMessageCmp(message, unit, weapon);
+			Create.GetDamageMessageCmp(message, message.NewEntity(), unit, weapon);
 			Create.HealthCmp(world, unit, 90, 90);
 		
 			ref UnitPhysicalProtection physProtection = ref Create.UnitPhysicalProtectionCmp(world, unit, 90, 90);
@@ -68,11 +68,11 @@ namespace RoomByRoom.Testing
 			DamageSystem damageSystem = new DamageSystem();
 			EcsWorld world = new EcsWorld();
 			EcsWorld message = new EcsWorld();
-			IEcsSystems systems = Setup.Systems(new EcsSystems(world), damageSystem, message);
+			IEcsSystems systems = Setup.Systems(new EcsSystems(world), message, damageSystem);
 
 			int unit = world.NewEntity();
 			int weapon = world.NewEntity();
-			Create.GetDamageMessageCmp(message, unit, weapon);
+			Create.GetDamageMessageCmp(message, message.NewEntity(), unit, weapon);
 			ref UnitPhysicalProtection physProtection = ref Create.UnitPhysicalProtectionCmp(world, unit, 90, 90);
 			Create.ItemPhysicalDamageCmp(world, weapon, 110);
 			Create.HealthCmp(world, unit);
@@ -91,11 +91,11 @@ namespace RoomByRoom.Testing
 			DamageSystem damageSystem = new DamageSystem();
 			EcsWorld world = new EcsWorld();
 			EcsWorld message = new EcsWorld();
-			IEcsSystems systems = Setup.Systems(new EcsSystems(world), damageSystem, message);
+			IEcsSystems systems = Setup.Systems(new EcsSystems(world), message, damageSystem);
 
 			int unit = world.NewEntity();
 			int weapon = world.NewEntity();
-			Create.GetDamageMessageCmp(message, unit, weapon);
+			Create.GetDamageMessageCmp(message, message.NewEntity(), unit, weapon);
 			float physProtection = Create.UnitPhysicalProtectionCmp(world, unit, 90, 90).CurrentPoint;
 			float physDamage = Create.ItemPhysicalDamageCmp(world, weapon, 110).Point;
 			ref Health health = ref Create.HealthCmp(world, unit, 120, 90);
@@ -115,13 +115,13 @@ namespace RoomByRoom.Testing
 			DamageSystem damageSystem = new DamageSystem();
 			EcsWorld world = new EcsWorld();
 			EcsWorld message = new EcsWorld();
-			IEcsSystems systems = Setup.Systems(new EcsSystems(world), damageSystem, message);
+			IEcsSystems systems = Setup.Systems(new EcsSystems(world), message, damageSystem);
 
 			int unit = world.NewEntity();
 			int weapon = world.NewEntity();
-			Create.GetDamageMessageCmp(message, unit, weapon);
-			float physProtection = Create.UnitPhysicalProtectionCmp(world, unit, 90, 90).CurrentPoint;
-			float physDamage = Create.ItemPhysicalDamageCmp(world, weapon, 110).Point;
+			Create.GetDamageMessageCmp(message, message.NewEntity(), unit, weapon);
+			Create.UnitPhysicalProtectionCmp(world, unit, 90, 90);
+			Create.ItemPhysicalDamageCmp(world, weapon, 110);
 			ref Health health = ref Create.HealthCmp(world, unit, 5, 90);
 		
 			// Act
@@ -138,12 +138,15 @@ namespace RoomByRoom.Testing
 			DamageSystem testSystem = new DamageSystem();
 			EcsWorld world = new EcsWorld();
 			EcsWorld message = new EcsWorld();
-			IEcsSystems systems = Setup.Systems(new EcsSystems(world), testSystem, message);
+			IEcsSystems systems = Setup.Systems(new EcsSystems(world), message, testSystem);
 
-			int unit = world.NewEntity();
 			int weapon = world.NewEntity();
-			Create.GetDamageMessageCmp(message, unit, weapon);
-			float maxTime = Create.UnitPhysicalProtectionCmp(world, unit).CantRestoreTime;
+			int unit = world.NewEntity();
+			int msg = message.NewEntity();
+			if (msg == unit)
+				msg = message.NewEntity();
+			Create.GetDamageMessageCmp(message, msg, unit, weapon);
+			float maxTime = Create.UnitPhysicalProtectionCmp(world, unit, cantRestoreTime: 10).CantRestoreTime;
 			Create.ItemPhysicalDamageCmp(world, weapon);
 			Create.HealthCmp(world, unit);
 			
@@ -164,11 +167,15 @@ namespace RoomByRoom.Testing
 			DamageSystem testSystem = new DamageSystem();
 			EcsWorld world = new EcsWorld();
 			EcsWorld message = new EcsWorld();
-			IEcsSystems systems = Setup.Systems(new EcsSystems(world), testSystem, message);
+			IEcsSystems systems = Setup.Systems(new EcsSystems(world), message, testSystem);
 
-			int unit = world.NewEntity();
 			int weapon = world.NewEntity();
-			Create.GetDamageMessageCmp(message, unit, weapon);
+			int unit = world.NewEntity();
+			int msg = message.NewEntity();
+			if (msg == unit)
+				msg = message.NewEntity();
+			
+			Create.GetDamageMessageCmp(message, msg, unit, weapon);
 			Create.UnitPhysicalProtectionCmp(world, unit, cantRestoreTime: checkValue);
 			Create.ItemPhysicalDamageCmp(world, weapon);
 			Create.HealthCmp(world, unit);

@@ -30,7 +30,6 @@ namespace RoomByRoom
 				if (!IsNearPlayer(humanoidPos, player.position))
 				{
 					agent.SetDestination(player.position);
-					GetHumanoidView(index).points = agent.path.corners;
 					
 					moveDir = (agent.nextPosition - humanoidPos).normalized;
 					rotateDir = ConvertToDirection(agent.steeringTarget - humanoidPos);
@@ -40,8 +39,7 @@ namespace RoomByRoom
 				{
 					agent.ResetPath();	
 					agent.Warp(humanoidPos);
-					if(CanAttack(index))
-						_world.AddComponent<AttackCommand>(index);
+					_world.AddComponent<AttackCommand>(index);
 					// agent.updatePosition = false;
 					moveDir = Vector3.zero;
 					rotateDir = ConvertToDirection(player.position - humanoidPos);
@@ -56,11 +54,6 @@ namespace RoomByRoom
 						return x;
 					});
 			}
-		}
-
-		private bool CanAttack(int unit)
-		{
-			return !_world.HasComponent<CantAttack>(unit);
 		}
 
 		private void AddRotateComponent(int index, Vector3 rotateDirection)

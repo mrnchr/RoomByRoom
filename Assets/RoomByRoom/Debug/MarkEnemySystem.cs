@@ -10,6 +10,7 @@ namespace RoomByRoom.Debugging
 		private readonly EcsFilterInject<Inc<NextRoomMessage>> _nextRoom = Idents.Worlds.MessageWorld;
 		private readonly EcsFilterInject<Inc<UnitViewRef>, Exc<ControllerByPlayer, CanBeDeleted>> _enemies = default;
 		private readonly EcsFilterInject<Inc<ItemViewRef>, Exc<CanBeDeleted>> _items = default;
+		private readonly EcsFilterInject<Inc<Bonus>, Exc<CanBeDeleted>> _bonuses = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
@@ -25,20 +26,23 @@ namespace RoomByRoom.Debugging
 
 			_world = systems.GetWorld();
 
-			foreach (int enemy in _enemies.Value)
-				_world.AddComponent<CanBeDeleted>(enemy);
+			foreach (int index in _enemies.Value)
+				_world.AddComponent<CanBeDeleted>(index);
 
 			foreach (int index in _items.Value)
 			{
 				if (!IsPlayerWeapon(index))
 					_world.AddComponent<CanBeDeleted>(index);
 			}
+
+			foreach (int index in _bonuses.Value)
+				_world.AddComponent<CanBeDeleted>(index);
 		}
 
 		private bool IsPlayerWeapon(int entity)
 		{
-			return _world.GetComponent<Owned>(entity).Owner ==
-			       _world.Filter<ControllerByPlayer>().End().GetRawEntities()[0];
+			return _world.HasComponent<Owned>(entity) 
+			  && Utils.IsUnitOf(_world,_world.GetComponent<Owned>(entity).Owner, UnitType.Player);
 		}
 	}
 }

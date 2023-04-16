@@ -5,9 +5,9 @@ namespace RoomByRoom.Database
 {
 	public class DBAccessor : ISaver
 	{
-		protected string _dbFileName = Utility.Idents.FilePaths.DatabaseFileName;
-		protected SQLiteConnection _conn;
-		protected SQLiteCommand _comm;
+		protected readonly string _dbFileName = Utility.Idents.FilePaths.DatabaseFileName;
+		protected readonly SQLiteConnection _conn;
+		protected readonly SQLiteCommand _comm;
 
 		public DBAccessor()
 		{

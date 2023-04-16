@@ -4,7 +4,7 @@ namespace RoomByRoom
 {
 	public class PackedPrefabData
 	{
-		public PrefabData Prefabs;
+		public readonly PrefabData Prefabs;
 
 		public PackedPrefabData(PrefabData prefabs)
 		{

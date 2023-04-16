@@ -27,24 +27,18 @@ namespace RoomByRoom
 
 	public class HumanoidView : GroundUnitView
 	{
-		public Vector3[] points;
+		private static readonly int _weapon = Animator.StringToHash("Weapon");
+		private static readonly int _startAttack = Animator.StringToHash("StartAttack");
 		[SerializeField] protected WeaponPlace[] WeaponPlaces;
 		[SerializeField] protected ArmorPlace[] ArmorPlaces;
 
-		public ItemPlace GetWeaponPlace(WeaponType type)
-		{
-			return Array.Find(WeaponPlaces, x => x.Type == type).Place;
-		}
-
-		public ItemPlace GetArmorPlace(ArmorType type)
-		{
-			return Array.Find(ArmorPlaces, x => x.Type == type).Place;
-		}
+		public ItemPlace GetWeaponPlace(WeaponType type) => Array.Find(WeaponPlaces, x => x.Type == type).Place;
+		public ItemPlace GetArmorPlace(ArmorType type) => Array.Find(ArmorPlaces, x => x.Type == type).Place;
 
 		public override void PlayAttackAnimation(WeaponType weaponType)
 		{
-			Anim.SetInteger("Weapon", (int)weaponType);
-			Anim.SetTrigger("StartAttack");
+			Anim.SetInteger(_weapon, (int)weaponType);
+			Anim.SetTrigger(_startAttack);
 			// TODO: change when there is a bow
 		}
 	}

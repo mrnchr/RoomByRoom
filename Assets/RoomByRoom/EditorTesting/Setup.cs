@@ -7,14 +7,16 @@ namespace RoomByRoom.Testing
 {
 	public static class Setup
 	{
-		public static IEcsSystems Systems<TSystem>(IEcsSystems systems, TSystem testSystem, EcsWorld oneMoreWorld = null)
-			where TSystem : IEcsSystem
+		public static IEcsSystems Systems(IEcsSystems systems, EcsWorld oneMoreWorld = null, params IEcsSystem[] system)
 		{
 			if (oneMoreWorld != null)
 				systems.AddWorld(oneMoreWorld, Idents.Worlds.MessageWorld);
+			
+			foreach (var sys in system)
+				systems.Add(sys);
+			
 			return systems
-				.Add(testSystem)
-				.Inject();
+					.Inject();
 		}
 	}
 }

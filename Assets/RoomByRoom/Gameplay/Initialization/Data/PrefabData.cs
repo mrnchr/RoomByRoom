@@ -24,5 +24,6 @@ namespace RoomByRoom
 		public ArmorView[] Helmets;
 		public ArmorView[] Shields;
 		public ArtifactView[] Artifacts;
+		public BonusView Bonus;
 	}
 }

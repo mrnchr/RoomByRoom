@@ -111,7 +111,7 @@ namespace RoomByRoom
 			_world.AddComponent<Shape>(item)
 				.Assign(x =>
 				{
-					x.PrefabIndex = GetRandomPrefabIndex(itemType, equipmentType);
+					x.PrefabIndex = FastRandom.GetPrefabIndex(_prefabData.Value, itemType, equipmentType);
 					return x;
 				});
 
@@ -123,11 +123,6 @@ namespace RoomByRoom
 				});
 
 			return item;
-		}
-
-		private int GetRandomPrefabIndex(ItemType item, int equipmentType)
-		{
-			return Rand.Range(0, _prefabData.Value.GetItems(item, equipmentType).Length);
 		}
 	}
 }

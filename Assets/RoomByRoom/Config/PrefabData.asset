@@ -51,11 +51,17 @@ MonoBehaviour:
   - {fileID: 8935909954702642164, guid: 15fb228984a3c8e41b56c9f82bf180e8, type: 3}
   Bows:
   - {fileID: 7980760320212665143, guid: f208f3b06fc41584a86a98e6ef5bae4c, type: 3}
-  Boots: []
-  Leggings: []
-  Gloves: []
-  Breastplates: []
-  Helmets: []
+  Boots:
+  - {fileID: 4438122189457555066, guid: 90fdd3401cb95904696952651b3c506d, type: 3}
+  Leggings:
+  - {fileID: 8820757017067759007, guid: d37f22e4d9c9a8a42ba7d99127b238ef, type: 3}
+  Gloves:
+  - {fileID: 4438122189457555066, guid: 90fdd3401cb95904696952651b3c506d, type: 3}
+  Breastplates:
+  - {fileID: 8820757017067759007, guid: d37f22e4d9c9a8a42ba7d99127b238ef, type: 3}
+  Helmets:
+  - {fileID: 4438122189457555066, guid: 90fdd3401cb95904696952651b3c506d, type: 3}
   Shields:
   - {fileID: -6468063185674759400, guid: 9efe4288fcfb0ab4fa764ba6f093cd1a, type: 3}
   Artifacts: []
+  Bonus: {fileID: 8982740443086614335, guid: 28731ef3ef8d9d14fbcdcc8f2da51664, type: 3}

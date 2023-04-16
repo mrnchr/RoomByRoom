@@ -172,6 +172,8 @@ MonoBehaviour:
       UnitPhysProtectionCmp:
         CurrentPoint: 0
         MaxPoint: 0
+        CantRestoreTime: 0
+        RestoreSpeed: 0
     Room:
       Info:
         Type: 0
@@ -289,11 +291,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultData: {fileID: 11400000, guid: 459d3dc4785704147a404de04da7ed2b, type: 2}
-  _sceneData: {fileID: 65209845}
+  _sceneInfo: {fileID: 65209845}
   _coroutineStarter: {fileID: 512437110}
   _prefabData: {fileID: 11400000, guid: d39d563c980198c488935c6529f8b5c3, type: 2}
   _configuration: {fileID: 11400000, guid: d18482ebc8e5cdf458dae86145d75263, type: 2}
-  _enemyCfg: {fileID: 11400000, guid: 1c55b1590c066804da033d2defd5487b, type: 2}
+  _enemyData: {fileID: 11400000, guid: 1c55b1590c066804da033d2defd5487b, type: 2}
+  _playerData: {fileID: 0}
 --- !u!1 &1897892192
 GameObject:
   m_ObjectHideFlags: 0

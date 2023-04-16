@@ -4,8 +4,8 @@ namespace RoomByRoom
 {
 	public enum ItemType
 	{
-		Weapon,
-		Armor,
-		Artifact
+		Weapon = 0,
+		Armor = 1,
+		Artifact = 2
 	}
 }

@@ -56,7 +56,7 @@ namespace RoomByRoom
 				.Add(new LoadPlayerSystem())
 				.Add(new LoadInventorySystem())
 				.Add(new PickPlayerMainWeaponSystem())
-				
+
 				.Add(new CreateEnemySystem())
 				.Add(new WearHumanoidEnemySystem())
 				.Add(new FillEnemyEquipmentSystem())
@@ -66,6 +66,7 @@ namespace RoomByRoom
 				.Add(new CreateRoomViewSystem())
 				.Add(new CreateUnitViewSystem())
 				.Add(new CreateEquipmentViewSystem())
+				.Add(new SpawnBonusSystem())
 				
 				.Add(new CreateSpawnPointSystem())
 				.Add(new PutUnitInRoomSystem())
@@ -78,6 +79,8 @@ namespace RoomByRoom
 				.DelHere<AttackCommand>()
 				.Add(new InputSystem())
 				.Add(new EnemyAISystem())
+				.Add(new TimerSystem<CantAttack>())
+				.Add(new DelTimerSystem<CantAttack>())
 				.Add(new DelayAttackSystem())
 				.Add(new MoveUnitSystem())
 				.Add(new RotateUnitSystem())
@@ -93,6 +96,7 @@ namespace RoomByRoom
 				.Add(new RecreateRoomSystem())
 				
 				.Add(new TimerSystem<CantRestore>())
+				.Add(new DelTimerSystem<CantRestore>())
 				.Add(new DamageSystem())
 				.Add(new RestoreProtectionSystem())
 				.Add(new DieSystem())

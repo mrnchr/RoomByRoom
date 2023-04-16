@@ -10,7 +10,6 @@ namespace RoomByRoom
 	{
 		private readonly EcsFilterInject<Inc<DelayAttackMessage>> _delayMsgs = Idents.Worlds.MessageWorld;
 		private readonly EcsCustomInject<EnemyData> _enemyCfg = default;
-		private readonly EcsCustomInject<CoroutineStarter> _coroutineStarter = default;
 		private EcsWorld _world;
 		private EcsWorld _message;
 
@@ -18,18 +17,13 @@ namespace RoomByRoom
 		{
 			_world = systems.GetWorld();
 			_message = systems.GetWorld(Idents.Worlds.MessageWorld);
-			
+
 			foreach (int index in _delayMsgs.Value)
 			{
-				_coroutineStarter.Value.PerformCoroutine(WaitToAttack(_message.GetComponent<DelayAttackMessage>(index).Unit));
+				int unit = _message.GetComponent<DelayAttackMessage>(index).Unit;
+				Utils.UpdateTimer<CantAttack>(_world, unit, _enemyCfg.Value.DelayAttackTime);
 				_message.DelEntity(index);
 			}
-		}
-
-		private IEnumerator WaitToAttack(int unit)
-		{
-			yield return new WaitForSeconds(_enemyCfg.Value.DelayAttackTime);
-			_world.DelComponent<CantAttack>(unit);
 		}
 	}
 }
