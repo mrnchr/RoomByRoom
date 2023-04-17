@@ -1,14 +1,14 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityEngine;
 using RoomByRoom.Utility;
+using UnityEngine;
 
 namespace RoomByRoom
 {
 	public class RecreateRoomSystem : IEcsRunSystem
 	{
-		private EcsFilterInject<Inc<NextRoomMessage>> _nextRoomMsg = Idents.Worlds.MessageWorld;
-		private EcsFilterInject<Inc<RoomViewRef>> _room = default;
+		private readonly EcsFilterInject<Inc<NextRoomMessage>> _nextRoomMsg = Idents.Worlds.MessageWorld;
+		private readonly EcsFilterInject<Inc<RoomViewRef>> _room = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
@@ -16,7 +16,7 @@ namespace RoomByRoom
 			_world = systems.GetWorld();
 			EcsWorld message = systems.GetWorld(Idents.Worlds.MessageWorld);
 
-			foreach (var index in _nextRoomMsg.Value)
+			foreach (int index in _nextRoomMsg.Value)
 			{
 				DeleteRoom();
 				CreateRoom(message.GetComponent<NextRoomMessage>(index));
@@ -37,7 +37,7 @@ namespace RoomByRoom
 		private void DeleteRoom()
 		{
 			int roomEntity = _room.Value.GetRawEntities()[0];
-			GameObject.Destroy(_world.GetComponent<RoomViewRef>(roomEntity).Value.gameObject);
+			Object.Destroy(_world.GetComponent<RoomViewRef>(roomEntity).Value.gameObject);
 			_world.DelEntity(roomEntity);
 		}
 	}

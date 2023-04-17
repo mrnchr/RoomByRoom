@@ -8,7 +8,7 @@ namespace RoomByRoom.Database
 
 		public BoundComponent<ItemInfo> Pull(SQLiteDataReader row)
 		{
-			BoundComponent<ItemInfo> comp = new BoundComponent<ItemInfo>
+			var comp = new BoundComponent<ItemInfo>
 			{
 				BoundEntity = row.GetInt32(0)
 			};
@@ -16,14 +16,12 @@ namespace RoomByRoom.Database
 			return comp;
 		}
 
-		public string GetTextToPut(BoundComponent<ItemInfo> comp, string toProfile)
-		{
-			return $"insert or replace into item values " +
-			       $"(" +
-			       $"{comp.BoundEntity}, " +
-			       $"\'{toProfile}\', " +
-			       $"{(int)comp.ComponentInfo.Type}" +
-			       $");";
-		}
+		public string GetTextToPut(BoundComponent<ItemInfo> comp, string toProfile) =>
+			"insert or replace into item values " +
+			"(" +
+			$"{comp.BoundEntity}, " +
+			$"\'{toProfile}\', " +
+			$"{(int)comp.ComponentInfo.Type}" +
+			");";
 	}
 }

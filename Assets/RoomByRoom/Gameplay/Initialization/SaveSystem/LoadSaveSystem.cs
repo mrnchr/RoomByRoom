@@ -1,4 +1,3 @@
-using System;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 
@@ -6,15 +5,15 @@ namespace RoomByRoom
 {
 	internal class LoadSaveSystem : IEcsPreInitSystem
 	{
-		private EcsCustomInject<Saving> _savedData = default;
-		private EcsCustomInject<DefaultData> _defaultData = default;
-		private EcsCustomInject<Configuration> _conf = default;
-		private EcsCustomInject<SavingService> _savingSvc = default;
-		private EcsCustomInject<GameInfo> _gameInfo = default;
+		private readonly EcsCustomInject<Configuration> _conf = default;
+		private readonly EcsCustomInject<DefaultData> _defaultData = default;
+		private readonly EcsCustomInject<Saving> _savedData = default;
+		private readonly EcsCustomInject<SavingService> _savingSvc = default;
+		private EcsCustomInject<GameInfo> _gameInfo;
 
 		public void PreInit(IEcsSystems systems)
 		{
-			Saving tempData = new Saving();
+			var tempData = new Saving();
 			if (!_conf.Value.IsNewGame && _savingSvc.Value.LoadData(ref tempData))
 			{
 				_savedData.Value.CopyOf(tempData);

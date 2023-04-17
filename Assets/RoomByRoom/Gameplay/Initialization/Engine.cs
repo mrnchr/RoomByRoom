@@ -1,13 +1,11 @@
-using UnityEngine;
-using UnityEngine.Serialization;
-
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
 using Leopotam.EcsLite.UnityEditor;
-
 using RoomByRoom.Debugging;
 using RoomByRoom.Utility;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
@@ -15,21 +13,24 @@ namespace RoomByRoom
 	{
 		// TODO: change to external injection
 		[SerializeField] private DefaultData _defaultData;
-		[FormerlySerializedAs("_sceneData")] [SerializeField] private SceneInfo _sceneInfo;
+
+		[FormerlySerializedAs("_sceneData"), SerializeField] 
+		private SceneInfo _sceneInfo;
+
 		[SerializeField] private CoroutineStarter _coroutineStarter;
 		[SerializeField] private PrefabData _prefabData;
 		[SerializeField] private Configuration _configuration;
 		[SerializeField] private EnemyData _enemyData;
 		[SerializeField] private PlayerData _playerData;
-		private Saving _saving;
 		private GameInfo _gameInfo;
+		private EcsWorld _message;
 		private PackedPrefabData _packedPrefabData;
+		private Saving _saving;
 
 		private IEcsSystems _updateSystems;
 
 		// private IEcsSystems _fixedUpdateSystems;
 		private EcsWorld _world;
-		private EcsWorld _message;
 
 		private void Start()
 		{
@@ -56,27 +57,24 @@ namespace RoomByRoom
 				.Add(new LoadPlayerSystem())
 				.Add(new LoadInventorySystem())
 				.Add(new PickPlayerMainWeaponSystem())
-
 				.Add(new CreateEnemySystem())
 				.Add(new WearHumanoidEnemySystem())
 				.Add(new FillEnemyEquipmentSystem())
 				.DelHere<Bare>()
-				
 				.DelHere<AddPlayerCommand>()
 				.Add(new CreateRoomViewSystem())
 				.Add(new CreateUnitViewSystem())
 				.Add(new CreateEquipmentViewSystem())
 				.Add(new SpawnBonusSystem())
-				
 				.Add(new CreateSpawnPointSystem())
 				.Add(new PutUnitInRoomSystem())
-				
 				.DelHere<OpenDoorMessage>(Idents.Worlds.MessageWorld)
 				.DelHere<RotateCameraMessage>(Idents.Worlds.MessageWorld)
 				.DelHere<MoveCommand>()
 				.DelHere<RotateCommand>()
 				.DelHere<JumpCommand>()
 				.DelHere<AttackCommand>()
+				.DelHere<TakeCommand>()
 				.Add(new InputSystem())
 				.Add(new EnemyAISystem())
 				.Add(new TimerSystem<CantAttack>())
@@ -85,24 +83,29 @@ namespace RoomByRoom
 				.Add(new MoveUnitSystem())
 				.Add(new RotateUnitSystem())
 				.Add(new JumpUnitSystem())
-				// .Add(new AfterJumpUnitSystem())
 				.Add(new RotateCameraSystem())
 				.Add(new KeepCameraSystem())
 				.Add(new AttackSystem())
-				
+				.Add(new TakeBonusSystem())
 				.DelHere<StartGameMessage>(Idents.Worlds.MessageWorld)
 				.DelHere<NextRoomMessage>(Idents.Worlds.MessageWorld)
 				.Add(new OpenDoorSystem())
 				.Add(new RecreateRoomSystem())
-				
 				.Add(new TimerSystem<CantRestore>())
 				.Add(new DelTimerSystem<CantRestore>())
 				.Add(new DamageSystem())
 				.Add(new RestoreProtectionSystem())
+				.DelHere<SpawnCommand>()
 				.Add(new DieSystem())
+				.DelHere<SelectCommand>()
+				.DelHere<DeselectCommand>()
+				.Add(new SelectBonusSystem())
+				.Add(new HighlightBonusSystem())
 #if UNITY_EDITOR
 				.Add(new MarkEnemySystem())
 				.Add(new RemoveEntitySystem())
+				.Add(new AddInventoryInfoSystem())
+				.Add(new CheckInventorySystem())
 				.Add(new EcsWorldDebugSystem())
 				.Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif

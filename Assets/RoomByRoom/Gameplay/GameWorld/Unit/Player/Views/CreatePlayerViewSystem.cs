@@ -6,22 +6,22 @@ namespace RoomByRoom
 {
 	internal class CreatePlayerViewSystem : IEcsRunSystem
 	{
-		private EcsCustomInject<PackedPrefabData> _packedPrefabData = default;
-		private EcsCustomInject<Saving> _savedData = default;
-		private EcsCustomInject<AttackService> _attackSvc = default;
-		private EcsFilterInject<Inc<ControllerByPlayer>, Exc<UnitViewRef>> _player = default;
+		private readonly EcsCustomInject<AttackService> _attackSvc = default;
+		private readonly EcsCustomInject<PackedPrefabData> _packedPrefabData = default;
+		private readonly EcsFilterInject<Inc<ControllerByPlayer>, Exc<UnitViewRef>> _player = default;
+		private readonly EcsCustomInject<Saving> _savedData = default;
 
 		public void Run(IEcsSystems systems)
 		{
 			EcsWorld world = systems.GetWorld();
 
-			foreach (var index in _player.Value)
+			foreach (int index in _player.Value)
 			{
 				// Create player entity from save
 				ref PlayerEntity playerEntity = ref _savedData.Value.Player;
 				// Spawn player in the world
 				GameObject player = Object.Instantiate(_packedPrefabData.Value.Prefabs.BasePlayerUnit.gameObject);
-				PlayerView playerView = player.GetComponent<PlayerView>();
+				var playerView = player.GetComponent<PlayerView>();
 				playerView.Entity = index;
 				playerView.AttackCtr.SetService(_attackSvc.Value);
 

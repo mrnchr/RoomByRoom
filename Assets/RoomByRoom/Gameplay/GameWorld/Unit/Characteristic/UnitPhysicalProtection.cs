@@ -8,7 +8,10 @@ namespace RoomByRoom
 	{
 		public float CurrentPoint;
 		public float MaxPoint;
-		[FormerlySerializedAs("BreakRestoreTime")] public float CantRestoreTime;
+
+		[FormerlySerializedAs("BreakRestoreTime")]
+		public float CantRestoreTime;
+
 		public float RestoreSpeed;
 	}
 }

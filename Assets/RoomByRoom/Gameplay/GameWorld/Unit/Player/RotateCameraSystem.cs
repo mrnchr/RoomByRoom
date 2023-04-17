@@ -7,9 +7,9 @@ namespace RoomByRoom
 {
 	public class RotateCameraSystem : IEcsRunSystem
 	{
-		private readonly EcsFilterInject<Inc<RotateCameraMessage>> _rotateCameraMsgs = Idents.Worlds.MessageWorld;
-		private readonly EcsFilterInject<Inc<ControllerByPlayer, UnitViewRef>> _player = default;
 		private readonly EcsCustomInject<Configuration> _configuration = default;
+		private readonly EcsFilterInject<Inc<ControllerByPlayer, UnitViewRef>> _player = default;
+		private readonly EcsFilterInject<Inc<RotateCameraMessage>> _rotateCameraMsgs = Idents.Worlds.MessageWorld;
 		private float _xRotation;
 
 		public void Run(IEcsSystems systems)
@@ -18,7 +18,7 @@ namespace RoomByRoom
 
 			foreach (int index in _rotateCameraMsgs.Value)
 			{
-				PlayerView player = (PlayerView)_player.Pools.Inc2.Get(playerEntity).Value;
+				var player = (PlayerView)_player.Pools.Inc2.Get(playerEntity).Value;
 
 				Vector2 rotation = CalculateRotation(index);
 

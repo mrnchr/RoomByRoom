@@ -1,23 +1,31 @@
 ﻿#if UNITY_EDITOR
-using UnityEngine;
-using UnityEditor;
 using System;
+using UnityEditor;
+using UnityEngine;
 
 namespace GitIntegration
 {
 	[InitializeOnLoad]
 	public class SmartMergeRegistrator
 	{
-		const string SmartMergeRegistratorEditorPrefsKey = "smart_merge_installed";
-		const int Version = 1;
-		static string VersionKey = $"{Version}_{Application.unityVersion}";
+		private const string SmartMergeRegistratorEditorPrefsKey = "smart_merge_installed";
+		private const int Version = 1;
+		private static readonly string VersionKey = $"{Version}_{Application.unityVersion}";
+
+		//Unity calls the static constructor when the engine opens
+		static SmartMergeRegistrator()
+		{
+			string instaledVersionKey = EditorPrefs.GetString(SmartMergeRegistratorEditorPrefsKey);
+			if (instaledVersionKey != VersionKey)
+				SmartMergeRegister();
+		}
 
 		[MenuItem("Tools/Git/SmartMerge registration")]
-		static void SmartMergeRegister()
+		private static void SmartMergeRegister()
 		{
 			try
 			{
-				var UnityYAMLMergePath = EditorApplication.applicationContentsPath + "/Tools" + "/UnityYAMLMerge.exe";
+				string UnityYAMLMergePath = EditorApplication.applicationContentsPath + "/Tools" + "/UnityYAMLMerge.exe";
 				Utils.ExecuteGitWithParams("config merge.unityyamlmerge.name \"Unity SmartMerge (UnityYamlMerge)\"");
 				Utils.ExecuteGitWithParams(
 					$"config merge.unityyamlmerge.driver \"\\\"{UnityYAMLMergePath}\\\" merge -h -p --force --fallback none %O %B %A %A\"");
@@ -32,18 +40,10 @@ namespace GitIntegration
 		}
 
 		[MenuItem("Tools/Git/SmartMerge unregistration")]
-		static void SmartMergeUnRegister()
+		private static void SmartMergeUnRegister()
 		{
 			Utils.ExecuteGitWithParams("config --remove-section merge.unityyamlmerge");
-			Debug.Log($"Succesfuly unregistered UnityYAMLMerge");
-		}
-
-		//Unity calls the static constructor when the engine opens
-		static SmartMergeRegistrator()
-		{
-			var instaledVersionKey = EditorPrefs.GetString(SmartMergeRegistratorEditorPrefsKey);
-			if (instaledVersionKey != VersionKey)
-				SmartMergeRegister();
+			Debug.Log("Succesfuly unregistered UnityYAMLMerge");
 		}
 	}
 }

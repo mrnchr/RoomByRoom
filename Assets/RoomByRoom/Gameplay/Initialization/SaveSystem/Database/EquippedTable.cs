@@ -6,21 +6,17 @@ namespace RoomByRoom.Database
 	{
 		public string GetTableName() => "equipped";
 
-		public BoundComponent<Equipped> Pull(SQLiteDataReader row)
-		{
-			return new BoundComponent<Equipped>
+		public BoundComponent<Equipped> Pull(SQLiteDataReader row) =>
+			new BoundComponent<Equipped>
 			{
 				BoundEntity = row.GetInt32(0)
 			};
-		}
 
-		public string GetTextToPut(BoundComponent<Equipped> comp, string toProfile)
-		{
-			return $"insert or replace into equipped values " +
-			       $"(" +
-			       $"{comp.BoundEntity}, " +
-			       $"\'{toProfile}\' " +
-			       $");";
-		}
+		public string GetTextToPut(BoundComponent<Equipped> comp, string toProfile) =>
+			"insert or replace into equipped values " +
+			"(" +
+			$"{comp.BoundEntity}, " +
+			$"\'{toProfile}\' " +
+			");";
 	}
 }

@@ -4,12 +4,19 @@ namespace RoomByRoom
 {
 	public class AttackCatcher : MonoBehaviour
 	{
-		private UnitView _ownView;
 		private AttackService _attackSvc;
+		private UnitView _ownView;
 
 		protected void Awake()
 		{
 			_ownView = GetComponent<UnitView>();
+		}
+
+		// must catch damaged unit
+		public void OnTriggerEnter(Collider other)
+		{
+			if (other.isTrigger && other.TryGetComponent(out WeaponView weapon))
+				_attackSvc.Damage(_ownView.Entity, weapon.Entity);
 		}
 
 		public void SetService(AttackService attackSvc)
@@ -25,15 +32,6 @@ namespace RoomByRoom
 		public void OnStopAttackAnimation()
 		{
 			_attackSvc.SetAttackTriggers(_ownView.Entity, false);
-		}
-
-		// must catch damaged unit
-		public void OnTriggerEnter(Collider other)
-		{
-			if (other.isTrigger && other.TryGetComponent(out WeaponView weapon))
-			{
-				_attackSvc.Damage(_ownView.Entity, weapon.Entity);
-			}
 		}
 	}
 }

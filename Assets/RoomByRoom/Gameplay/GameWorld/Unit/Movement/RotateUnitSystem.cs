@@ -1,19 +1,19 @@
-using UnityEngine;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
+using UnityEngine;
 
 namespace RoomByRoom
 {
 	public class RotateUnitSystem : IEcsRunSystem
 	{
-		private EcsFilterInject<Inc<RotateCommand, UnitViewRef>> _units = default;
+		private readonly EcsFilterInject<Inc<RotateCommand, UnitViewRef>> _units = default;
 
 		public void Run(IEcsSystems systems)
 		{
 			EcsWorld world = systems.GetWorld();
 
-			foreach (var index in _units.Value)
+			foreach (int index in _units.Value)
 			{
 				Vector3 rotateDirection = world.GetComponent<RotateCommand>(index).RotateDirection;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace GitIntegration
 {
@@ -6,7 +7,7 @@ namespace GitIntegration
 	{
 		public static string ExecuteGitWithParams(string param)
 		{
-			var processInfo = new System.Diagnostics.ProcessStartInfo("git");
+			var processInfo = new ProcessStartInfo("git");
 
 			processInfo.UseShellExecute = false;
 			processInfo.WorkingDirectory = Environment.CurrentDirectory;
@@ -14,7 +15,7 @@ namespace GitIntegration
 			processInfo.RedirectStandardError = true;
 			processInfo.CreateNoWindow = true;
 
-			var process = new System.Diagnostics.Process();
+			var process = new Process();
 			process.StartInfo = processInfo;
 			process.StartInfo.FileName = "git";
 			process.StartInfo.Arguments = param;

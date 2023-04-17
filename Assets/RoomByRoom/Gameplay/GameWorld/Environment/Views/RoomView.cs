@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace RoomByRoom
 {
 	public class RoomView : View

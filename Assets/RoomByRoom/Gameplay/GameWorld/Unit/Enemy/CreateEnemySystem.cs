@@ -7,9 +7,9 @@ namespace RoomByRoom
 {
 	public class CreateEnemySystem : IEcsRunSystem
 	{
-		private readonly EcsFilterInject<Inc<NextRoomMessage>> _nextRoomMsgs = Idents.Worlds.MessageWorld;
-		private readonly EcsCustomInject<GameInfo> _gameInfo = default;
 		private readonly EcsCustomInject<EnemyData> _enemyData = default;
+		private readonly EcsCustomInject<GameInfo> _gameInfo = default;
+		private readonly EcsFilterInject<Inc<NextRoomMessage>> _nextRoomMsgs = Idents.Worlds.MessageWorld;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
@@ -29,14 +29,14 @@ namespace RoomByRoom
 
 		private void CreateEnemies()
 		{
-			int numberOfEnemies = 0;
-			int enemySize = 0;
+			var numberOfEnemies = 0;
+			var enemySize = 0;
 			int[] enemyWeights = { 2, 3, 4, 5 };
 
 			while (numberOfEnemies < 11 && enemySize < 21)
 			{
 				// TODO: change to random
-				UnitType enemyType = UnitType.Humanoid; // FastRandom.EnemyType;
+				var enemyType = UnitType.Humanoid; // FastRandom.EnemyType;
 				CreateEnemy(enemyType, FastRandom.GetEnemyRace());
 
 				numberOfEnemies++;

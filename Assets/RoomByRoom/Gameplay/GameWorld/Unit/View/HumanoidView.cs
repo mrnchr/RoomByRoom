@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System;
 using UnityEngine;
 
@@ -32,8 +31,15 @@ namespace RoomByRoom
 		[SerializeField] protected WeaponPlace[] WeaponPlaces;
 		[SerializeField] protected ArmorPlace[] ArmorPlaces;
 
-		public ItemPlace GetWeaponPlace(WeaponType type) => Array.Find(WeaponPlaces, x => x.Type == type).Place;
-		public ItemPlace GetArmorPlace(ArmorType type) => Array.Find(ArmorPlaces, x => x.Type == type).Place;
+		public ItemPlace GetWeaponPlace(WeaponType type)
+		{
+			return Array.Find(WeaponPlaces, x => x.Type == type).Place;
+		}
+
+		public ItemPlace GetArmorPlace(ArmorType type)
+		{
+			return Array.Find(ArmorPlaces, x => x.Type == type).Place;
+		}
 
 		public override void PlayAttackAnimation(WeaponType weaponType)
 		{

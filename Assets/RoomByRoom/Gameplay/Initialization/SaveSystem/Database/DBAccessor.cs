@@ -1,13 +1,14 @@
-using System.Data.SQLite;
 using System.Collections.Generic;
+using System.Data.SQLite;
+using RoomByRoom.Utility;
 
 namespace RoomByRoom.Database
 {
 	public class DBAccessor : ISaver
 	{
-		protected readonly string _dbFileName = Utility.Idents.FilePaths.DatabaseFileName;
-		protected readonly SQLiteConnection _conn;
 		protected readonly SQLiteCommand _comm;
+		protected readonly SQLiteConnection _conn;
+		protected readonly string _dbFileName = Idents.FilePaths.DatabaseFileName;
 
 		public DBAccessor()
 		{
@@ -34,7 +35,7 @@ namespace RoomByRoom.Database
 				return false;
 			}
 
-			int index = 1;
+			var index = 1;
 
 			saving.GameSave.RoomCount = profileRow.GetInt32(index++);
 			saving.Player.Race.Type = (RaceType)profileRow.GetInt32(index++);
@@ -50,15 +51,12 @@ namespace RoomByRoom.Database
 				where T : ITable<BoundComponent<TValue>>, new()
 				where TValue : struct
 			{
-				T compTable = new();
+				T compTable = new T();
 				_comm.CommandText = $"select * from {compTable.GetTableName()} where profile_name = \'{profile}\';";
 				profileRow = _comm.ExecuteReader();
-				List<BoundComponent<TValue>> comps = new();
+				List<BoundComponent<TValue>> comps = new List<BoundComponent<TValue>>();
 
-				while (profileRow.Read())
-				{
-					comps.Add(compTable.Pull(profileRow));
-				}
+				while (profileRow.Read()) comps.Add(compTable.Pull(profileRow));
 
 				profileRow.Close();
 				return comps;
@@ -75,19 +73,13 @@ namespace RoomByRoom.Database
 			return true;
 		}
 
-		public void DeleteData(string profile)
-		{
-			_comm.CommandText = $"delete from profile where name = \'{profile}\';";
-			_comm.ExecuteNonQuery();
-		}
-
 		public void SaveData(string profile, Saving saving)
 		{
 			DeleteData(profile);
 
 			// Save current profile
 			_comm.CommandText = "insert or replace into profile values " +
-			                    $"(" +
+			                    "(" +
 			                    $"\'{profile}\', " +
 			                    $"{saving.GameSave.RoomCount}, " +
 			                    $"{(int)saving.Player.Race.Type}, " +
@@ -104,7 +96,7 @@ namespace RoomByRoom.Database
 				where T : ITable<BoundComponent<TValue>>, new()
 				where TValue : struct
 			{
-				T compTable = new();
+				T compTable = new T();
 				foreach (var comp in comps)
 				{
 					_comm.CommandText = compTable.GetTextToPut(comp, profile);
@@ -119,6 +111,12 @@ namespace RoomByRoom.Database
 			PutComponent<PhysicalDamageTable, ItemPhysicalDamage>(saving.Inventory.PhysDamage);
 			PutComponent<EquippedTable, Equipped>(saving.Inventory.Equipped);
 			PutComponent<ShapeTable, Shape>(saving.Inventory.Shape);
+		}
+
+		public void DeleteData(string profile)
+		{
+			_comm.CommandText = $"delete from profile where name = \'{profile}\';";
+			_comm.ExecuteNonQuery();
 		}
 	}
 }

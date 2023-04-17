@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
@@ -7,9 +6,10 @@ namespace RoomByRoom
 	public class EnemyData : ScriptableObject
 	{
 		public ArmorData Armor;
-		
+
 		[Header("Humanoid")]
 		public float DelayAttackTime;
+
 		public float AttackDistance;
 	}
 }

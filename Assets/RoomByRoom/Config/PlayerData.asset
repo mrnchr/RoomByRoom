@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b229806004b146e2b32ef6b22683bf50, type: 3}
+  m_Name: PlayerData
+  m_EditorClassIdentifier: 
+  Armor: {fileID: 11400000, guid: 39ba2a44dc509c14b9a31f94f65d42cb, type: 2}
+  TakeItemDistance: 2
+  BackpackSize: 10
+  EquipmentSize: 16

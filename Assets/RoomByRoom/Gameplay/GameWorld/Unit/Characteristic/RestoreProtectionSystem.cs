@@ -1,6 +1,5 @@
 ﻿using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-
 using RoomByRoom.Utility;
 using UnityEngine;
 

@@ -7,16 +7,16 @@ namespace RoomByRoom
 {
 	public class CreateSpawnPointSystem : IEcsRunSystem
 	{
-		private EcsFilterInject<Inc<AddPlayerCommand, RoomViewRef>> _rooms = default;
+		private readonly EcsFilterInject<Inc<AddPlayerCommand, RoomViewRef>> _rooms = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
 		{
 			_world = systems.GetWorld();
 
-			foreach (var index in _rooms.Value)
+			foreach (int index in _rooms.Value)
 			{
-				SpawnPoint[] spawns = _world.GetComponent<RoomViewRef>(index).Value.SpawnPoints;
+				var spawns = _world.GetComponent<RoomViewRef>(index).Value.SpawnPoints;
 				Array.ForEach(spawns, CreateSpawnPointEntity);
 			}
 		}

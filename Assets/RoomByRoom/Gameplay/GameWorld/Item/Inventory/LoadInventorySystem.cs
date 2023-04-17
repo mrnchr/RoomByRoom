@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
-using UnityEngine;
 
 namespace RoomByRoom
 {
 	public class LoadInventorySystem : IEcsInitSystem
 	{
+		private readonly Dictionary<int, int> _boundItems = new Dictionary<int, int>();
+		private readonly EcsCustomInject<CharacteristicService> _charSvc = default;
 		private readonly EcsFilterInject<Inc<ControllerByPlayer>> _player = default;
 		private readonly EcsCustomInject<Saving> _savedData = default;
-		private readonly EcsCustomInject<CharacteristicService> _charSvc = default;
-		private readonly HashSet<int> _savedItems = new();
-		private readonly Dictionary<int, int> _boundItems = new();
+		private readonly HashSet<int> _savedItems = new HashSet<int>();
 		private InventoryEntity _savedInventory;
 		private EcsWorld _world;
 
@@ -44,7 +43,7 @@ namespace RoomByRoom
 
 				AddItemToInventory(player, itemEntity);
 			}
-			
+
 			_charSvc.Value.Calculate(player);
 			_world.GetComponent<UnitPhysicalProtection>(player)
 				.Assign(x =>
@@ -81,7 +80,7 @@ namespace RoomByRoom
 			ProcessComponents(_savedInventory.Shape, CollectEntity);
 		}
 
-		void ProcessComponents<T>(List<BoundComponent<T>> components, Action<BoundComponent<T>> action)
+		private void ProcessComponents<T>(List<BoundComponent<T>> components, Action<BoundComponent<T>> action)
 			where T : struct
 		{
 			components.ForEach(action);

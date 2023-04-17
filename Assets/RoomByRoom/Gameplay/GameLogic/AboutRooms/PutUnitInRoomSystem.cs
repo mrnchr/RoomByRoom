@@ -1,16 +1,18 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
+using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace RoomByRoom
 {
 	internal class PutUnitInRoomSystem : IEcsRunSystem
 	{
-		private readonly EcsFilterInject<Inc<UnitViewRef, UnitInfo>> _units = default;
 		private readonly EcsFilterInject<Inc<SpawnPoint>> _points = default;
+		private readonly EcsFilterInject<Inc<UnitViewRef, UnitInfo>> _units = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
@@ -20,9 +22,9 @@ namespace RoomByRoom
 
 			_world = systems.GetWorld();
 
-			int playerPoint = 0;
-			int bossPoint = 0;
-			List<int> allEnemyPoints = new();
+			var playerPoint = 0;
+			var bossPoint = 0;
+			List<int> allEnemyPoints = new List<int>();
 
 			foreach (int index in _points.Value)
 			{
@@ -41,7 +43,7 @@ namespace RoomByRoom
 				}
 			}
 
-			List<int> enemyPoints = SelectEnemyPoints(allEnemyPoints);
+			var enemyPoints = SelectEnemyPoints(allEnemyPoints);
 
 			foreach (int index in _units.Value)
 			{
@@ -101,9 +103,9 @@ namespace RoomByRoom
 
 		private List<int> SelectEnemyPoints(List<int> allSpawnPoints)
 		{
-			int numberOfEnemies = 0;
+			var numberOfEnemies = 0;
 
-			foreach (var unit in _units.Value)
+			foreach (int unit in _units.Value)
 			{
 				if (Utils.IsEnemy(_world.GetComponent<UnitInfo>(unit).Type))
 					numberOfEnemies++;
@@ -112,15 +114,15 @@ namespace RoomByRoom
 			if (numberOfEnemies == 0)
 				return null;
 
-			List<int> enemyPoints = new();
+			List<int> enemyPoints = new List<int>();
 
 			if (allSpawnPoints.Count < numberOfEnemies)
-				throw new System.ArgumentException("Spawn points for enemies is less than enemies themselves");
+				throw new ArgumentException("Spawn points for enemies is less than enemies themselves");
 
 			int index;
 			while (numberOfEnemies > 0)
 			{
-				index = UnityEngine.Random.Range(0, allSpawnPoints.Count);
+				index = Random.Range(0, allSpawnPoints.Count);
 				enemyPoints.Add(allSpawnPoints[index]);
 
 				allSpawnPoints.RemoveAt(index);

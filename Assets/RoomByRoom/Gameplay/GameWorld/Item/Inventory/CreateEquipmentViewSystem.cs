@@ -1,7 +1,7 @@
-using UnityEngine;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
+using UnityEngine;
 
 namespace RoomByRoom
 {
@@ -15,7 +15,7 @@ namespace RoomByRoom
 		{
 			_world = systems.GetWorld();
 
-			foreach (var index in _equipments.Value)
+			foreach (int index in _equipments.Value)
 			{
 				ItemType type = _world.GetComponent<ItemInfo>(index).Type;
 
@@ -58,11 +58,9 @@ namespace RoomByRoom
 				: humanoid.GetArmorPlace(_world.GetComponent<ArmorInfo>(entity).Type);
 		}
 
-		private HumanoidView GetHumanoidUnit(int index)
-		{
-			return (HumanoidView)_world.GetComponent<UnitViewRef>(
+		private HumanoidView GetHumanoidUnit(int index) =>
+			(HumanoidView)_world.GetComponent<UnitViewRef>(
 					_world.GetComponent<Owned>(index).Owner)
 				.Value;
-		}
 	}
 }

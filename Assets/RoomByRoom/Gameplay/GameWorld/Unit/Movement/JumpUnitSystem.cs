@@ -1,27 +1,24 @@
 using System.Collections;
-
-using UnityEngine;
-
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-
 using RoomByRoom.Utility;
+using UnityEngine;
 
 namespace RoomByRoom
 {
 	public class JumpUnitSystem : IEcsRunSystem
 	{
-		private readonly EcsFilterInject<Inc<Jumpable, UnitViewRef, JumpCommand>, Exc<CantJump>> _units = default;
 		private readonly EcsCustomInject<CoroutineStarter> _corStarter = default;
+		private readonly EcsFilterInject<Inc<Jumpable, UnitViewRef, JumpCommand>, Exc<CantJump>> _units = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
 		{
 			_world = systems.GetWorld();
 
-			foreach (var index in _units.Value)
+			foreach (int index in _units.Value)
 			{
-				GroundUnitView groundUnit = (GroundUnitView)(_world.GetComponent<UnitViewRef>(index).Value);
+				var groundUnit = (GroundUnitView)_world.GetComponent<UnitViewRef>(index).Value;
 				ref Jumpable jumpable = ref _world.GetComponent<Jumpable>(index);
 
 				if (Physics.CheckSphere(groundUnit.transform.position, 0.01f, groundUnit.GroundMask,

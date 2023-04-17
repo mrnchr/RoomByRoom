@@ -15,28 +15,26 @@ namespace RoomByRoom
 		{
 			_world = systems.GetWorld();
 
-			foreach (int index in _bonuses.Value)
-			{
-				PutItemInBonus(SpawnItem(index), SpawnBonus(index));
-			}
+			foreach (int index in _bonuses.Value) PutItemInBonus(SpawnItem(index), SpawnBonus(index));
 		}
 
 		private void PutItemInBonus(ItemView itemView, BonusView bonusView)
 		{
 			Transform transform = itemView.transform;
-			Renderer renderer = itemView.GetComponent<Renderer>();
+			var renderer = itemView.GetComponent<Renderer>();
 			ItemPlace place = bonusView.ItemHolder;
-			
+
 			transform.SetParent(place.Parent);
 			transform.position = place.Point.position - renderer.bounds.center;
 			transform.rotation = place.Point.rotation;
 		}
 
-		private BonusView SpawnBonus(int index)
+		private BonusView SpawnBonus(int entity)
 		{
 			BonusView bonusView = Object.Instantiate(_prefabData.Value.Prefabs.Bonus);
-			bonusView.transform.position = _world.GetComponent<SpawnCommand>(index).Coords;
-			_world.AddComponent<BonusViewRef>(index)
+			bonusView.transform.position = _world.GetComponent<SpawnCommand>(entity).Coords;
+			bonusView.Entity = entity;
+			_world.AddComponent<BonusViewRef>(entity)
 				.Value = bonusView;
 			return bonusView;
 		}
@@ -45,6 +43,7 @@ namespace RoomByRoom
 		{
 			int item = _world.GetComponent<Bonus>(entity).Item;
 			ItemView itemView = Object.Instantiate(GetItemPrefab(item));
+			itemView.Entity = item;
 			_world.AddComponent<ItemViewRef>(item)
 				.Value = itemView;
 			return itemView;
@@ -60,11 +59,9 @@ namespace RoomByRoom
 			return _prefabData.Value.GetItem(type, eqType, shape);
 		}
 
-		private int GetEquipmentType(ItemType type, int entity)
-		{
-			return type == ItemType.Armor
+		private int GetEquipmentType(ItemType type, int entity) =>
+			type == ItemType.Armor
 				? (int)_world.GetComponent<ArmorInfo>(entity).Type
 				: (int)_world.GetComponent<WeaponInfo>(entity).Type;
-		}
 	}
 }

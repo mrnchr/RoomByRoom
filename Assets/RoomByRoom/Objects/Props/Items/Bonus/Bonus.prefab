@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Entity: 0
+  Shell: {fileID: 352601663783729789}
   ItemHolder:
     Parent: {fileID: 3816807125199675629}
     Point: {fileID: 3816807125199675629}

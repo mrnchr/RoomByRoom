@@ -9,8 +9,8 @@ namespace RoomByRoom.Utility
 	{
 		public static string ListToString<T>(List<T> list)
 		{
-			string s = "{ ";
-			for (int i = 0; i < list.Count; i++)
+			var s = "{ ";
+			for (var i = 0; i < list.Count; i++)
 			{
 				s += list[i].ToString();
 				if (i < list.Count - 1)
@@ -23,8 +23,8 @@ namespace RoomByRoom.Utility
 
 		public static string Print<T>(this List<T> list)
 		{
-			string s = "{ ";
-			for (int i = 0; i < list.Count; i++)
+			var s = "{ ";
+			for (var i = 0; i < list.Count; i++)
 			{
 				s += list[i].ToString();
 				if (i < list.Count - 1)
@@ -36,9 +36,12 @@ namespace RoomByRoom.Utility
 		}
 
 		public static int GetEnumLength<T>()
-			where T : Enum => Enum.GetNames(typeof(T)).Length;
+			where T : Enum =>
+			Enum.GetNames(typeof(T)).Length;
 
-		public static bool IsUnitOf(EcsWorld world, int entity, UnitType type) => world.GetComponent<UnitInfo>(entity).Type == type;
+		public static bool IsUnitOf(EcsWorld world, int entity, UnitType type) =>
+			world.GetComponent<UnitInfo>(entity).Type == type;
+
 		public static bool IsEnemy(UnitType type) => type != UnitType.Player && type != UnitType.Boss;
 
 
@@ -58,7 +61,8 @@ namespace RoomByRoom.Utility
 			return obj;
 		}
 
-		public static float Clamp(float value, float min = float.MaxValue, float max = float.MaxValue) => value.Clamp(min, max);
+		public static float Clamp(float value, float min = float.MaxValue, float max = float.MaxValue) =>
+			value.Clamp(min, max);
 
 		public static void SetTransform(Transform from, Transform to)
 		{
@@ -73,7 +77,7 @@ namespace RoomByRoom.Utility
 		}
 
 		public static void UpdateTimer<T>(EcsWorld world, int entity, float time)
-		where T : struct, ITimerable
+			where T : struct, ITimerable
 		{
 			(world.HasComponent<T>(entity)
 					? ref world.GetComponent<T>(entity)

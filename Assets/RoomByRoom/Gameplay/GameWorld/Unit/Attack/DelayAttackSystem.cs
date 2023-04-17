@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using Leopotam.EcsLite;
+﻿using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
-using UnityEngine;
 
 namespace RoomByRoom
 {
@@ -10,8 +8,8 @@ namespace RoomByRoom
 	{
 		private readonly EcsFilterInject<Inc<DelayAttackMessage>> _delayMsgs = Idents.Worlds.MessageWorld;
 		private readonly EcsCustomInject<EnemyData> _enemyCfg = default;
-		private EcsWorld _world;
 		private EcsWorld _message;
+		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
 		{

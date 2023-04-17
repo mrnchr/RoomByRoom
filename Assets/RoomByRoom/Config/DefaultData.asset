@@ -46,7 +46,7 @@ MonoBehaviour:
     Weapon:
     - BoundEntity: 0
       ComponentInfo:
-        Type: 1
+        Type: 0
     - BoundEntity: 1
       ComponentInfo:
         Type: 3
@@ -54,7 +54,7 @@ MonoBehaviour:
     PhysDamage:
     - BoundEntity: 0
       ComponentInfo:
-        Point: 12
+        Point: 50
     - BoundEntity: 1
       ComponentInfo:
         Point: 9
@@ -65,7 +65,7 @@ MonoBehaviour:
     Shape:
     - BoundEntity: 0
       ComponentInfo:
-        PrefabIndex: 0
+        PrefabIndex: -1
     - BoundEntity: 1
       ComponentInfo:
         PrefabIndex: 0

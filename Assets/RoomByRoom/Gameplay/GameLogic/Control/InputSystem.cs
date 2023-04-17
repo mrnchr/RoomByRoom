@@ -1,15 +1,15 @@
-using UnityEngine;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
+using UnityEngine;
 
 namespace RoomByRoom
 {
 	public class InputSystem : IEcsInitSystem, IEcsRunSystem
 	{
-		private EcsFilterInject<Inc<ControllerByPlayer>> _controller = default;
-		private EcsWorld _world;
+		private readonly EcsFilterInject<Inc<ControllerByPlayer>> _controller = default;
 		private EcsWorld _message;
+		private EcsWorld _world;
 
 		public void Init(IEcsSystems systems)
 		{
@@ -19,14 +19,20 @@ namespace RoomByRoom
 
 		public void Run(IEcsSystems systems)
 		{
-			foreach (var index in _controller.Value)
+			foreach (int index in _controller.Value)
 			{
 				OpenDoor();
 				Move(index);
 				Jump(index);
 				RotateCamera();
 				Attack(index);
+				Take(index);
 			}
+		}
+
+		private void Take(int entity)
+		{
+			if (Input.GetKeyDown(KeyCode.T)) _world.AddComponent<TakeCommand>(entity);
 		}
 
 		private void RotateCamera()
@@ -40,7 +46,8 @@ namespace RoomByRoom
 				});
 		}
 
-		private static Vector2 GetRotationInput() => new((int)Input.GetAxisRaw("Mouse X"), (int)Input.GetAxisRaw("Mouse Y"));
+		private static Vector2 GetRotationInput() =>
+			new Vector2((int)Input.GetAxisRaw("Mouse X"), (int)Input.GetAxisRaw("Mouse Y"));
 
 		private void Jump(int entity)
 		{
@@ -65,7 +72,8 @@ namespace RoomByRoom
 				});
 		}
 
-		private static Vector3 GetMovementInput() => new(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+		private static Vector3 GetMovementInput() =>
+			new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
 		private void OpenDoor()
 		{

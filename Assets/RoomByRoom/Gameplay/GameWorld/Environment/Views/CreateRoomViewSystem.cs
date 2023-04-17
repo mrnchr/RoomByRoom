@@ -1,9 +1,8 @@
 using System;
-using UnityEngine;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
-using Object = System.Object;
+using Object = UnityEngine.Object;
 
 namespace RoomByRoom
 {
@@ -21,7 +20,7 @@ namespace RoomByRoom
 
 			foreach (int index in _rooms.Value)
 			{
-				RoomView roomView = UnityEngine.Object.Instantiate(SelectRoom(index));
+				RoomView roomView = Object.Instantiate(SelectRoom(index));
 				roomView.Entity = index;
 
 				_world.AddComponent<RoomViewRef>(index)

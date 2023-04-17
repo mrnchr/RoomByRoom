@@ -13,10 +13,7 @@ namespace RoomByRoom
 
 		public void SetActiveAttackTriggers(bool isActive)
 		{
-			foreach (var trigger in AttackTriggers)
-			{
-				trigger.enabled = isActive;
-			}
+			foreach (Collider trigger in AttackTriggers) trigger.enabled = isActive;
 		}
 	}
 }

@@ -8,20 +8,18 @@ namespace RoomByRoom.Database
 
 		public BoundComponent<ItemPhysicalProtection> Pull(SQLiteDataReader row)
 		{
-			BoundComponent<ItemPhysicalProtection> comp = new BoundComponent<ItemPhysicalProtection>();
+			var comp = new BoundComponent<ItemPhysicalProtection>();
 			comp.BoundEntity = row.GetInt32(0);
 			comp.ComponentInfo.Point = row.GetFloat(2);
 			return comp;
 		}
 
-		public string GetTextToPut(BoundComponent<ItemPhysicalProtection> comp, string toProfile)
-		{
-			return $"insert or replace into protection values " +
-			       $"(" +
-			       $"{comp.BoundEntity}, " +
-			       $"\'{toProfile}\', " +
-			       $"{comp.ComponentInfo.Point}" +
-			       $");";
-		}
+		public string GetTextToPut(BoundComponent<ItemPhysicalProtection> comp, string toProfile) =>
+			"insert or replace into protection values " +
+			"(" +
+			$"{comp.BoundEntity}, " +
+			$"\'{toProfile}\', " +
+			$"{comp.ComponentInfo.Point}" +
+			");";
 	}
 }

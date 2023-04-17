@@ -1,8 +1,5 @@
-using UnityEngine;
-
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-
 using RoomByRoom.Utility;
 
 namespace RoomByRoom
@@ -31,8 +28,8 @@ namespace RoomByRoom
 					ref Health health = ref _world.GetComponent<Health>(message.Damaged);
 
 					health.CurrentPoint += physProtection.CurrentPoint;
-					health.CurrentPoint.Clamp(min: 0);
-					
+					health.CurrentPoint.Clamp(0);
+
 					physProtection.CurrentPoint = 0;
 					// UnityEngine.Debug.Log($"Health after damage: {health.Point}");
 				}

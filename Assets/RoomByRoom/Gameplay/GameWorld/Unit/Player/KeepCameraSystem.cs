@@ -1,5 +1,4 @@
 ﻿using Leopotam.EcsLite;
-
 using RoomByRoom.Utility;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ namespace RoomByRoom
 	public class KeepCameraSystem : IEcsRunSystem
 	{
 		private EcsWorld _world;
-		
+
 		public void Run(IEcsSystems systems)
 		{
 			_world = systems.GetWorld();
@@ -20,10 +19,8 @@ namespace RoomByRoom
 				: player.CameraHolder.position + GetDirectionFromPlayerToCamera(player) * player.CameraDistance;
 		}
 
-		private Vector3 GetDirectionFromPlayerToCamera(PlayerView player)
-		{
-			return (player.Camera.position - player.CameraHolder.position).normalized;
-		}
+		private Vector3 GetDirectionFromPlayerToCamera(PlayerView player) =>
+			(player.Camera.position - player.CameraHolder.position).normalized;
 
 		private PlayerView GetPlayer()
 		{

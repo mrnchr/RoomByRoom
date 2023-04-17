@@ -1,23 +1,20 @@
-using UnityEngine;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
+using UnityEngine;
 
 namespace RoomByRoom
 {
 	public class MoveUnitSystem : IEcsRunSystem
 	{
-		private EcsFilterInject<Inc<MoveCommand, UnitViewRef, Movable>> _units = default;
+		private readonly EcsFilterInject<Inc<MoveCommand, UnitViewRef, Movable>> _units = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
 		{
 			_world = systems.GetWorld();
 
-			foreach (var index in _units.Value)
-			{
-				Move(index);
-			}
+			foreach (int index in _units.Value) Move(index);
 		}
 
 		private void Move(int entity)
@@ -30,10 +27,7 @@ namespace RoomByRoom
 			unitView.Rb.velocity = endDirection;
 		}
 
-		private float GetSpeed(int entity)
-		{
-			return _world.GetComponent<Movable>(entity).Speed;
-		}
+		private float GetSpeed(int entity) => _world.GetComponent<Movable>(entity).Speed;
 
 		private Vector3 GetRawDirection(int entity, UnitView unitView)
 		{

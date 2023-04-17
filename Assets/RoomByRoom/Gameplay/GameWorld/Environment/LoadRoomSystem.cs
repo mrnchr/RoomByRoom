@@ -6,11 +6,11 @@ namespace RoomByRoom
 {
 	internal class LoadRoomSystem : IEcsInitSystem
 	{
-		private EcsCustomInject<Saving> _savedData = default;
+		private readonly EcsCustomInject<Saving> _savedData = default;
 
 		public void Init(IEcsSystems systems)
 		{
-			var world = systems.GetWorld();
+			EcsWorld world = systems.GetWorld();
 
 			int room = world.NewEntity();
 			RoomEntity roomEntity = _savedData.Value.Room;

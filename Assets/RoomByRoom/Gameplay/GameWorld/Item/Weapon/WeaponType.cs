@@ -4,7 +4,7 @@ namespace RoomByRoom
 	{
 		None,
 		OneHand,
-		TwoHand,
+		TwoHands,
 		Bow
 	}
 }

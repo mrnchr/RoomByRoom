@@ -1,25 +1,21 @@
 ﻿using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-
 using RoomByRoom.Utility;
 
 namespace RoomByRoom
 {
 	public class FillEnemyEquipmentSystem : IEcsRunSystem
 	{
-		private readonly EcsFilterInject<Inc<Equipped>> _items = default;
 		private readonly EcsCustomInject<CharacteristicService> _charSvc = default;
+		private readonly EcsFilterInject<Inc<Equipped>> _items = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
 		{
 			_world = systems.GetWorld();
 
-			foreach (int index in _items.Value)
-			{
-				AddItemToEquipment(index);
-			}
-			
+			foreach (int index in _items.Value) AddItemToEquipment(index);
+
 			foreach (int index in _world.Filter<Bare>().End())
 			{
 				_charSvc.Value.Calculate(index);

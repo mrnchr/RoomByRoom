@@ -1,16 +1,16 @@
 using System.Collections.Generic;
-using Rand = UnityEngine.Random;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
+using Rand = UnityEngine.Random;
 
 namespace RoomByRoom
 {
 	public class WearHumanoidEnemySystem : IEcsRunSystem
 	{
-		private readonly EcsFilterInject<Inc<Bare>> _units = default;
 		private readonly EcsCustomInject<GameInfo> _gameInfo = default;
 		private readonly EcsCustomInject<PackedPrefabData> _prefabData = default;
+		private readonly EcsFilterInject<Inc<Bare>> _units = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
@@ -28,9 +28,9 @@ namespace RoomByRoom
 		{
 			int maxArmorNumber = Utils.GetEnumLength<ArmorType>() - 1;
 			int armorNumber = Rand.Range(0, maxArmorNumber);
-			List<int> armorTypes = new List<int>(new int[] { 0, 1, 2, 3, 4 });
+			var armorTypes = new List<int>(new[] { 0, 1, 2, 3, 4 });
 
-			for (int i = 0; i < armorNumber; i++)
+			for (var i = 0; i < armorNumber; i++)
 			{
 				int index = Rand.Range(0, armorTypes.Count);
 				CreateArmor((ArmorType)armorTypes[index], entity);
@@ -61,7 +61,7 @@ namespace RoomByRoom
 		private void CreateWeapon(int unit)
 		{
 			// TODO: change to random
-			WeaponType weaponType = WeaponType.OneHand; // FastRandom.GetWeaponType();
+			var weaponType = WeaponType.OneHand; // FastRandom.GetWeaponType();
 
 			int weapon = CreateItemEntity(ItemType.Weapon, (int)weaponType, unit);
 
@@ -93,7 +93,10 @@ namespace RoomByRoom
 		}
 
 		// TODO: shield has persistent rather than protection
-		private void CreateShield(int entity) => CreateArmor(ArmorType.Shield, entity);
+		private void CreateShield(int entity)
+		{
+			CreateArmor(ArmorType.Shield, entity);
+		}
 
 		private int CreateItemEntity(ItemType itemType, int equipmentType, int unitEntity)
 		{

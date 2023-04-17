@@ -1,19 +1,19 @@
-using UnityEngine;
-using UnityEngine.AI;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
+using UnityEngine;
+using UnityEngine.AI;
 
 namespace RoomByRoom
 {
 	public class CreateUnitViewSystem : IEcsRunSystem
 	{
-		private readonly EcsFilterInject<Inc<UnitInfo>, Exc<UnitViewRef>> _units = default;
-		private readonly EcsCustomInject<Saving> _savedData = default;
 		private readonly EcsCustomInject<AttackService> _attackSvc = default;
 		private readonly EcsCustomInject<PackedPrefabData> _prefabData = default;
-		private EcsWorld _world;
+		private readonly EcsCustomInject<Saving> _savedData = default;
+		private readonly EcsFilterInject<Inc<UnitInfo>, Exc<UnitViewRef>> _units = default;
 		private int _playerEntity;
+		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
 		{
@@ -40,20 +40,15 @@ namespace RoomByRoom
 					SetNavMeshAgent(index, unitView);
 
 				if (unitView is GroundUnitView groundUnit)
-				{
 					_world.AddComponent<Jumpable>(index)
 						.Assign(x => GetJumping(index, groundUnit));
-				}
-				else if (unitView is FlyingUnitView)
-				{
-					_world.AddComponent<Flyable>(index);
-				}
+				else if (unitView is FlyingUnitView) _world.AddComponent<Flyable>(index);
 			}
 		}
 
 		private void SetNavMeshAgent(int index, UnitView unitView)
 		{
-			NavMeshAgent agent = unitView.GetComponent<NavMeshAgent>();
+			var agent = unitView.GetComponent<NavMeshAgent>();
 			agent.updateRotation = false;
 			agent.updatePosition = false;
 			agent.speed = GetMoving(index, unitView).Speed;
@@ -66,26 +61,20 @@ namespace RoomByRoom
 				});
 		}
 
-		private Movable GetMoving(int entity, UnitView unit)
-		{
-			return IsPlayer(entity)
+		private Movable GetMoving(int entity, UnitView unit) =>
+			IsPlayer(entity)
 				? _savedData.Value.Player.MovableCmp
 				: unit.MovableCmp;
-		}
 
-		private Jumpable GetJumping(int entity, GroundUnitView unit)
-		{
-			return IsPlayer(entity)
+		private Jumpable GetJumping(int entity, GroundUnitView unit) =>
+			IsPlayer(entity)
 				? _savedData.Value.Player.JumpableCmp
 				: unit.JumpableCmp;
-		}
 
-		private UnitView InstantiateUnit(int entity)
-		{
-			return Object.Instantiate(
+		private UnitView InstantiateUnit(int entity) =>
+			Object.Instantiate(
 					GetUnitPrefab(entity))
 				.GetComponent<UnitView>();
-		}
 
 		private GameObject GetUnitPrefab(int entity)
 		{

@@ -6,9 +6,9 @@ namespace RoomByRoom
 {
 	public class OpenDoorSystem : IEcsRunSystem
 	{
+		private readonly EcsCustomInject<GameInfo> _gameInfo = default;
 		private readonly EcsFilterInject<Inc<OpenDoorMessage>> _openDoorMsg = Idents.Worlds.MessageWorld;
 		private readonly EcsFilterInject<Inc<Opener>> _opener = default;
-		private readonly EcsCustomInject<GameInfo> _gameInfo = default;
 		private EcsWorld _message;
 
 		public void Run(IEcsSystems systems)
@@ -16,16 +16,14 @@ namespace RoomByRoom
 			_message = systems.GetWorld(Idents.Worlds.MessageWorld);
 
 			foreach (int index in _openDoorMsg.Value)
+			foreach (int _ in _opener.Value)
 			{
-				foreach (int _ in _opener.Value)
-				{
-					if (IsFirstRoom(_gameInfo.Value.RoomCount))
-						StartGame();
+				if (IsFirstRoom(_gameInfo.Value.RoomCount))
+					StartGame();
 
-					CreateNextRoom();
+				CreateNextRoom();
 
-					++_gameInfo.Value.RoomCount;
-				}
+				++_gameInfo.Value.RoomCount;
 			}
 		}
 

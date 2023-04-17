@@ -11,12 +11,10 @@ namespace RoomByRoom
 			Prefabs = prefabs;
 		}
 
-		public ItemView GetItem(ItemType item, int type, int index = -1)
-		{
-			return index == -1
+		public ItemView GetItem(ItemType item, int type, int index = -1) =>
+			index == -1
 				? Prefabs.PlayerHand
 				: GetItems(item, type)[index];
-		}
 
 		public ItemView[] GetItems(ItemType item, int type)
 		{
@@ -25,7 +23,7 @@ namespace RoomByRoom
 				ItemType.Armor => GetArmors((ArmorType)type),
 				ItemType.Artifact => Prefabs.Artifacts,
 				ItemType.Weapon => GetWeapons((WeaponType)type),
-				_ => throw new ArgumentOutOfRangeException(),
+				_ => throw new ArgumentOutOfRangeException()
 			};
 		}
 
@@ -39,7 +37,7 @@ namespace RoomByRoom
 				ArmorType.Helmet => Prefabs.Helmets,
 				ArmorType.Leggings => Prefabs.Leggings,
 				ArmorType.Shield => Prefabs.Shields,
-				_ => throw new ArgumentOutOfRangeException(),
+				_ => throw new ArgumentOutOfRangeException()
 			};
 		}
 
@@ -49,8 +47,8 @@ namespace RoomByRoom
 			{
 				WeaponType.Bow => Prefabs.Bows,
 				WeaponType.OneHand => Prefabs.OneHandWeapons,
-				WeaponType.TwoHand => Prefabs.TwoHandsWeapons,
-				_ => throw new ArgumentOutOfRangeException(),
+				WeaponType.TwoHands => Prefabs.TwoHandsWeapons,
+				_ => throw new ArgumentOutOfRangeException()
 			};
 		}
 
@@ -61,7 +59,7 @@ namespace RoomByRoom
 				RaceType.Sand => Prefabs.SandEnemyUnits,
 				RaceType.Water => Prefabs.WaterEnemyUnits,
 				RaceType.Dark => Prefabs.DarkEnemyUnits,
-				_ => throw new ArgumentOutOfRangeException(),
+				_ => throw new ArgumentOutOfRangeException()
 			};
 		}
 	}

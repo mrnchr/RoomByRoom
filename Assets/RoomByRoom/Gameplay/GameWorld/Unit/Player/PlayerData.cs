@@ -6,5 +6,8 @@ namespace RoomByRoom
 	public class PlayerData : ScriptableObject
 	{
 		public ArmorData Armor;
+		public float TakeItemDistance;
+		public int BackpackSize;
+		public int EquipmentSize;
 	}
 }

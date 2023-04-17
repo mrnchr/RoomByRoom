@@ -6,7 +6,7 @@ namespace RoomByRoom
 {
 	public class PickPlayerMainWeaponSystem : IEcsInitSystem
 	{
-		private EcsFilterInject<Inc<WeaponInfo, Equipped>> _weapons = default;
+		private readonly EcsFilterInject<Inc<WeaponInfo, Equipped>> _weapons = default;
 
 		public void Init(IEcsSystems systems)
 		{

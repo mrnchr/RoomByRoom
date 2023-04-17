@@ -3,24 +3,24 @@ using UnityEngine.AI;
 
 namespace RoomByRoom
 {
-    public class HumanoidMovement : MonoBehaviour
-    {
-        private Transform _player;
-        private NavMeshPath _path;
-        private HumanoidView _humanoid;
-        private NavMeshAgent _agent;
+	public class HumanoidMovement : MonoBehaviour
+	{
+		private NavMeshAgent _agent;
+		private HumanoidView _humanoid;
+		private NavMeshPath _path;
+		private Transform _player;
 
-        void Start()
-        {
-            _humanoid = GetComponent<HumanoidView>();
-            _player = FindObjectOfType<PlayerView>().transform;
-            _agent = GetComponent<NavMeshAgent>();
-        }
+		private void Start()
+		{
+			_humanoid = GetComponent<HumanoidView>();
+			_player = FindObjectOfType<PlayerView>().transform;
+			_agent = GetComponent<NavMeshAgent>();
+		}
 
-        void Update()
-        {
-            // if ((transform.position - _player.transform.position).sqrMagnitude > 3f)
-                _agent.SetDestination(_player.transform.position);
-        }
-    }
+		private void Update()
+		{
+			// if ((transform.position - _player.transform.position).sqrMagnitude > 3f)
+			_agent.SetDestination(_player.transform.position);
+		}
+	}
 }

@@ -1,8 +1,8 @@
-using UnityEngine;
-using UnityEngine.AI;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
+using UnityEngine;
+using UnityEngine.AI;
 
 namespace RoomByRoom
 {
@@ -22,7 +22,7 @@ namespace RoomByRoom
 				// TODO: to execute for all enemies
 				if (!IsHumanoid(index))
 					continue;
-				
+
 				Vector3 humanoidPos = GetHumanoidPosition(index);
 				Vector3 moveDir;
 				Vector3 rotateDir;
@@ -30,21 +30,21 @@ namespace RoomByRoom
 				if (!IsNearPlayer(humanoidPos, player.position))
 				{
 					agent.SetDestination(player.position);
-					
+
 					moveDir = (agent.nextPosition - humanoidPos).normalized;
 					rotateDir = ConvertToDirection(agent.steeringTarget - humanoidPos);
 					// agent.updatePosition = true;
 				}
 				else
 				{
-					agent.ResetPath();	
+					agent.ResetPath();
 					agent.Warp(humanoidPos);
 					_world.AddComponent<AttackCommand>(index);
 					// agent.updatePosition = false;
 					moveDir = Vector3.zero;
 					rotateDir = ConvertToDirection(player.position - humanoidPos);
 				}
-				
+
 				AddRotateComponent(index, rotateDir);
 
 				_world.AddComponent<MoveCommand>(index)

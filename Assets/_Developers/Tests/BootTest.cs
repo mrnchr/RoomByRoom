@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RoomByRoom
 {
-    public class BootTest : MonoBehaviour
-    {
-    }
+	public class BootTest : MonoBehaviour
+	{
+	}
 }

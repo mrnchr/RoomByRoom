@@ -1,0 +1,29 @@
+{
+  "name": "PlayModeTesting",
+  "rootNamespace": "",
+  "references": [
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner",
+    "GameAssembly",
+    "Leopotam.EcsLite",
+    "Leopotam.EcsLite.Di",
+    "Leopotam.EcsLite.ExtendedSystems",
+    "Leopotam.EcsLite.UnityEditor.Runtime",
+    "Testing"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "nunit.framework.dll",
+    "FluentAssertions.dll",
+    "System.Diagnostics.EventLog.dll"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
