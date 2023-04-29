@@ -18,7 +18,7 @@ namespace RoomByRoom
 
 			foreach (int index in _delayMsgs.Value)
 			{
-				int unit = _message.GetComponent<DelayAttackMessage>(index).Unit;
+				int unit = _message.Get<DelayAttackMessage>(index).Unit;
 				Utils.UpdateTimer<CantAttack>(_world, unit, _enemyCfg.Value.DelayAttackTime);
 				_message.DelEntity(index);
 			}

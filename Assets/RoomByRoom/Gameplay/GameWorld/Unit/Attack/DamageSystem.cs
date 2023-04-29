@@ -16,8 +16,8 @@ namespace RoomByRoom
 			foreach (int index in _messages.Value)
 			{
 				ref GetDamageMessage message = ref _messages.Pools.Inc1.Get(index);
-				ref UnitPhysicalProtection physProtection = ref _world.GetComponent<UnitPhysicalProtection>(message.Damaged);
-				float physDamage = _world.GetComponent<ItemPhysicalDamage>(message.Weapon).Point;
+				ref UnitPhysicalProtection physProtection = ref _world.Get<UnitPhysicalProtection>(message.Damaged);
+				float physDamage = _world.Get<ItemPhysicalDamage>(message.Weapon).Point;
 
 				// Debug.Log($"Damage: {physDamage}, protection: {physProtection.CurrentPoint}");
 
@@ -25,7 +25,7 @@ namespace RoomByRoom
 				physProtection.CurrentPoint -= physDamage;
 				if (physProtection.CurrentPoint < 0)
 				{
-					ref Health health = ref _world.GetComponent<Health>(message.Damaged);
+					ref Health health = ref _world.Get<Health>(message.Damaged);
 
 					health.CurrentPoint += physProtection.CurrentPoint;
 					health.CurrentPoint.Clamp(0);

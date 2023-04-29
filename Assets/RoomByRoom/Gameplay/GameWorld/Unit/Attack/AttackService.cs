@@ -16,12 +16,12 @@ namespace RoomByRoom
 
 		public void SetAttackTriggers(int unit, bool isAttack)
 		{
-			ref MainWeapon mainWeapon = ref _world.GetComponent<MainWeapon>(unit);
-			var weapon = (WeaponView)_world.GetComponent<ItemViewRef>(mainWeapon.Entity).Value;
+			ref MainWeapon mainWeapon = ref _world.Get<MainWeapon>(unit);
+			var weapon = (WeaponView)_world.Get<ItemViewRef>(mainWeapon.Entity).Value;
 			weapon.SetActiveAttackTriggers(isAttack);
 
 			if (!isAttack && Utils.IsUnitOf(_world, unit, UnitType.Humanoid))
-				_message.AddComponent<DelayAttackMessage>(_message.NewEntity())
+				_message.Add<DelayAttackMessage>(_message.NewEntity())
 					.Assign(x =>
 					{
 						x.Unit = unit;
@@ -31,14 +31,14 @@ namespace RoomByRoom
 
 		public void Damage(int damaged, int weapon)
 		{
-			if (!_world.HasComponent<Owned>(weapon))
+			if (!_world.Has<Owned>(weapon))
 				return;
 
-			int owner = _world.GetComponent<Owned>(weapon).Owner;
+			int owner = _world.Get<Owned>(weapon).Owner;
 			if (!CanFight(damaged, owner))
 				return;
 
-			_message.AddComponent<GetDamageMessage>(_message.NewEntity())
+			_message.Add<GetDamageMessage>(_message.NewEntity())
 				.Assign(x =>
 				{
 					x.Damaged = damaged;

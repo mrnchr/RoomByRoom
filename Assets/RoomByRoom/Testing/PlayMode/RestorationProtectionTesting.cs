@@ -51,7 +51,7 @@ namespace RoomByRoom.Testing.PlayMode
 			enemyView.transform.position = playerView.transform.position + new Vector3(1f, 0, 1.5f);
 
 			int weapon = eng.World.NewEntity();
-			eng.World.AddComponent<WeaponInfo>(weapon).Type = WeaponType.OneHand;
+			eng.World.Add<WeaponInfo>(weapon).Type = WeaponType.OneHand;
 			var weaponObj = (GameObject)Object.Instantiate(Resources.Load("Axe1 Variant"));
 			var weaponView = weaponObj.GetComponent<WeaponView>();
 			weaponView.Entity = weapon;
@@ -65,16 +65,16 @@ namespace RoomByRoom.Testing.PlayMode
 			// Debug.Log(eng);
 			// yield return new WaitForSeconds(5);
 			EcsWorld world = eng.World;
-			world.AddComponent<UnitViewRef>(player).Value = playerView;
-			world.AddComponent<UnitViewRef>(enemy).Value = enemyView;
-			world.AddComponent<ItemViewRef>(weapon).Value = weaponView;
-			world.AddComponent<UnitInfo>(player).Type = UnitType.Player;
-			world.AddComponent<UnitInfo>(enemy).Type = UnitType.Humanoid;
-			world.AddComponent<MainWeapon>(player).Entity = weapon;
-			world.AddComponent<Owned>(weapon).Owner = player;
-			world.AddComponent<ItemPhysicalDamage>(weapon).Point = 30;
+			world.Add<UnitViewRef>(player).Value = playerView;
+			world.Add<UnitViewRef>(enemy).Value = enemyView;
+			world.Add<ItemViewRef>(weapon).Value = weaponView;
+			world.Add<UnitInfo>(player).Type = UnitType.Player;
+			world.Add<UnitInfo>(enemy).Type = UnitType.Humanoid;
+			world.Add<MainWeapon>(player).Entity = weapon;
+			world.Add<Owned>(weapon).Owner = player;
+			world.Add<ItemPhysicalDamage>(weapon).Point = 30;
 
-			UnitPhysicalProtection physProtection = world.AddComponent<UnitPhysicalProtection>(enemy)
+			UnitPhysicalProtection physProtection = world.Add<UnitPhysicalProtection>(enemy)
 				.Assign(x =>
 				{
 					x.CurrentPoint = 50;
@@ -85,19 +85,19 @@ namespace RoomByRoom.Testing.PlayMode
 				});
 
 			float lastPoint = physProtection.CurrentPoint;
-			world.AddComponent<AttackCommand>(player);
+			world.Add<AttackCommand>(player);
 
 			// Act
-			yield return new WaitUntil(() => world.HasComponent<CantRestore>(enemy) || exit);
-			var physProt = world.GetComponent<UnitPhysicalProtection>(enemy);
+			yield return new WaitUntil(() => world.Has<CantRestore>(enemy) || exit);
+			var physProt = world.Get<UnitPhysicalProtection>(enemy);
 			physProt.CurrentPoint.Should().BeLessThan(lastPoint);
 			lastPoint = physProt.CurrentPoint;
 
-			world.DelComponent<CantRestore>(enemy);
+			world.Del<CantRestore>(enemy);
 			yield return new WaitForSeconds(1);
 
 			// Assert
-			world.GetComponent<UnitPhysicalProtection>(enemy).CurrentPoint.Should().BeGreaterThan(lastPoint);
+			world.Get<UnitPhysicalProtection>(enemy).CurrentPoint.Should().BeGreaterThan(lastPoint);
 		}
 	}
 

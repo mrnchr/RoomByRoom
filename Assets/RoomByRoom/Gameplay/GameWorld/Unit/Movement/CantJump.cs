@@ -1,6 +1,7 @@
 namespace RoomByRoom
 {
-	public struct CantJump
+	public struct CantJump : ITimerable
 	{
+		public float TimeLeft { get; set; }
 	}
 }

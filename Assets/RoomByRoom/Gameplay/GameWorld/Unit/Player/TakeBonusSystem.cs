@@ -23,15 +23,15 @@ namespace RoomByRoom
 			if (bonus == -1)
 				return;
 
-			int item = _world.GetComponent<Bonus>(bonus).Item;
+			int item = _world.Get<Bonus>(bonus).Item;
 			foreach (int index in _takes.Value)
 			{
-				var inventory = _world.GetComponent<Inventory>(index).ItemList;
+				var inventory = _world.Get<Inventory>(index).ItemList;
 
 				if (CanPutInEquipment(index, item))
 				{
-					_world.AddComponent<Equipped>(item);
-					var equipment = _world.GetComponent<Equipment>(index).ItemList;
+					_world.Add<Equipped>(item);
+					var equipment = _world.Get<Equipment>(index).ItemList;
 					equipment.Add(item);
 
 					if (IsMeleeWeapon(GetItemTuple(item)))
@@ -47,11 +47,11 @@ namespace RoomByRoom
 				{
 					if (IsBackPackFull(index))
 						continue;
-					_world.GetComponent<Backpack>(index)
+					_world.Get<Backpack>(index)
 						.ItemList.Add(item);
 				}
 
-				_world.AddComponent<Owned>(item)
+				_world.Add<Owned>(item)
 					.Owner = index;
 
 				inventory.Add(item);
@@ -70,29 +70,31 @@ namespace RoomByRoom
 
 		private void DestroyBonus(int selected, int item)
 		{
-			Object.Destroy(_world.GetComponent<BonusViewRef>(selected).Value.gameObject);
-			_world.DelComponent<ItemViewRef>(item);
+			Object.Destroy(_world.Get<BonusViewRef>(selected).Value.gameObject);
+			_world.Del<ItemViewRef>(item);
 			_world.DelEntity(selected);
 		}
 
-		private void ChangeMainWeapon(int hands, int item, int index)
+		private void ChangeMainWeapon(int hands, int item, int unit)
 		{
-			_world.GetComponent<ItemViewRef>(hands).Value.gameObject.SetActive(false);
-			_world.DelComponent<InHands>(hands);
+			_world.Get<ItemViewRef>(hands).Value.gameObject.SetActive(false);
+			_world.Del<InHands>(hands);
 
-			_world.AddComponent<InHands>(item);
-			_world.GetComponent<MainWeapon>(index)
+			_world.Add<InHands>(item);
+			_world.Get<MainWeapon>(unit)
 				.Entity = item;
+			
+			Utils.SetWeaponToAnimate(_world, item, unit);
 		}
 
-		private bool IsMainWeapon(int unit, int weapon) => _world.GetComponent<MainWeapon>(unit).Entity == weapon;
+		private bool IsMainWeapon(int unit, int weapon) => _world.Get<MainWeapon>(unit).Entity == weapon;
 
 		private void Disarm(int hands, List<int> equipment, List<int> inventory)
 		{
 			if (hands != -1)
 			{
-				_world.DelComponent<Equipped>(hands);
-				_world.AddComponent<NotVisible>(hands);
+				_world.Del<Equipped>(hands);
+				_world.Add<NotVisible>(hands);
 				equipment.Remove(hands);
 				inventory.Remove(hands);
 			}
@@ -110,15 +112,15 @@ namespace RoomByRoom
 		}
 
 		private bool IsHands(int item) =>
-			_world.HasComponent<WeaponInfo>(item) && _world.GetComponent<WeaponInfo>(item).Type == None;
+			_world.Has<WeaponInfo>(item) && _world.Get<WeaponInfo>(item).Type == None;
 
 		private bool IsListFull(List<int> list) => list.Count == list.Capacity;
 
-		private bool IsBackPackFull(int entity) => IsListFull(_world.GetComponent<Backpack>(entity).ItemList);
+		private bool IsBackPackFull(int entity) => IsListFull(_world.Get<Backpack>(entity).ItemList);
 
 		private bool CanPutInEquipment(int entity, int checkedItem)
 		{
-			var list = _world.GetComponent<Equipment>(entity).ItemList;
+			var list = _world.Get<Equipment>(entity).ItemList;
 			if (IsListFull(list))
 				return false;
 
@@ -145,7 +147,7 @@ namespace RoomByRoom
 
 		private ItemTuple GetItemTuple(int item)
 		{
-			ItemType type = _world.GetComponent<ItemInfo>(item).Type;
+			ItemType type = _world.Get<ItemInfo>(item).Type;
 			return new ItemTuple
 			{
 				Type = type,
@@ -168,8 +170,8 @@ namespace RoomByRoom
 			// TODO: add artifact
 			return itemType switch
 			{
-				Weapon => (int)_world.GetComponent<WeaponInfo>(item).Type,
-				Armor => (int)_world.GetComponent<ArmorInfo>(item).Type,
+				Weapon => (int)_world.Get<WeaponInfo>(item).Type,
+				Armor => (int)_world.Get<ArmorInfo>(item).Type,
 				_ => throw new ArgumentOutOfRangeException(nameof(itemType), itemType, null)
 			};
 		}

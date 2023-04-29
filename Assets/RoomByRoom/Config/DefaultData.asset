@@ -40,32 +40,19 @@ MonoBehaviour:
     - BoundEntity: 0
       ComponentInfo:
         Type: 0
-    - BoundEntity: 1
-      ComponentInfo:
-        Type: 0
     Weapon:
     - BoundEntity: 0
       ComponentInfo:
         Type: 0
-    - BoundEntity: 1
-      ComponentInfo:
-        Type: 3
     Armor: []
     PhysDamage:
     - BoundEntity: 0
       ComponentInfo:
         Point: 50
-    - BoundEntity: 1
-      ComponentInfo:
-        Point: 9
     PhysProtection: []
     Equipped:
     - BoundEntity: 0
-    - BoundEntity: 1
     Shape:
     - BoundEntity: 0
       ComponentInfo:
         PrefabIndex: -1
-    - BoundEntity: 1
-      ComponentInfo:
-        PrefabIndex: 0

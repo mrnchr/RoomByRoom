@@ -7,7 +7,9 @@ namespace RoomByRoom
 {
 	public class InputSystem : IEcsInitSystem, IEcsRunSystem
 	{
-		private readonly EcsFilterInject<Inc<ControllerByPlayer>> _controller = default;
+		private readonly EcsFilterInject<Inc<ControllerByPlayer>> _player = default;
+		private readonly EcsCustomInject<Configuration> _config = default;
+		private Controller _controller;
 		private EcsWorld _message;
 		private EcsWorld _world;
 
@@ -15,11 +17,12 @@ namespace RoomByRoom
 		{
 			_world = systems.GetWorld();
 			_message = systems.GetWorld(Idents.Worlds.MessageWorld);
+			_controller = _config.Value.Controller;
 		}
 
 		public void Run(IEcsSystems systems)
 		{
-			foreach (int index in _controller.Value)
+			foreach (int index in _player.Value)
 			{
 				OpenDoor();
 				Move(index);
@@ -32,18 +35,14 @@ namespace RoomByRoom
 
 		private void Take(int entity)
 		{
-			if (Input.GetKeyDown(KeyCode.T)) _world.AddComponent<TakeCommand>(entity);
+			if (Input.GetKeyDown(_controller.TakeCode)) 
+				_world.Add<TakeCommand>(entity);
 		}
 
 		private void RotateCamera()
 		{
-			int entity = _message.NewEntity();
-			_message.AddComponent<RotateCameraMessage>(entity)
-				.Assign(x =>
-				{
-					x.RotateDirection = GetRotationInput();
-					return x;
-				});
+			_message.Add<RotateCameraMessage>(_message.NewEntity())
+				.RotateDirection = GetRotationInput();
 		}
 
 		private static Vector2 GetRotationInput() =>
@@ -52,24 +51,16 @@ namespace RoomByRoom
 		private void Jump(int entity)
 		{
 			if (Input.GetAxisRaw("Jump") > 0)
-				_world.AddComponent<JumpCommand>(entity);
+				_world.Add<JumpCommand>(entity);
 		}
 
 		private void Move(int entity)
 		{
 			Vector3 dir = GetMovementInput();
-			_world.AddComponent<MoveCommand>(entity)
-				.Assign(x =>
-				{
-					x.MoveDirection = dir;
-					return x;
-				});
-			_world.AddComponent<RotateCommand>(entity)
-				.Assign(x =>
-				{
-					x.RotateDirection = dir;
-					return x;
-				});
+			_world.Add<MoveCommand>(entity)
+				.MoveDirection = dir;
+			_world.Add<RotateCommand>(entity)
+				.RotateDirection = dir;
 		}
 
 		private static Vector3 GetMovementInput() =>
@@ -77,17 +68,14 @@ namespace RoomByRoom
 
 		private void OpenDoor()
 		{
-			if (Input.GetKeyDown(KeyCode.F))
-			{
-				int entity = _message.NewEntity();
-				_message.AddComponent<OpenDoorMessage>(entity);
-			}
+			if (Input.GetKeyDown(_controller.OpenDoorCode))
+				_message.Add<OpenDoorMessage>(_message.NewEntity());
 		}
 
 		private void Attack(int entity)
 		{
-			if (Input.GetKeyDown(KeyCode.Mouse0))
-				_world.AddComponent<AttackCommand>(entity);
+			if (Input.GetKeyDown(_controller.AttackCode))
+				_world.Add<AttackCommand>(entity);
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace RoomByRoom
 			foreach (int index in _nextRoomMsg.Value)
 			{
 				DeleteRoom();
-				CreateRoom(message.GetComponent<NextRoomMessage>(index));
+				CreateRoom(message.Get<NextRoomMessage>(index));
 			}
 		}
 
@@ -27,17 +27,17 @@ namespace RoomByRoom
 		{
 			int roomEntity = _world.NewEntity();
 
-			_world.AddComponent<RaceInfo>(roomEntity)
+			_world.Add<RaceInfo>(roomEntity)
 				.Assign(x => x = nextRoom.Race);
 
-			_world.AddComponent<RoomInfo>(roomEntity)
+			_world.Add<RoomInfo>(roomEntity)
 				.Assign(x => x = nextRoom.Room);
 		}
 
 		private void DeleteRoom()
 		{
 			int roomEntity = _room.Value.GetRawEntities()[0];
-			Object.Destroy(_world.GetComponent<RoomViewRef>(roomEntity).Value.gameObject);
+			Object.Destroy(_world.Get<RoomViewRef>(roomEntity).Value.gameObject);
 			_world.DelEntity(roomEntity);
 		}
 	}

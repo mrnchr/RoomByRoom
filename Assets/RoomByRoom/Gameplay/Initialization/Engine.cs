@@ -12,12 +12,11 @@ namespace RoomByRoom
 	public sealed class Engine : MonoBehaviour
 	{
 		// TODO: change to external injection
-		[SerializeField] private DefaultData _defaultData;
+		[FormerlySerializedAs("_defaultData"),SerializeField] private InitializeData _initializeData;
 
 		[FormerlySerializedAs("_sceneData"), SerializeField] 
 		private SceneInfo _sceneInfo;
 
-		[SerializeField] private CoroutineStarter _coroutineStarter;
 		[SerializeField] private PrefabData _prefabData;
 		[SerializeField] private Configuration _configuration;
 		[SerializeField] private EnemyData _enemyData;
@@ -51,7 +50,7 @@ namespace RoomByRoom
 
 			_updateSystems
 				.AddWorld(_message, Idents.Worlds.MessageWorld)
-				.Add(new LoadSaveSystem())
+				.Add(new LoadSavingSystem())
 				.Add(new EnterGameStateSystem())
 				.Add(new LoadRoomSystem())
 				.Add(new LoadPlayerSystem())
@@ -82,7 +81,10 @@ namespace RoomByRoom
 				.Add(new DelayAttackSystem())
 				.Add(new MoveUnitSystem())
 				.Add(new RotateUnitSystem())
+				.Add(new TimerSystem<CantJump>())
+				.Add(new DelTimerSystem<CantJump>())
 				.Add(new JumpUnitSystem())
+				.Add(new AnimateLandingSystem())
 				.Add(new RotateCameraSystem())
 				.Add(new KeepCameraSystem())
 				.Add(new AttackSystem())
@@ -110,7 +112,7 @@ namespace RoomByRoom
 				.Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif
 				.Inject(_sceneInfo, _saving, _packedPrefabData, _configuration,
-					savingSvc, _defaultData, _gameInfo, attackSvc, _enemyData, charSvc, _coroutineStarter, _playerData)
+					savingSvc, _initializeData, _gameInfo, attackSvc, _enemyData, charSvc, _playerData)
 				.Init();
 
 			// _fixedUpdateSystems = new EcsSystems(_world);

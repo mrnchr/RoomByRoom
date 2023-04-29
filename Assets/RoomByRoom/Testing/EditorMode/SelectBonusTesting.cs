@@ -29,9 +29,9 @@ namespace RoomByRoom.Testing.EditorMode
 			_player = _world.NewEntity();
 
 			_playerView = Create.UnitViewRefCmp(_world, _player).Value;
-			_world.AddComponent<ControllerByPlayer>(_player);
+			_world.Add<ControllerByPlayer>(_player);
 			_bonusView = Create.BonusViewRefCmp(_world, _bonus).Value;
-			_world.AddComponent<Bonus>(_bonus);
+			_world.Add<Bonus>(_bonus);
 		}
 
 		[Test]
@@ -43,8 +43,8 @@ namespace RoomByRoom.Testing.EditorMode
 			_testSystem.Run(_systems);
 
 			// Assert
-			_world.HasComponent<SelectCommand>(_bonus).Should().Be(true);
-			_world.HasComponent<Selected>(_bonus).Should().Be(true);
+			_world.Has<SelectCommand>(_bonus).Should().Be(true);
+			_world.Has<Selected>(_bonus).Should().Be(true);
 		}
 
 		[Test]
@@ -57,8 +57,8 @@ namespace RoomByRoom.Testing.EditorMode
 			_testSystem.Run(_systems);
 
 			// Assert
-			_world.HasComponent<SelectCommand>(_bonus).Should().Be(false);
-			_world.HasComponent<Selected>(_bonus).Should().Be(false);
+			_world.Has<SelectCommand>(_bonus).Should().Be(false);
+			_world.Has<Selected>(_bonus).Should().Be(false);
 		}
 
 		[Test]
@@ -68,17 +68,17 @@ namespace RoomByRoom.Testing.EditorMode
 			// Arrange
 			int anotherBonus = _world.NewEntity();
 			Create.BonusViewRefCmp(_world, anotherBonus).Value.transform.position = Vector3.forward;
-			_world.AddComponent<Bonus>(anotherBonus);
-			_world.AddComponent<Selected>(anotherBonus);
+			_world.Add<Bonus>(anotherBonus);
+			_world.Add<Selected>(anotherBonus);
 
 			// Act
 			_testSystem.Run(_systems);
 
 			// Assert
-			_world.HasComponent<Selected>(anotherBonus).Should().Be(false);
-			_world.HasComponent<DeselectCommand>(anotherBonus).Should().Be(true);
-			_world.HasComponent<SelectCommand>(_bonus).Should().Be(true);
-			_world.HasComponent<Selected>(_bonus).Should().Be(true);
+			_world.Has<Selected>(anotherBonus).Should().Be(false);
+			_world.Has<DeselectCommand>(anotherBonus).Should().Be(true);
+			_world.Has<SelectCommand>(_bonus).Should().Be(true);
+			_world.Has<Selected>(_bonus).Should().Be(true);
 		}
 
 		[Test]
@@ -88,18 +88,18 @@ namespace RoomByRoom.Testing.EditorMode
 			// Arrange
 			int anotherBonus = _world.NewEntity();
 			Create.BonusViewRefCmp(_world, anotherBonus).Value.transform.position = Vector3.forward * 20;
-			_world.AddComponent<Bonus>(anotherBonus);
-			_world.AddComponent<Selected>(anotherBonus);
+			_world.Add<Bonus>(anotherBonus);
+			_world.Add<Selected>(anotherBonus);
 			_bonusView.transform.position = Vector3.back * 20;
 
 			// Act
 			_testSystem.Run(_systems);
 
 			// Assert
-			_world.HasComponent<Selected>(anotherBonus).Should().Be(false);
-			_world.HasComponent<DeselectCommand>(anotherBonus).Should().Be(true);
-			_world.HasComponent<SelectCommand>(_bonus).Should().Be(false);
-			_world.HasComponent<Selected>(_bonus).Should().Be(false);
+			_world.Has<Selected>(anotherBonus).Should().Be(false);
+			_world.Has<DeselectCommand>(anotherBonus).Should().Be(true);
+			_world.Has<SelectCommand>(_bonus).Should().Be(false);
+			_world.Has<Selected>(_bonus).Should().Be(false);
 		}
 
 		[Test]
@@ -107,29 +107,29 @@ namespace RoomByRoom.Testing.EditorMode
 		{
 			// Arrange
 			_bonusView.transform.position = Vector3.back * 20;
-			_world.AddComponent<Selected>(_bonus);
+			_world.Add<Selected>(_bonus);
 
 			// Act
 			_testSystem.Run(_systems);
 
 			// Assert
-			_world.HasComponent<Selected>(_bonus).Should().Be(false);
-			_world.HasComponent<DeselectCommand>(_bonus).Should().Be(true);
+			_world.Has<Selected>(_bonus).Should().Be(false);
+			_world.Has<DeselectCommand>(_bonus).Should().Be(true);
 		}
 
 		[Test]
 		public void WhenSelectBonus_AndBonusWasSelectedAndPlayerIsNearBonus_ThenBonusShouldBeSelected()
 		{
 			// Arrange
-			_world.AddComponent<Selected>(_bonus);
+			_world.Add<Selected>(_bonus);
 
 			// Act
 			_testSystem.Run(_systems);
 
 			// Assert
-			_world.HasComponent<Selected>(_bonus).Should().Be(true);
-			_world.HasComponent<DeselectCommand>(_bonus).Should().Be(false);
-			_world.HasComponent<SelectCommand>(_bonus).Should().Be(false);
+			_world.Has<Selected>(_bonus).Should().Be(true);
+			_world.Has<DeselectCommand>(_bonus).Should().Be(false);
+			_world.Has<SelectCommand>(_bonus).Should().Be(false);
 		}
 
 		[TearDown]

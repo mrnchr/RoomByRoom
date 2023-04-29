@@ -15,18 +15,18 @@ namespace RoomByRoom.Debugging
 
 			foreach (int index in _units.Value)
 			{
-				var inv = _world.GetComponent<UnitViewRef>(index)
+				var inv = _world.Get<UnitViewRef>(index)
 					.Value.gameObject.AddComponent<DebugInventory>();
 
-				inv.Equipment = _world.GetComponent<Equipment>(index).ItemList;
+				inv.Equipment = _world.Get<Equipment>(index).ItemList;
 
 				if (Utils.IsUnitOf(_world, index, UnitType.Player))
 				{
-					inv.Backpack = _world.GetComponent<Backpack>(index).ItemList;
-					inv.Inventory = _world.GetComponent<Inventory>(index).ItemList;
+					inv.Backpack = _world.Get<Backpack>(index).ItemList;
+					inv.Inventory = _world.Get<Inventory>(index).ItemList;
 				}
 
-				_world.AddComponent<DebugInfo>(index).Inv = inv;
+				_world.Add<DebugInfo>(index).Inv = inv;
 			}
 		}
 	}

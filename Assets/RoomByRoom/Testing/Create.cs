@@ -15,7 +15,7 @@ namespace RoomByRoom.Testing
 
 		public static ref GetDamageMessage GetDamageMessageCmp(EcsWorld message, int entity, int unit, int weapon)
 		{
-			return ref message.AddComponent<GetDamageMessage>(entity)
+			return ref message.Add<GetDamageMessage>(entity)
 				.Assign(x =>
 				{
 					x.Damaged = unit;
@@ -31,7 +31,7 @@ namespace RoomByRoom.Testing
 			float restoreSpeed = 0,
 			float cantRestoreTime = 0)
 		{
-			return ref world.AddComponent<UnitPhysicalProtection>(unit)
+			return ref world.Add<UnitPhysicalProtection>(unit)
 				.Assign(x =>
 				{
 					x.MaxPoint = maxPoint;
@@ -44,7 +44,7 @@ namespace RoomByRoom.Testing
 
 		public static ref Health HealthCmp(EcsWorld world, int unit, float currPoint = 0, float maxPoint = 0)
 		{
-			return ref world.AddComponent<Health>(unit)
+			return ref world.Add<Health>(unit)
 				.Assign(x =>
 				{
 					x.CurrentPoint = currPoint;
@@ -55,7 +55,7 @@ namespace RoomByRoom.Testing
 
 		public static ref ItemPhysicalDamage ItemPhysicalDamageCmp(EcsWorld world, int weapon, float point = 0)
 		{
-			return ref world.AddComponent<ItemPhysicalDamage>(weapon)
+			return ref world.Add<ItemPhysicalDamage>(weapon)
 				.Assign(x =>
 				{
 					x.Point = point;
@@ -65,7 +65,7 @@ namespace RoomByRoom.Testing
 
 		public static ref Owned OwnedCmp(EcsWorld world, int item, int unit)
 		{
-			return ref world.AddComponent<Owned>(item)
+			return ref world.Add<Owned>(item)
 				.Assign(x =>
 				{
 					x.Owner = unit;
@@ -75,7 +75,7 @@ namespace RoomByRoom.Testing
 
 		public static ref ArmorInfo ArmorInfoCmp(EcsWorld world, int armor, ArmorType type = ArmorType.Boots)
 		{
-			return ref world.AddComponent<ArmorInfo>(armor)
+			return ref world.Add<ArmorInfo>(armor)
 				.Assign(x =>
 				{
 					x.Type = type;
@@ -85,7 +85,7 @@ namespace RoomByRoom.Testing
 
 		public static ref WeaponInfo WeaponInfoCmp(EcsWorld world, int weapon, WeaponType type = WeaponType.OneHand)
 		{
-			return ref world.AddComponent<WeaponInfo>(weapon)
+			return ref world.Add<WeaponInfo>(weapon)
 				.Assign(x =>
 				{
 					x.Type = type;
@@ -95,12 +95,12 @@ namespace RoomByRoom.Testing
 
 		public static void EquippedCmp(EcsWorld world, int armor)
 		{
-			world.AddComponent<Equipped>(armor);
+			world.Add<Equipped>(armor);
 		}
 
 		public static ref ItemPhysicalProtection ItemPhysicalProtectionCmp(EcsWorld world, int armor, float point = 0)
 		{
-			return ref world.AddComponent<ItemPhysicalProtection>(armor)
+			return ref world.Add<ItemPhysicalProtection>(armor)
 				.Assign(x =>
 				{
 					x.Point = point;
@@ -110,7 +110,7 @@ namespace RoomByRoom.Testing
 
 		public static ref UnitInfo UnitInfoCmp(EcsWorld world, int unit, UnitType type = UnitType.Humanoid)
 		{
-			return ref world.AddComponent<UnitInfo>(unit)
+			return ref world.Add<UnitInfo>(unit)
 				.Assign(x =>
 				{
 					x.Type = type;
@@ -120,7 +120,7 @@ namespace RoomByRoom.Testing
 
 		public static ref Bonus BonusCmp(EcsWorld world, int entity, int item)
 		{
-			return ref world.AddComponent<Bonus>(entity)
+			return ref world.Add<Bonus>(entity)
 				.Assign(x =>
 				{
 					x.Item = item;
@@ -130,7 +130,7 @@ namespace RoomByRoom.Testing
 
 		public static ref ItemInfo ItemInfoCmp(EcsWorld world, int item, ItemType type = ItemType.Armor)
 		{
-			return ref world.AddComponent<ItemInfo>(item)
+			return ref world.Add<ItemInfo>(item)
 				.Assign(x =>
 				{
 					x.Type = type;
@@ -140,7 +140,7 @@ namespace RoomByRoom.Testing
 
 		public static ref CantRestore CantRestoreCmp(EcsWorld world, int unit, float timeLeft = 0)
 		{
-			return ref world.AddComponent<CantRestore>(unit)
+			return ref world.Add<CantRestore>(unit)
 				.Assign(x =>
 				{
 					x.TimeLeft = timeLeft;
@@ -167,7 +167,7 @@ namespace RoomByRoom.Testing
 
 		public static ref Equipment EquipmentCmp(EcsWorld world, int entity, int size = 16, params int[] items)
 		{
-			return ref world.AddComponent<Equipment>(entity)
+			return ref world.Add<Equipment>(entity)
 				.Assign(x =>
 				{
 					x.ItemList = new List<int>(size);
@@ -178,7 +178,7 @@ namespace RoomByRoom.Testing
 
 		public static ref Inventory InventoryCmp(EcsWorld world, int entity, int size = 26, params int[] items)
 		{
-			return ref world.AddComponent<Inventory>(entity)
+			return ref world.Add<Inventory>(entity)
 				.Assign(x =>
 				{
 					x.ItemList = new List<int>(size);
@@ -189,7 +189,7 @@ namespace RoomByRoom.Testing
 
 		public static ref Backpack BackpackCmp(EcsWorld world, int entity, int size = 10, params int[] items)
 		{
-			return ref world.AddComponent<Backpack>(entity)
+			return ref world.Add<Backpack>(entity)
 				.Assign(x =>
 				{
 					x.ItemList = new List<int>(size);
@@ -202,7 +202,7 @@ namespace RoomByRoom.Testing
 		{
 			if (!view)
 				view = new GameObject().AddComponent<UnitView>();
-			return ref world.AddComponent<UnitViewRef>(entity)
+			return ref world.Add<UnitViewRef>(entity)
 				.Assign(x =>
 				{
 					x.Value = view;
@@ -214,7 +214,7 @@ namespace RoomByRoom.Testing
 		{
 			if (!view)
 				view = new GameObject().AddComponent<BonusView>();
-			return ref world.AddComponent<BonusViewRef>(entity)
+			return ref world.Add<BonusViewRef>(entity)
 				.Assign(x =>
 				{
 					x.Value = view;
@@ -226,7 +226,7 @@ namespace RoomByRoom.Testing
 		{
 			if (!view)
 				view = new GameObject().AddComponent<ItemView>();
-			return ref world.AddComponent<ItemViewRef>(index)
+			return ref world.Add<ItemViewRef>(index)
 				.Assign(x =>
 				{
 					x.Value = view;
@@ -247,7 +247,7 @@ namespace RoomByRoom.Testing
 
 		public static ref Shape ShapeCmp(EcsWorld world, int item, int shape)
 		{
-			return ref world.AddComponent<Shape>(item)
+			return ref world.Add<Shape>(item)
 				.Assign(x =>
 				{
 					x.PrefabIndex = shape;
@@ -255,6 +255,6 @@ namespace RoomByRoom.Testing
 				});
 		}
 
-		public static void InHandsCmp(EcsWorld world, int item) => world.AddComponent<InHands>(item);
+		public static void InHandsCmp(EcsWorld world, int item) => world.Add<InHands>(item);
 	}
 }

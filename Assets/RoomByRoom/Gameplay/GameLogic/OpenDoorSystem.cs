@@ -29,7 +29,7 @@ namespace RoomByRoom
 
 		private void CreateNextRoom()
 		{
-			_message.AddComponent<NextRoomMessage>(_message.NewEntity())
+			_message.Add<NextRoomMessage>(_message.NewEntity())
 				.Assign(x =>
 				{
 					x.Race.Type = FastRandom.GetEnemyRace();
@@ -41,7 +41,7 @@ namespace RoomByRoom
 		private void StartGame()
 		{
 			int startGameEntity = _message.NewEntity();
-			_message.AddComponent<StartGameMessage>(startGameEntity);
+			_message.Add<StartGameMessage>(startGameEntity);
 		}
 
 		private static bool IsFirstRoom(int number) => number == 0;

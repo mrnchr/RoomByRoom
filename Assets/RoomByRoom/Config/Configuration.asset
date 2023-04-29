@@ -12,6 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc4c5b2e22b97b48b2a3b5237b726be, type: 3}
   m_Name: Configuration
   m_EditorClassIdentifier: 
+  Controller:
+    ForwardCode: 0
+    BackCode: 0
+    LeftCode: 0
+    RightCode: 0
+    JumpCode: 0
+    AttackCode: 323
+    TakeCode: 102
+    OpenDoorCode: 116
+    CameraUpCode: 0
+    CameraDownCode: 0
+    CameraLeftCode: 0
+    CameraRightCode: 0
   MouseSensitivity: {x: 1, y: 1}
   DefaultSaveName: flop
   IsNewGame: 1

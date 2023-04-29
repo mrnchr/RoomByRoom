@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
@@ -24,11 +25,11 @@ namespace RoomByRoom
 
 			var playerPoint = 0;
 			var bossPoint = 0;
-			List<int> allEnemyPoints = new List<int>();
+			var allEnemyPoints = new List<int>();
 
 			foreach (int index in _points.Value)
 			{
-				UnitType unitType = _world.GetComponent<SpawnPoint>(index).UnitType;
+				UnitType unitType = _world.Get<SpawnPoint>(index).UnitType;
 				switch (unitType)
 				{
 					case UnitType.Player:
@@ -47,7 +48,7 @@ namespace RoomByRoom
 
 			foreach (int index in _units.Value)
 			{
-				UnitType unitType = _world.GetComponent<UnitInfo>(index).Type;
+				UnitType unitType = _world.Get<UnitInfo>(index).Type;
 				int spawnEntity = GetSpawnEntity(unitType);
 				PutInSpawn(index, GetSpawn(spawnEntity));
 			}
@@ -71,25 +72,24 @@ namespace RoomByRoom
 						enemyPoints.RemoveAt(0);
 						break;
 				}
-
 				return spawnEntity;
 			}
 		}
 
 		private Transform GetSpawn(int spawnEntity)
 		{
-			ref SpawnPoint unitPoint = ref _world.GetComponent<SpawnPoint>(spawnEntity);
+			ref SpawnPoint unitPoint = ref _world.Get<SpawnPoint>(spawnEntity);
 			return unitPoint.UnitSpawn;
 		}
 
 		private bool HasSpawnPoints() => _points.Value.GetEntitiesCount() > 0;
 
-		private void PutInSpawn(int index, Transform spawn)
+		private void PutInSpawn(int unit, Transform spawn)
 		{
-			UnitView unitView = _world.GetComponent<UnitViewRef>(index).Value;
-			if (_world.GetComponent<UnitInfo>(index).Type != UnitType.Player)
+			UnitView unitView = _world.Get<UnitViewRef>(unit).Value;
+			if (!Utils.IsUnitOf(_world, unit, UnitType.Player))
 			{
-				NavMeshAgent agent = _world.GetComponent<ControllerByAI>(index).Agent;
+				NavMeshAgent agent = _world.Get<ControllerByAI>(unit).Agent;
 				agent.Warp(spawn.position);
 				agent.transform.rotation = spawn.rotation;
 			}
@@ -103,33 +103,34 @@ namespace RoomByRoom
 
 		private List<int> SelectEnemyPoints(List<int> allSpawnPoints)
 		{
-			var numberOfEnemies = 0;
-
-			foreach (int unit in _units.Value)
-			{
-				if (Utils.IsEnemy(_world.GetComponent<UnitInfo>(unit).Type))
-					numberOfEnemies++;
-			}
-
+			int numberOfEnemies = GetEnemyCount();
 			if (numberOfEnemies == 0)
 				return null;
-
-			List<int> enemyPoints = new List<int>();
-
+			
 			if (allSpawnPoints.Count < numberOfEnemies)
 				throw new ArgumentException("Spawn points for enemies is less than enemies themselves");
 
-			int index;
-			while (numberOfEnemies > 0)
+			var enemyPoints = new List<int>();
+			for (int i = numberOfEnemies; i > 0; i--)
 			{
-				index = Random.Range(0, allSpawnPoints.Count);
+				int index = Random.Range(0, allSpawnPoints.Count);
 				enemyPoints.Add(allSpawnPoints[index]);
 
 				allSpawnPoints.RemoveAt(index);
-				numberOfEnemies--;
 			}
 
 			return enemyPoints;
+		}
+
+		private int GetEnemyCount()
+		{
+			var numberOfEnemies = 0;
+			foreach (int index in _units.Value)
+			{
+				if (Utils.IsEnemy(_world, index))
+					numberOfEnemies++;
+			}
+			return numberOfEnemies;
 		}
 	}
 }

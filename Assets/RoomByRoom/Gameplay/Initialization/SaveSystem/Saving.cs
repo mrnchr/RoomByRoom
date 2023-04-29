@@ -6,14 +6,14 @@ namespace RoomByRoom
 	public class Saving
 	{
 		public GameInfo GameSave;
-		public PlayerEntity Player;
-		public RoomEntity Room;
-		public InventoryEntity Inventory;
+		public SavedPlayer Player;
+		public SavedRoom Room;
+		public SavedInventory Inventory;
 
 		public Saving()
 		{
 			GameSave = new GameInfo();
-			Inventory = new InventoryEntity();
+			Inventory = new SavedInventory();
 		}
 
 		public void CopyOf(Saving from)

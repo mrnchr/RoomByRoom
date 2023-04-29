@@ -43,19 +43,11 @@ namespace RoomByRoom
 		{
 			int armor = CreateItemEntity(ItemType.Armor, (int)armorType, unit);
 
-			_world.AddComponent<ArmorInfo>(armor)
-				.Assign(x =>
-				{
-					x.Type = armorType;
-					return x;
-				});
+			_world.Add<ArmorInfo>(armor)
+				.Type = armorType;
 
-			_world.AddComponent<ItemPhysicalProtection>(armor)
-				.Assign(x =>
-				{
-					x.Point = FastRandom.GetArmorProtection(armorType, _gameInfo.Value.RoomCount);
-					return x;
-				});
+			_world.Add<ItemPhysicalProtection>(armor)
+				.Point = FastRandom.GetArmorProtection(armorType, _gameInfo.Value.RoomCount);
 		}
 
 		private void CreateWeapon(int unit)
@@ -65,65 +57,40 @@ namespace RoomByRoom
 
 			int weapon = CreateItemEntity(ItemType.Weapon, (int)weaponType, unit);
 
-			_world.AddComponent<WeaponInfo>(weapon)
-				.Assign(x =>
-				{
-					x.Type = weaponType;
-					return x;
-				});
+			_world.Add<WeaponInfo>(weapon)
+				.Type = weaponType;
 
-			_world.AddComponent<ItemPhysicalDamage>(weapon)
-				.Assign(x =>
-				{
-					x.Point = FastRandom.GetPhysicalDamage(weaponType, _gameInfo.Value.RoomCount);
-					return x;
-				});
+			_world.Add<ItemPhysicalDamage>(weapon)
+				.Point = FastRandom.GetPhysicalDamage(weaponType, _gameInfo.Value.RoomCount);
 
-			_world.AddComponent<InHands>(weapon);
+			_world.Add<InHands>(weapon);
 
-			_world.AddComponent<MainWeapon>(unit)
-				.Assign(x =>
-				{
-					x.Entity = weapon;
-					return x;
-				});
+			_world.Add<MainWeapon>(unit)
+				.Entity = weapon;
+			
+			// Utils.SetWeaponToAnimate(_world, weapon);
 
 			if (weaponType == WeaponType.OneHand)
 				CreateShield(unit);
 		}
 
 		// TODO: shield has persistent rather than protection
-		private void CreateShield(int entity)
-		{
-			CreateArmor(ArmorType.Shield, entity);
-		}
+		private void CreateShield(int entity) => CreateArmor(ArmorType.Shield, entity);
 
 		private int CreateItemEntity(ItemType itemType, int equipmentType, int unitEntity)
 		{
 			int item = _world.NewEntity();
 
-			_world.AddComponent<ItemInfo>(item)
-				.Assign(x =>
-				{
-					x.Type = itemType;
-					return x;
-				});
+			_world.Add<ItemInfo>(item)
+				.Type = itemType;
 
-			_world.AddComponent<Equipped>(item);
+			_world.Add<Equipped>(item);
 
-			_world.AddComponent<Shape>(item)
-				.Assign(x =>
-				{
-					x.PrefabIndex = FastRandom.GetPrefabIndex(_prefabData.Value, itemType, equipmentType);
-					return x;
-				});
+			_world.Add<Shape>(item)
+				.PrefabIndex = FastRandom.GetPrefabIndex(_prefabData.Value, itemType, equipmentType);
 
-			_world.AddComponent<Owned>(item)
-				.Assign(x =>
-				{
-					x.Owner = unitEntity;
-					return x;
-				});
+			_world.Add<Owned>(item)
+				.Owner = unitEntity;
 
 			return item;
 		}

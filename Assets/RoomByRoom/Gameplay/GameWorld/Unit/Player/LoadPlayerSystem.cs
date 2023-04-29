@@ -14,57 +14,33 @@ namespace RoomByRoom
 		public void Init(IEcsSystems systems)
 		{
 			EcsWorld world = systems.GetWorld();
+			SavedPlayer savedPlayer = _savedData.Value.Player;
+
 			int player = world.NewEntity();
-			PlayerEntity playerEntity = _savedData.Value.Player;
+			world.Add<RaceInfo>(player)
+				.Assign(x => savedPlayer.Race);
 
-			world.AddComponent<RaceInfo>(player)
-				.Assign(x => playerEntity.Race);
+			world.Add<Health>(player)
+				.Assign(x => savedPlayer.HealthCmp);
 
-			// TODO: write test
-#if UNITY_EDITOR
-			if (playerEntity.HealthCmp.CurrentPoint != playerEntity.HealthCmp.MaxPoint)
-				Debug.LogWarning(
-					"Player's current HP doesn't match player's max HP in player saves. The game might work uncorrected");
-#endif
+			world.Add<UnitInfo>(player)
+				.Type = UnitType.Player;
 
-			world.AddComponent<Health>(player)
-				.Assign(x => playerEntity.HealthCmp);
+			world.Add<Inventory>(player)
+				.ItemList = new List<int>(_playerData.Value.BackpackSize + _playerData.Value.EquipmentSize);
 
-			world.AddComponent<UnitInfo>(player)
-				.Assign(x =>
-				{
-					x.Type = UnitType.Player;
-					return x;
-				});
+			world.Add<Equipment>(player)
+				.ItemList = new List<int>(_playerData.Value.EquipmentSize);
 
-			world.AddComponent<Inventory>(player)
-				.Assign(x =>
-				{
-					x.ItemList = new List<int>(_playerData.Value.BackpackSize + _playerData.Value.EquipmentSize);
-					return x;
-				});
+			world.Add<Backpack>(player)
+				.ItemList = new List<int>(_playerData.Value.BackpackSize);
 
-			world.AddComponent<Equipment>(player)
-				.Assign(x =>
-				{
-					x.ItemList = new List<int>(_playerData.Value.EquipmentSize);
-					return x;
-				});
-
-			world.AddComponent<Backpack>(player)
-				.Assign(x =>
-				{
-					x.ItemList = new List<int>(_playerData.Value.BackpackSize);
-					return x;
-				});
-
-			world.AddComponent<UnitPhysicalProtection>(player)
-				.Assign(x => playerEntity.UnitPhysProtectionCmp);
+			world.Add<UnitPhysicalProtection>(player) = savedPlayer.UnitPhysProtectionCmp;
 
 			// // TODO: remove after tests
-			world.AddComponent<Opener>(player);
+			world.Add<Opener>(player);
 
-			world.AddComponent<ControllerByPlayer>(player);
+			world.Add<ControllerByPlayer>(player);
 		}
 	}
 }

@@ -155,8 +155,8 @@ namespace RoomByRoom.Testing.EditorMode
 			testSystem.Run(systems);
 
 			// Assert
-			world.HasComponent<CantRestore>(unit).Should().Be(true);
-			world.GetComponent<CantRestore>(unit).TimeLeft.Should().Be(maxTime);
+			world.Has<CantRestore>(unit).Should().Be(true);
+			world.Get<CantRestore>(unit).TimeLeft.Should().Be(maxTime);
 		}
 
 		[Test]

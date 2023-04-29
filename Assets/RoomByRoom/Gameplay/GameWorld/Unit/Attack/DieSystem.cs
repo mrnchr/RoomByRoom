@@ -17,7 +17,7 @@ namespace RoomByRoom
 
 			foreach (int index in _units.Value)
 			{
-				if (world.GetComponent<Health>(index).CurrentPoint != 0)
+				if (world.Get<Health>(index).CurrentPoint != 0)
 					continue;
 				Debug.Log($"Entity {index} died");
 
@@ -26,18 +26,18 @@ namespace RoomByRoom
 					continue;
 
 				int bonus = world.NewEntity();
-				world.AddComponent<Bonus>(bonus)
+				world.Add<Bonus>(bonus)
 					.Item = FastRandom.CreateItem(world, _prefabData.Value, _gameInfo.Value);
-				world.AddComponent<SpawnCommand>(bonus)
-					.Coords = world.GetComponent<UnitViewRef>(index).Value.transform.position;
+				world.Add<SpawnCommand>(bonus)
+					.Coords = world.Get<UnitViewRef>(index).Value.transform.position;
 
-				foreach (int item in world.GetComponent<Equipment>(index).ItemList)
+				foreach (int item in world.Get<Equipment>(index).ItemList)
 				{
-					Object.Destroy(world.GetComponent<ItemViewRef>(item).Value.gameObject);
+					Object.Destroy(world.Get<ItemViewRef>(item).Value.gameObject);
 					world.DelEntity(item);
 				}
 
-				Object.Destroy(world.GetComponent<UnitViewRef>(index).Value.gameObject);
+				Object.Destroy(world.Get<UnitViewRef>(index).Value.gameObject);
 				world.DelEntity(index);
 			}
 		}

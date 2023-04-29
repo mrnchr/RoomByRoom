@@ -16,13 +16,13 @@ namespace RoomByRoom
 			foreach (int attack in _attacks.Value)
 			{
 				ref UnitViewRef unitViewRef = ref _attacks.Pools.Inc2.Get(attack);
-				unitViewRef.Value.PlayAttackAnimation(GetMainWeaponType(attack));
+				unitViewRef.Value.StartAttackAnimation();
 			}
 		}
 
 		private WeaponType GetMainWeaponType(int unit)
 		{
-			ref MainWeapon mainWeapon = ref _world.GetComponent<MainWeapon>(unit);
+			ref MainWeapon mainWeapon = ref _world.Get<MainWeapon>(unit);
 			return _world.GetPool<WeaponInfo>().Get(mainWeapon.Entity).Type;
 		}
 	}

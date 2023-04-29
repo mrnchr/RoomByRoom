@@ -1,4 +1,5 @@
-﻿using Leopotam.EcsLite;
+﻿using System.Linq;
+using Leopotam.EcsLite;
 using RoomByRoom.Utility;
 
 namespace RoomByRoom
@@ -7,34 +8,19 @@ namespace RoomByRoom
 	{
 		private readonly EcsWorld _world;
 
-		public CharacteristicService(EcsWorld world)
-		{
-			_world = world;
-		}
+		public CharacteristicService(EcsWorld world) => _world = world;
 
-		public void Calculate(int unit)
-		{
-			CalcPhysProtection(unit);
-		}
+		public void Calculate(int unit) => CalcPhysProtection(unit);
 
 		private void CalcPhysProtection(int unit)
 		{
-			float totalProtection = 0;
-			foreach (int index in _world.GetComponent<Equipment>(unit).ItemList)
-			{
-				if (!_world.HasComponent<ItemPhysicalProtection>(index))
-					continue;
-
-				totalProtection += _world.GetComponent<ItemPhysicalProtection>(index).Point;
-			}
+			float totalProtection = _world.Get<Equipment>(unit).ItemList
+				.Where(index => _world.Has<ItemPhysicalProtection>(index))
+				.Sum(index => _world.Get<ItemPhysicalProtection>(index).Point);
 
 			// UnityEngine.Debug.Log($"Entity: {unit}, protection: {totalProtection}");
-			_world.GetComponent<UnitPhysicalProtection>(unit)
-				.Assign(x =>
-				{
-					x.MaxPoint = totalProtection;
-					return x;
-				});
+			_world.Get<UnitPhysicalProtection>(unit)
+					.MaxPoint = totalProtection;
 		}
 	}
 }

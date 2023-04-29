@@ -32,14 +32,14 @@ namespace RoomByRoom.Debugging
 		private bool TryGetView(int entity, out View view)
 		{
 			view = null;
-			if (_world.HasComponent<UnitViewRef>(entity))
-				return view = _world.GetComponent<UnitViewRef>(entity).Value;
+			if (_world.Has<UnitViewRef>(entity))
+				return view = _world.Get<UnitViewRef>(entity).Value;
 
-			if (_world.HasComponent<ItemViewRef>(entity))
-				return view = _world.GetComponent<ItemViewRef>(entity).Value;
+			if (_world.Has<ItemViewRef>(entity))
+				return view = _world.Get<ItemViewRef>(entity).Value;
 
-			if (_world.HasComponent<BonusViewRef>(entity))
-				return view = _world.GetComponent<BonusViewRef>(entity).Value;
+			if (_world.Has<BonusViewRef>(entity))
+				return view = _world.Get<BonusViewRef>(entity).Value;
 
 			return false;
 		}

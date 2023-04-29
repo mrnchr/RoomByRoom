@@ -22,17 +22,17 @@ namespace RoomByRoom.Testing.EditorMode
 				int item = FastRandom.CreateItem(world, prefabData, gameInfo);
 
 				// Assert
-				world.HasComponent<ItemInfo>(item).Should().Be(true);
-				world.HasComponent<Shape>(item).Should().Be(true);
-				if (world.GetComponent<ItemInfo>(item).Type == ItemType.Armor)
+				world.Has<ItemInfo>(item).Should().Be(true);
+				world.Has<Shape>(item).Should().Be(true);
+				if (world.Get<ItemInfo>(item).Type == ItemType.Armor)
 				{
-					world.HasComponent<ArmorInfo>(item).Should().Be(true);
-					world.HasComponent<ItemPhysicalProtection>(item).Should().Be(true);
+					world.Has<ArmorInfo>(item).Should().Be(true);
+					world.Has<ItemPhysicalProtection>(item).Should().Be(true);
 				}
 				else
 				{
-					world.HasComponent<WeaponInfo>(item).Should().Be(true);
-					world.HasComponent<ItemPhysicalDamage>(item).Should().Be(true);
+					world.Has<WeaponInfo>(item).Should().Be(true);
+					world.Has<ItemPhysicalDamage>(item).Should().Be(true);
 				}
 			}
 		}

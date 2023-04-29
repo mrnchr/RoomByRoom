@@ -36,7 +36,7 @@ namespace RoomByRoom.Testing.EditorMode
 			_testSystem.Run(_systems);
 
 			// Assert
-			_world.GetComponent<UnitPhysicalProtection>(_unit).CurrentPoint.Should().BeGreaterThan(lastPoint);
+			_world.Get<UnitPhysicalProtection>(_unit).CurrentPoint.Should().BeGreaterThan(lastPoint);
 		}
 
 		[UnityTest]
@@ -54,7 +54,7 @@ namespace RoomByRoom.Testing.EditorMode
 			}
 
 			// Assert
-			_world.GetComponent<UnitPhysicalProtection>(_unit).CurrentPoint.Should().Be(maxPoint);
+			_world.Get<UnitPhysicalProtection>(_unit).CurrentPoint.Should().Be(maxPoint);
 		}
 
 		[TearDown]

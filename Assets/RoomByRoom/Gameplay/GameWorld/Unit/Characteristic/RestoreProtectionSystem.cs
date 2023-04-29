@@ -16,7 +16,7 @@ namespace RoomByRoom
 
 			foreach (int index in _units.Value)
 			{
-				ref UnitPhysicalProtection physProtection = ref _world.GetComponent<UnitPhysicalProtection>(index);
+				ref UnitPhysicalProtection physProtection = ref _world.Get<UnitPhysicalProtection>(index);
 				physProtection.CurrentPoint += physProtection.RestoreSpeed * Time.deltaTime;
 				physProtection.CurrentPoint.Clamp(max: physProtection.MaxPoint);
 			}

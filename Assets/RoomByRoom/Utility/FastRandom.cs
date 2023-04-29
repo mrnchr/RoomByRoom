@@ -112,7 +112,7 @@ namespace RoomByRoom.Utility
 
 			// TODO: change to all item type
 			var type = (ItemType)Rand.Range(0, 2); // GetItemType();
-			world.AddComponent<ItemInfo>(item)
+			world.Add<ItemInfo>(item)
 				.Type = type;
 
 			// TODO: create shield
@@ -120,10 +120,10 @@ namespace RoomByRoom.Utility
 			if (type == ItemType.Armor)
 			{
 				equipmentType = (int)GetArmorType();
-				world.AddComponent<ArmorInfo>(item)
+				world.Add<ArmorInfo>(item)
 					.Type = (ArmorType)equipmentType;
 
-				world.AddComponent<ItemPhysicalProtection>(item)
+				world.Add<ItemPhysicalProtection>(item)
 					.Point = GetArmorProtection((ArmorType)equipmentType, gameInfo.RoomCount);
 			}
 			else
@@ -131,14 +131,14 @@ namespace RoomByRoom.Utility
 				// TODO: create all types of weapon
 				equipmentType = (int)WeaponType.OneHand; // FastRandom.GetWeaponType();
 
-				world.AddComponent<WeaponInfo>(item)
+				world.Add<WeaponInfo>(item)
 					.Type = (WeaponType)equipmentType;
 
-				world.AddComponent<ItemPhysicalDamage>(item)
+				world.Add<ItemPhysicalDamage>(item)
 					.Point = GetPhysicalDamage((WeaponType)equipmentType, gameInfo.RoomCount);
 			}
 
-			world.AddComponent<Shape>(item)
+			world.Add<Shape>(item)
 				.PrefabIndex = GetPrefabIndex(prefabData, type, equipmentType);
 
 			return item;

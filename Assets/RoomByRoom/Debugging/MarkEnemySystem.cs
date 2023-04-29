@@ -26,28 +26,28 @@ namespace RoomByRoom.Debugging
 			_world = systems.GetWorld();
 
 			foreach (int index in _enemies.Value)
-				_world.AddComponent<CanBeDeleted>(index);
+				_world.Add<CanBeDeleted>(index);
 
 			foreach (int index in _items.Value)
 			{
-				if (_world.HasComponent<CanBeDeleted>(index))
+				if (_world.Has<CanBeDeleted>(index))
 				{
 					if (IsPlayerWeapon(index))
-						_world.DelComponent<CanBeDeleted>(index);
+						_world.Del<CanBeDeleted>(index);
 				}
 				else
 				{
 					if (!IsPlayerWeapon(index))
-						_world.AddComponent<CanBeDeleted>(index);
+						_world.Add<CanBeDeleted>(index);
 				}
 			}
 
 			foreach (int index in _bonuses.Value)
-				_world.AddComponent<CanBeDeleted>(index);
+				_world.Add<CanBeDeleted>(index);
 		}
 
 		private bool IsPlayerWeapon(int entity) =>
-			_world.HasComponent<Owned>(entity)
-			&& Utils.IsUnitOf(_world, _world.GetComponent<Owned>(entity).Owner, UnitType.Player);
+			_world.Has<Owned>(entity)
+			&& Utils.IsUnitOf(_world, _world.Get<Owned>(entity).Owner, UnitType.Player);
 	}
 }

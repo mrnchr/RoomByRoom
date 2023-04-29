@@ -19,11 +19,16 @@ namespace RoomByRoom
 
 			foreach (int index in _nextRoomMsgs.Value)
 			{
-				ref NextRoomMessage nextRoomMsg = ref message.GetComponent<NextRoomMessage>(index);
-				if (nextRoomMsg.Room.Type == RoomType.Enemy)
-					CreateEnemies();
-				else if (nextRoomMsg.Room.Type == RoomType.Boss)
-					CreateEnemy(UnitType.Boss, nextRoomMsg.Race.Type);
+				ref NextRoomMessage nextRoomMsg = ref message.Get<NextRoomMessage>(index);
+				switch (nextRoomMsg.Room.Type)
+				{
+					case RoomType.Enemy:
+						CreateEnemies();
+						break;
+					case RoomType.Boss:
+						CreateEnemy(UnitType.Boss, nextRoomMsg.Race.Type);
+						break;
+				}
 			}
 		}
 
@@ -48,26 +53,18 @@ namespace RoomByRoom
 		{
 			int enemy = _world.NewEntity();
 
-			_world.AddComponent<UnitInfo>(enemy)
-				.Assign(x =>
-				{
-					x.Type = type;
-					return x;
-				});
+			_world.Add<UnitInfo>(enemy)
+				.Type = type;
 
-			_world.AddComponent<RaceInfo>(enemy)
-				.Assign(x =>
-				{
-					x.Type = race;
-					return x;
-				});
+			_world.Add<RaceInfo>(enemy)
+				.Type = race;
 
-			_world.AddComponent<ControllerByAI>(enemy);
+			_world.Add<ControllerByAI>(enemy);
 
 			if (type == UnitType.Humanoid)
-				_world.AddComponent<Bare>(enemy);
+				_world.Add<Bare>(enemy);
 
-			_world.AddComponent<Health>(enemy)
+			_world.Add<Health>(enemy)
 				.Assign(x =>
 				{
 					x.MaxPoint = FastRandom.GetUnitHp(_gameInfo.Value.RoomCount, type);
@@ -75,14 +72,10 @@ namespace RoomByRoom
 					return x;
 				});
 
-			_world.AddComponent<Equipment>(enemy)
-				.Assign(x =>
-				{
-					x.ItemList = new List<int>();
-					return x;
-				});
+			_world.Add<Equipment>(enemy)
+					.ItemList = new List<int>();
 
-			_world.AddComponent<UnitPhysicalProtection>(enemy)
+			_world.Add<UnitPhysicalProtection>(enemy)
 				.Assign(
 					x =>
 					{

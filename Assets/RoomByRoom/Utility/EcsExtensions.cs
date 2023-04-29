@@ -7,21 +7,21 @@ namespace RoomByRoom.Utility
 	public static class EcsExtensions
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static ref T AddComponent<T>(this EcsWorld world, int entity)
+		public static ref T Add<T>(this EcsWorld world, int entity)
 			where T : struct =>
 			ref world.GetPool<T>().Add(entity);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static ref T GetComponent<T>(this EcsWorld world, int entity)
+		public static ref T Get<T>(this EcsWorld world, int entity)
 			where T : struct =>
 			ref world.GetPool<T>().Get(entity);
 
-		public static bool HasComponent<T>(this EcsWorld world, int entity)
+		public static bool Has<T>(this EcsWorld world, int entity)
 			where T : struct =>
 			world.GetPool<T>().Has(entity);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void DelComponent<T>(this EcsWorld world, int entity)
+		public static void Del<T>(this EcsWorld world, int entity)
 			where T : struct
 		{
 			world.GetPool<T>().Del(entity);

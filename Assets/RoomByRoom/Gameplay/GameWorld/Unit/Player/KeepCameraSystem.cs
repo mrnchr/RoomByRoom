@@ -14,7 +14,7 @@ namespace RoomByRoom
 			PlayerView player = GetPlayer();
 
 			player.Camera.position = Physics.Raycast(player.CameraHolder.position,
-				GetDirectionFromPlayerToCamera(player), out RaycastHit hit, player.CameraDistance, player.Wall)
+				GetDirectionFromPlayerToCamera(player), out RaycastHit hit, player.CameraDistance, player.WallMask)
 				? hit.point - GetDirectionFromPlayerToCamera(player) * 0.05f
 				: player.CameraHolder.position + GetDirectionFromPlayerToCamera(player) * player.CameraDistance;
 		}
@@ -25,7 +25,7 @@ namespace RoomByRoom
 		private PlayerView GetPlayer()
 		{
 			int entity = _world.Filter<ControllerByPlayer>().End().GetRawEntities()[0];
-			return (PlayerView)_world.GetComponent<UnitViewRef>(entity).Value;
+			return (PlayerView)_world.Get<UnitViewRef>(entity).Value;
 		}
 	}
 }

@@ -14,36 +14,36 @@ namespace RoomByRoom
 		{
 			_world = systems.GetWorld();
 
-			foreach (int index in _units.Value) Move(index);
+			foreach (int index in _units.Value) 
+				Move(index);
 		}
 
 		private void Move(int entity)
 		{
-			UnitView unitView = _world.GetComponent<UnitViewRef>(entity).Value;
-			Vector3 endDirection = GetRawDirection(entity, unitView);
+			UnitView unitView = _world.Get<UnitViewRef>(entity).Value;
+			Vector3 endVelocity = GetVelocity(entity, unitView);
+			unitView.Rb.velocity = endVelocity;
+			
+			if(unitView is HumanoidView humanoid)
+				humanoid.AnimateRun(GetRawDirection(entity) != Vector3.zero);
+		}
+
+		private float GetSpeed(int entity) => _world.Get<Movable>(entity).Speed;
+
+		private Vector3 GetVelocity(int entity, UnitView unitView)
+		{
+			Vector3 endDirection = GetRawDirection(entity);
+			if (unitView is PlayerView playerView)
+			{
+				endDirection = playerView.CameraHolder.TransformDirection(endDirection);
+				endDirection.y = 0;
+			}
 
 			endDirection = endDirection.normalized * GetSpeed(entity);
 			endDirection.y = unitView.Rb.velocity.y;
-			unitView.Rb.velocity = endDirection;
-		}
-
-		private float GetSpeed(int entity) => _world.GetComponent<Movable>(entity).Speed;
-
-		private Vector3 GetRawDirection(int entity, UnitView unitView)
-		{
-			Vector3 endDirection;
-			Vector3 moveDirection = _world.GetComponent<MoveCommand>(entity).MoveDirection;
-			if (unitView is PlayerView playerView)
-			{
-				endDirection = playerView.CameraHolder.TransformDirection(moveDirection);
-				endDirection.y = 0;
-			}
-			else
-			{
-				endDirection = moveDirection;
-			}
-
 			return endDirection;
 		}
+
+		private Vector3 GetRawDirection(int entity) => _world.Get<MoveCommand>(entity).MoveDirection;
 	}
 }

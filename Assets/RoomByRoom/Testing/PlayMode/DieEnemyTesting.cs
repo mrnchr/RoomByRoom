@@ -25,7 +25,7 @@ namespace RoomByRoom.Testing.PlayMode
 
 			int enemy = world.NewEntity();
 
-			world.AddComponent<Bare>(enemy);
+			world.Add<Bare>(enemy);
 			Create.EquipmentCmp(world, enemy);
 			Create.HealthCmp(world, enemy);
 			Create.UnitPhysicalProtectionCmp(world, enemy);
@@ -35,7 +35,7 @@ namespace RoomByRoom.Testing.PlayMode
 			secondSystem.Run(systems);
 			thirdSystem.Run(systems);
 
-			foreach (int index in world.GetComponent<Equipment>(enemy).ItemList)
+			foreach (int index in world.Get<Equipment>(enemy).ItemList)
 				Create.ItemViewRefCmp(world, index);
 
 			// Act
@@ -74,9 +74,9 @@ namespace RoomByRoom.Testing.PlayMode
 			bonuses.GetEntitiesCount().Should().BeGreaterThan(0);
 			foreach (int index in bonuses)
 			{
-				world.HasComponent<SpawnCommand>(index).Should().Be(true);
-				int item = world.GetComponent<Bonus>(index).Item;
-				world.HasComponent<ItemInfo>(item).Should().Be(true);
+				world.Has<SpawnCommand>(index).Should().Be(true);
+				int item = world.Get<Bonus>(index).Item;
+				world.Has<ItemInfo>(item).Should().Be(true);
 			}
 
 			systems.Destroy();

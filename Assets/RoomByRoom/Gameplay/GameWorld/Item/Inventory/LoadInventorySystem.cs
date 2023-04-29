@@ -13,7 +13,7 @@ namespace RoomByRoom
 		private readonly EcsFilterInject<Inc<ControllerByPlayer>> _player = default;
 		private readonly EcsCustomInject<Saving> _savedData = default;
 		private readonly HashSet<int> _savedItems = new HashSet<int>();
-		private InventoryEntity _savedInventory;
+		private SavedInventory _savedInventory;
 		private EcsWorld _world;
 
 		public void Init(IEcsSystems systems)
@@ -34,42 +34,35 @@ namespace RoomByRoom
 			int player = _player.Value.GetRawEntities()[0];
 			foreach (int itemEntity in _boundItems.Values)
 			{
-				_world.AddComponent<Owned>(itemEntity)
-					.Assign(x =>
-					{
-						x.Owner = player;
-						return x;
-					});
+				_world.Add<Owned>(itemEntity)
+					.Owner = player;
 
 				AddItemToInventory(player, itemEntity);
 			}
 
 			_charSvc.Value.Calculate(player);
-			_world.GetComponent<UnitPhysicalProtection>(player)
+			_world.Get<UnitPhysicalProtection>(player)
 				.Assign(x =>
 				{
-					if (x.CurrentPoint < 0)
-						x.CurrentPoint = x.MaxPoint;
+					x.CurrentPoint.Clamp(max: x.MaxPoint);
 					return x;
 				});
 		}
 
 		private void AddItemToInventory(int player, int item)
 		{
-			Utils.AddItemToList(_world.GetComponent<Inventory>(player).ItemList, item);
+			Utils.AddItemToList(_world.Get<Inventory>(player).ItemList, item);
 			Utils.AddItemToList(
-				_world.HasComponent<Equipped>(item)
-					? _world.GetComponent<Equipment>(player).ItemList
-					: _world.GetComponent<Backpack>(player).ItemList, item);
+				_world.Has<Equipped>(item)
+					? _world.Get<Equipment>(player).ItemList
+					: _world.Get<Backpack>(player).ItemList, item);
 		}
 
 		private void CollectEntities()
 		{
 			void CollectEntity<T>(BoundComponent<T> component)
-				where T : struct
-			{
+				where T : struct =>
 				_savedItems.Add(component.BoundEntity);
-			}
 
 			ProcessComponents(_savedInventory.Item, CollectEntity);
 			ProcessComponents(_savedInventory.Weapon, CollectEntity);
@@ -81,17 +74,15 @@ namespace RoomByRoom
 		}
 
 		private void ProcessComponents<T>(List<BoundComponent<T>> components, Action<BoundComponent<T>> action)
-			where T : struct
-		{
+			where T : struct =>
 			components.ForEach(action);
-		}
 
 		private void LoadEntities()
 		{
 			void LoadComponent<T>(BoundComponent<T> component)
 				where T : struct
 			{
-				_world.AddComponent<T>(_boundItems[component.BoundEntity])
+				_world.Add<T>(_boundItems[component.BoundEntity])
 					.Assign(x => component.ComponentInfo);
 			}
 

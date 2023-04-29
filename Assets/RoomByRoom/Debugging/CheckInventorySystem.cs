@@ -16,9 +16,9 @@ namespace RoomByRoom.Debugging
 			_world = systems.GetWorld();
 			foreach (int index in _player.Value)
 			{
-				var inv = _world.GetComponent<Inventory>(index).ItemList;
-				var eq = _world.GetComponent<Equipment>(index).ItemList;
-				var bp = _world.GetComponent<Backpack>(index).ItemList;
+				var inv = _world.Get<Inventory>(index).ItemList;
+				var eq = _world.Get<Equipment>(index).ItemList;
+				var bp = _world.Get<Backpack>(index).ItemList;
 
 				if (!inv.All(x => eq.Union(bp).Contains(x)))
 					Debug.LogError("Inventory is not synchronized with equipment and backpack");

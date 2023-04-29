@@ -14,12 +14,13 @@ namespace RoomByRoom
 		{
 			_world = systems.GetWorld();
 
-			foreach (int index in _items.Value) AddItemToEquipment(index);
+			foreach (int index in _items.Value) 
+				AddItemToEquipment(index);
 
 			foreach (int index in _world.Filter<Bare>().End())
 			{
 				_charSvc.Value.Calculate(index);
-				_world.GetComponent<UnitPhysicalProtection>(index)
+				_world.Get<UnitPhysicalProtection>(index)
 					.Assign(x =>
 					{
 						x.CurrentPoint = x.MaxPoint;
@@ -28,13 +29,13 @@ namespace RoomByRoom
 			}
 		}
 
-		private void AddItemToEquipment(int index)
+		private void AddItemToEquipment(int item)
 		{
-			int owner = _world.GetComponent<Owned>(index).Owner;
-			if (IsCreatedWhileAgo(owner))
-				Utils.AddItemToList(_world.GetComponent<Equipment>(owner).ItemList, index);
+			int owner = _world.Get<Owned>(item).Owner;
+			if (IsBare(owner))
+				Utils.AddItemToList(_world.Get<Equipment>(owner).ItemList, item);
 		}
 
-		private bool IsCreatedWhileAgo(int owner) => _world.HasComponent<Bare>(owner);
+		private bool IsBare(int owner) => _world.Has<Bare>(owner);
 	}
 }
