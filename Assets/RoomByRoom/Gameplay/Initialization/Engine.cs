@@ -3,6 +3,7 @@ using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
 using Leopotam.EcsLite.UnityEditor;
 using RoomByRoom.Debugging;
+using RoomByRoom.UI.MainMenu;
 using RoomByRoom.Utility;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -12,9 +13,10 @@ namespace RoomByRoom
 	public sealed class Engine : MonoBehaviour
 	{
 		// TODO: change to external injection
-		[FormerlySerializedAs("_defaultData"),SerializeField] private InitializeData _initializeData;
+		[SerializeField]
+		private InitializeData _initializeData;
 
-		[FormerlySerializedAs("_sceneData"), SerializeField] 
+		[FormerlySerializedAs("_sceneData"), SerializeField]
 		private SceneInfo _sceneInfo;
 
 		[SerializeField] private PrefabData _prefabData;
@@ -31,20 +33,26 @@ namespace RoomByRoom
 		// private IEcsSystems _fixedUpdateSystems;
 		private EcsWorld _world;
 
-		private void Start()
+		private void Awake()
 		{
 			_saving = new Saving();
-			var savingSvc = new SavingService(_configuration.DefaultSaveName, _configuration.SaveInFile);
 			_packedPrefabData = new PackedPrefabData(_prefabData);
-
 			_gameInfo = new GameInfo();
-
-			_sceneInfo.CurrentGame = _gameInfo;
-			_sceneInfo.CurrentSave = _saving;
 
 			_world = new EcsWorld();
 			_message = new EcsWorld();
 			_updateSystems = new EcsSystems(_world);
+
+#if UNITY_EDITOR
+			_sceneInfo.CurrentGame = _gameInfo;
+			_sceneInfo.CurrentSave = _saving;
+#endif
+		}
+
+		private void Start()
+		{
+			var outerData = FindObjectOfType<OuterData>();
+			var savingSvc = new SavingService(outerData.ProfileName, _configuration.SaveInFile);
 			var attackSvc = new AttackService(_world, _message);
 			var charSvc = new CharacteristicService(_world);
 
@@ -121,6 +129,8 @@ namespace RoomByRoom
 			//     .AddWorld(message, Idents.Worlds.MessageWorld)
 			//     .Inject(_sceneData, _savedData, _packedPrefabData, _configuration)
 			//     .Init();
+
+			Destroy(outerData.gameObject);
 		}
 
 		private void Update()

@@ -26,6 +26,6 @@ MonoBehaviour:
     CameraLeftCode: 0
     CameraRightCode: 0
   MouseSensitivity: {x: 1, y: 1}
-  DefaultSaveName: flop
+  DefaultSaveName: Jack
   IsNewGame: 1
   SaveInFile: 1
