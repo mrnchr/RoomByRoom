@@ -106,7 +106,7 @@ namespace RoomByRoom.Utility
 
 		public static int GetEnemyRoom(int enemyRoomCount) => Rand.Range(0, enemyRoomCount);
 
-		public static int CreateItem(EcsWorld world, PackedPrefabData prefabData, GameInfo gameInfo)
+		public static int CreateItem(EcsWorld world, PrefabService prefabService, GameInfo gameInfo)
 		{
 			int item = world.NewEntity();
 
@@ -139,12 +139,12 @@ namespace RoomByRoom.Utility
 			}
 
 			world.Add<Shape>(item)
-				.PrefabIndex = GetPrefabIndex(prefabData, type, equipmentType);
+				.PrefabIndex = GetPrefabIndex(prefabService, type, equipmentType);
 
 			return item;
 		}
 
-		public static int GetPrefabIndex(PackedPrefabData prefabData, ItemType item, int equipmentType) =>
-			Rand.Range(0, prefabData.GetItems(item, equipmentType).Length);
+		public static int GetPrefabIndex(PrefabService prefabSvc, ItemType item, int equipmentType) =>
+			Rand.Range(0, prefabSvc.GetItems(item, equipmentType).Length);
 	}
 }

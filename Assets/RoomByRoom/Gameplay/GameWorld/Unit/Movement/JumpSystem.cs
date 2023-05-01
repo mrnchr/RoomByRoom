@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace RoomByRoom
 {
-	public class JumpUnitSystem : IEcsRunSystem
+	public class JumpSystem : IEcsRunSystem
 	{
-		private readonly EcsFilterInject<Inc<Jumpable, UnitViewRef, JumpCommand>, Exc<CantJump>> _units = default;
+		private readonly EcsFilterInject<Inc<JumpCommand>, Exc<CantJump>> _units = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)

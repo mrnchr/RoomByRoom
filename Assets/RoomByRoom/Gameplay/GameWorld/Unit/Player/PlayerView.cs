@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
@@ -9,11 +8,6 @@ namespace RoomByRoom
 		public Transform CameraHolder;
 		public Transform Camera;
 		public float CameraDistance;
-		[FormerlySerializedAs("Wall")] public LayerMask WallMask;
-
-		protected override void OnAwake()
-		{
-			// Rb = Character.GetComponent<Rigidbody>();
-		}
+		public LayerMask WallMask;
 	}
 }

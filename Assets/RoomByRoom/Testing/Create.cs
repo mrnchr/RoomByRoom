@@ -148,9 +148,9 @@ namespace RoomByRoom.Testing
 				});
 		}
 
-		public static PackedPrefabData PackedPrefabData()
+		public static PrefabService PrefabService()
 		{
-			return new PackedPrefabData(ScriptableObject.CreateInstance<PrefabData>())
+			return new PrefabService(ScriptableObject.CreateInstance<PrefabData>())
 			{
 				Prefabs =
 				{
@@ -159,7 +159,7 @@ namespace RoomByRoom.Testing
 					Breastplates = new[] { new GameObject().AddComponent<ArmorView>() },
 					Helmets = new[] { new GameObject().AddComponent<ArmorView>() },
 					Gloves = new[] { new GameObject().AddComponent<ArmorView>() },
-					OneHandWeapons = new[] { Setup.WeaponViewF(GO<WeaponView>()) },
+					OneHands = new[] { Setup.WeaponViewF(GO<WeaponView>()) },
 					Shields = new[] { new GameObject().AddComponent<ArmorView>() }
 				}
 			};

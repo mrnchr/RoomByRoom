@@ -9,8 +9,9 @@ namespace RoomByRoom
 	public class CreateUnitViewSystem : IEcsRunSystem
 	{
 		private readonly EcsCustomInject<AttackService> _attackSvc = default;
-		private readonly EcsCustomInject<PackedPrefabData> _prefabData = default;
+		private readonly EcsCustomInject<PrefabService> _prefabSvc = default;
 		private readonly EcsCustomInject<Saving> _savedData = default;
+		private readonly EcsCustomInject<SceneInfo> _sceneInfo = default;
 		private readonly EcsFilterInject<Inc<UnitInfo>, Exc<UnitViewRef>> _units = default;
 		private EcsWorld _world;
 
@@ -30,8 +31,10 @@ namespace RoomByRoom
 				_world.Add<Movable>(index)
 					.Assign(_ => GetMoving(index, unitView));
 
-				if (!Utils.IsUnitOf(_world, index, UnitType.Player))
-					SetNavMeshAgent(index, unitView);
+				if (Utils.IsUnitOf(_world, index, UnitType.Player))
+					SetPlayerUnit(index, unitView);
+				else
+					SetEnemyUnit(index, unitView);
 
 				if (unitView is GroundUnitView groundUnit)
 				{
@@ -46,6 +49,20 @@ namespace RoomByRoom
 					_world.Add<Flyable>(index);
 				}
 			}
+		}
+
+		private void SetPlayerUnit(int index, UnitView unitView)
+		{
+			var playerView = (PlayerView)unitView;
+			playerView.Camera = _sceneInfo.Value.MainCamera.transform;
+			playerView.Camera.SetParent(playerView.CameraHolder);
+			playerView.HealthBar = _sceneInfo.Value.HealthBar;
+			playerView.ArmorBar = _sceneInfo.Value.ArmorBar;
+		}
+
+		private void SetEnemyUnit(int index, UnitView unitView)
+		{
+			SetNavMeshAgent(index, unitView);
 		}
 
 		private void SetNavMeshAgent(int index, UnitView unitView)
@@ -79,14 +96,14 @@ namespace RoomByRoom
 
 			// TODO: load player depending on his race
 			return Utils.IsUnitOf(_world, entity, UnitType.Player)
-				? _prefabData.Value.Prefabs.BasePlayerUnit
+				? _prefabSvc.Value.Prefabs.BasePlayerUnit
 				: SelectEnemy(type, race);
 		}
 
 
 		private UnitView SelectEnemy(UnitType type, RaceType race) =>
 			type == UnitType.Boss
-				? _prefabData.Value.Prefabs.BossUnits[(int)race - 1]
-				: _prefabData.Value.GetEnemies(race)[(int)type - 1];
+				? _prefabSvc.Value.Prefabs.BossUnits[(int)race - 1]
+				: _prefabSvc.Value.GetEnemies(race)[(int)type - 1];
 	}
 }

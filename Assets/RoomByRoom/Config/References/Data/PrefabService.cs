@@ -2,11 +2,11 @@ using System;
 
 namespace RoomByRoom
 {
-	public class PackedPrefabData
+	public class PrefabService
 	{
 		public readonly PrefabData Prefabs;
 
-		public PackedPrefabData(PrefabData prefabs) => Prefabs = prefabs;
+		public PrefabService(PrefabData prefabs) => Prefabs = prefabs;
 
 		public ItemView GetItem(ItemType item, int type, int index = -1) =>
 			index == -1
@@ -38,8 +38,8 @@ namespace RoomByRoom
 			type switch
 			{
 				WeaponType.Bow => Prefabs.Bows,
-				WeaponType.OneHand => Prefabs.OneHandWeapons,
-				WeaponType.TwoHands => Prefabs.TwoHandsWeapons,
+				WeaponType.OneHand => Prefabs.OneHands,
+				WeaponType.TwoHands => Prefabs.TwoHands,
 				_ => throw new ArgumentOutOfRangeException()
 			};
 

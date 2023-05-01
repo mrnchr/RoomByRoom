@@ -20,7 +20,7 @@ namespace RoomByRoom
 		{
 			if (_player.Value.GetEntitiesCount() == 0)
 				throw new TimeoutException("It is impossible to create inventory for the player. The entity does not exist");
-
+			
 			_world = systems.GetWorld();
 			_savedInventory = _savedData.Value.Inventory;
 
@@ -47,6 +47,8 @@ namespace RoomByRoom
 					x.CurrentPoint.Clamp(max: x.MaxPoint);
 					return x;
 				});
+
+			Utils.SendDirtyMessage(systems.GetWorld(Idents.Worlds.MessageWorld));
 		}
 
 		private void AddItemToInventory(int player, int item)

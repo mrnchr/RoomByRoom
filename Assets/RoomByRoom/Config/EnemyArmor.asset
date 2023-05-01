@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dbd424dfd544baca883f887d9629bd8, type: 3}
   m_Name: EnemyArmor
   m_EditorClassIdentifier: 
-  RestoreSpeed: 2
+  RestoreSpeed: 5
   BreakRestoreTime: 2

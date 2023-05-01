@@ -6,14 +6,14 @@ namespace RoomByRoom.UI.MainMenu
 	{
 		private bool _isInputCorrected;
 		private Configuration _config;
-		private Mediator _mediator;
+		private MainMenuMediator _mainMenuMediator;
 		private ProfileFieldView _newProfileField;
 		private GameObject _errorMessage;
 		private readonly char[] _invalidFileNameSymbols = { '/', '\\', ':', '*', '?', '\"', '<', '>', '|' };
 
 		private void Awake()
 		{
-			_mediator = FindObjectOfType<Mediator>();
+			_mainMenuMediator = FindObjectOfType<MainMenuMediator>();
 			_isInputCorrected = true;
 		}
 
@@ -36,14 +36,14 @@ namespace RoomByRoom.UI.MainMenu
 
 		public void Show()
 		{
-			_mediator.SwitchNewProfile(true);
+			_mainMenuMediator.SwitchNewProfile(true);
 			_newProfileField.InputField.text = _config.DefaultSaveName;
 		}
 
 		public void TryStartGame()
 		{
 			if (_isInputCorrected)
-				_mediator.StartGame(_newProfileField.InputField.text);
+				_mainMenuMediator.StartGame(_newProfileField.InputField.text);
 		}
 	}
 }

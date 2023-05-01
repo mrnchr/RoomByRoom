@@ -10,10 +10,13 @@ namespace RoomByRoom
 	{
 		private readonly EcsFilterInject<Inc<ControllerByAI, UnitViewRef>> _enemies = default;
 		private readonly EcsCustomInject<EnemyData> _enemyData = default;
+		private readonly EcsCustomInject<BlockingService> _blockingSvc = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
 		{
+			if (_blockingSvc.Value.IsBlocking()) return;
+			
 			_world = systems.GetWorld();
 			Transform player = GetPlayerTransform();
 
@@ -33,14 +36,12 @@ namespace RoomByRoom
 
 					moveDir = (agent.nextPosition - humanoidPos).normalized;
 					rotateDir = ConvertToDirection(agent.steeringTarget - humanoidPos);
-					// agent.updatePosition = true;
 				}
 				else
 				{
 					agent.ResetPath();
 					agent.Warp(humanoidPos);
 					_world.Add<AttackCommand>(index);
-					// agent.updatePosition = false;
 					moveDir = Vector3.zero;
 					rotateDir = ConvertToDirection(player.position - humanoidPos);
 				}
@@ -52,15 +53,13 @@ namespace RoomByRoom
 			}
 		}
 
-		private void AddRotateComponent(int index, Vector3 rotateDirection)
-		{
+		private void AddRotateComponent(int index, Vector3 rotateDirection) =>
 			_world.Add<RotateCommand>(index)
 				.Assign(x =>
 				{
 					x.RotateDirection = rotateDirection;
 					return x;
 				});
-		}
 
 		private Vector3 GetHumanoidPosition(int index) => GetHumanoidView(index).transform.position;
 		private HumanoidView GetHumanoidView(int entity) => (HumanoidView)_world.Get<UnitViewRef>(entity).Value;

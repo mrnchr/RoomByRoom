@@ -20,7 +20,7 @@ namespace RoomByRoom.Testing.PlayMode
 			var world = new EcsWorld();
 			IEcsSystems systems = Setup
 				.Systems(new EcsSystems(world), null, testSystem, secondSystem, thirdSystem, forthSystem)
-				.Inject(new PackedPrefabData((PrefabData)Resources.Load("LoadPrefabData")), Create.GameInfo(),
+				.Inject(new PrefabService((PrefabData)Resources.Load("LoadPrefabData")), Create.GameInfo(),
 					new CharacteristicService(world));
 
 			int enemy = world.NewEntity();
@@ -58,7 +58,7 @@ namespace RoomByRoom.Testing.PlayMode
 			var testSystem = new DieSystem();
 			var world = new EcsWorld();
 			IEcsSystems systems = Setup.Systems(new EcsSystems(world), null, testSystem)
-				.Inject(Create.GameInfo(), new PackedPrefabData((PrefabData)Resources.Load("LoadPrefabData")));
+				.Inject(Create.GameInfo(), new PrefabService((PrefabData)Resources.Load("LoadPrefabData")));
 
 			int enemy = world.NewEntity();
 			Create.HealthCmp(world, enemy);

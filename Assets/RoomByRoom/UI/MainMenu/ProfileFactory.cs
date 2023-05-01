@@ -6,19 +6,19 @@ namespace RoomByRoom.UI.MainMenu
 	{
 		private readonly ProfileView _prefab;
 		private readonly Transform _parent;
-		private readonly Mediator _mediator;
+		private readonly MainMenuMediator _mainMenuMediator;
 
-		public ProfileButtonFactory(ProfileView prefab, Transform parent, Mediator mediator)
+		public ProfileButtonFactory(ProfileView prefab, Transform parent, MainMenuMediator mainMenuMediator)
 		{
 			_prefab = prefab;
 			_parent = parent;
-			_mediator = mediator;
+			_mainMenuMediator = mainMenuMediator;
 		}
 
 		public ProfileView Create()
 		{
 			ProfileView view = Object.Instantiate(_prefab, _parent);
-			view.OnSelect += _mediator.StartGame;
+			view.OnSelect += _mainMenuMediator.StartGame;
 
 			return view;
 		}

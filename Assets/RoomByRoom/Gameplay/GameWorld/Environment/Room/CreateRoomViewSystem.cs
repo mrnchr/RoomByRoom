@@ -8,7 +8,7 @@ namespace RoomByRoom
 {
 	internal class CreateRoomViewSystem : IEcsRunSystem
 	{
-		private readonly EcsCustomInject<PackedPrefabData> _injectPrefabData = default;
+		private readonly EcsCustomInject<PrefabService> _prefabSvc = default;
 		private readonly EcsFilterInject<Inc<RoomInfo, RaceInfo>, Exc<RoomViewRef>> _rooms = default;
 		private PrefabData _prefabData;
 		private EcsWorld _world;
@@ -16,7 +16,7 @@ namespace RoomByRoom
 		public void Run(IEcsSystems systems)
 		{
 			_world = systems.GetWorld();
-			_prefabData = _injectPrefabData.Value.Prefabs;
+			_prefabData = _prefabSvc.Value.Prefabs;
 
 			foreach (int index in _rooms.Value)
 			{

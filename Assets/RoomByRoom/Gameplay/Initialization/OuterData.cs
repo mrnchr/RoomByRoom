@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RoomByRoom.UI.MainMenu
+namespace RoomByRoom
 {
 	public class OuterData : MonoBehaviour
 	{

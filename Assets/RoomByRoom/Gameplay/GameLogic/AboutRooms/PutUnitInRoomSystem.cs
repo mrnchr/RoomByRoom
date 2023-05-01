@@ -87,15 +87,15 @@ namespace RoomByRoom
 		private void PutInSpawn(int unit, Transform spawn)
 		{
 			UnitView unitView = _world.Get<UnitViewRef>(unit).Value;
-			if (!Utils.IsUnitOf(_world, unit, UnitType.Player))
+			if (Utils.IsUnitOf(_world, unit, UnitType.Player))
+			{
+				Utils.SetTransform(unitView.transform, spawn);
+			}
+			else
 			{
 				NavMeshAgent agent = _world.Get<ControllerByAI>(unit).Agent;
 				agent.Warp(spawn.position);
 				agent.transform.rotation = spawn.rotation;
-			}
-			else
-			{
-				Utils.SetTransform(unitView.transform, spawn);
 			}
 
 			unitView.Rb.velocity = Vector3.zero;

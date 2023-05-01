@@ -14,6 +14,8 @@ namespace RoomByRoom
 		public KeyCode AttackCode;
 		public KeyCode TakeCode;
 		public KeyCode OpenDoorCode;
+		public KeyCode InventoryCode;
+		public KeyCode PauseCode;
 		[HideInInspector] public KeyCode CameraUpCode;
 		[HideInInspector] public KeyCode CameraDownCode;
 		[HideInInspector] public KeyCode CameraLeftCode;

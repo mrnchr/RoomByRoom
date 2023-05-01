@@ -12,14 +12,14 @@ namespace RoomByRoom.Testing.EditorMode
 		{
 			// Arrange
 			var world = new EcsWorld();
-			PackedPrefabData prefabData = Create.PackedPrefabData();
+			PrefabService prefabService = Create.PrefabService();
 
 			GameInfo gameInfo = Create.GameInfo();
 
 			for (var i = 0; i < 100; i++)
 			{
 				// Act
-				int item = FastRandom.CreateItem(world, prefabData, gameInfo);
+				int item = FastRandom.CreateItem(world, prefabService, gameInfo);
 
 				// Assert
 				world.Has<ItemInfo>(item).Should().Be(true);

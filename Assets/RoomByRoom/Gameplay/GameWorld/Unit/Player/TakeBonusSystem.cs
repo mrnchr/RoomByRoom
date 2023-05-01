@@ -55,6 +55,8 @@ namespace RoomByRoom
 					.Owner = index;
 
 				inventory.Add(item);
+				
+				Utils.SendDirtyMessage(systems.GetWorld(Idents.Worlds.MessageWorld));
 
 				DestroyBonus(bonus, item);
 			}

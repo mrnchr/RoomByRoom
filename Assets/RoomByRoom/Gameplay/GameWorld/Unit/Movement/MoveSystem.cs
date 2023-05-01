@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace RoomByRoom
 {
-	public class MoveUnitSystem : IEcsRunSystem
+	public class MoveSystem : IEcsRunSystem
 	{
-		private readonly EcsFilterInject<Inc<MoveCommand, UnitViewRef, Movable>> _units = default;
+		private readonly EcsFilterInject<Inc<MoveCommand>> _units = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)

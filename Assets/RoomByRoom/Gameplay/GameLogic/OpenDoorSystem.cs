@@ -15,8 +15,8 @@ namespace RoomByRoom
 		{
 			_message = systems.GetWorld(Idents.Worlds.MessageWorld);
 
-			foreach (int index in _openDoorMsg.Value)
-			foreach (int _ in _opener.Value)
+			foreach (int _ in _openDoorMsg.Value)
+			foreach (int __ in _opener.Value)
 			{
 				if (IsFirstRoom(_gameInfo.Value.RoomCount))
 					StartGame();

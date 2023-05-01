@@ -2,7 +2,7 @@
 
 namespace RoomByRoom.UI.MainMenu
 {
-	public class Mediator : MonoBehaviour
+	public class MainMenuMediator : MonoBehaviour
 	{
 		private WindowSwitcher _windowSwitcher;
 		private ProfileSelectorWindow _profileSelectorWindow;

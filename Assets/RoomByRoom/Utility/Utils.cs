@@ -96,5 +96,7 @@ namespace RoomByRoom.Utility
 			HumanoidView humanoid = (HumanoidView)world.Get<UnitViewRef>(owner).Value;
 			humanoid.SetWeaponToAnimate(world.Get<WeaponInfo>(item).Type);
 		}
+
+		public static void SendDirtyMessage(EcsWorld message) => message.Add<DirtyMessage>(message.NewEntity());
 	}
 }

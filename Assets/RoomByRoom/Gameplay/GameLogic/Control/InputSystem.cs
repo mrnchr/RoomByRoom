@@ -1,5 +1,6 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using RoomByRoom.UI.Game;
 using RoomByRoom.Utility;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace RoomByRoom
 	public class InputSystem : IEcsInitSystem, IEcsRunSystem
 	{
 		private readonly EcsFilterInject<Inc<ControllerByPlayer>> _player = default;
+		private readonly EcsCustomInject<BlockingService> _blockingSvc = default;
 		private readonly EcsCustomInject<Configuration> _config = default;
 		private Controller _controller;
 		private EcsWorld _message;
@@ -24,6 +26,12 @@ namespace RoomByRoom
 		{
 			foreach (int index in _player.Value)
 			{
+				TurnPause();
+
+				if (_blockingSvc.Value.IsPause()) return;
+				TurnInventory();
+
+				if (_blockingSvc.Value.IsInventory()) return;
 				OpenDoor();
 				Move(index);
 				Jump(index);
@@ -31,6 +39,18 @@ namespace RoomByRoom
 				Attack(index);
 				Take(index);
 			}
+		}
+
+		private void TurnPause()
+		{
+			if (Input.GetKeyDown(_controller.PauseCode))
+				_message.Add<TurnPauseMessage>(_message.NewEntity());
+		}
+
+		private void TurnInventory()
+		{
+			if (Input.GetKeyDown(_controller.InventoryCode))
+				_message.Add<TurnInventoryMessage>(_message.NewEntity());
 		}
 
 		private void Take(int entity)

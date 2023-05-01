@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RoomByRoom.UI.MainMenu
 {
@@ -17,7 +18,7 @@ namespace RoomByRoom.UI.MainMenu
 		[SerializeField] private GameObject _newProfileWindow;
 
 		[Header("Mediator Construction")]
-		[SerializeField] private Mediator _mediator;
+		[SerializeField] private MainMenuMediator _mainMenuMediator;
 		
 		[Header("Profile Button Factory Construction")]
 		[SerializeField] private ProfileView _profileButton;
@@ -37,12 +38,12 @@ namespace RoomByRoom.UI.MainMenu
 			_outerData.transform.SetParent(null);
 			DontDestroyOnLoad(_outerData);
 			_profileSvc = new ProfileService(_config.SaveInFile);
-			_profileButtonFactory = new ProfileButtonFactory(_profileButton, _profileGroup, _mediator);
+			_profileButtonFactory = new ProfileButtonFactory(_profileButton, _profileGroup, _mainMenuMediator);
 			_startGameSvc = new StartGameService(_outerData);
 			
 			_profileCreatorWindow.Construct(_config, _profileFieldView, _errorMessageObject);
 			_windowSwitcher.Construct(_buttonWindow, _profileWindow, _newProfileWindow);
-			_mediator.Construct(_profileButtonFactory, _profileSvc, _startGameSvc);
+			_mainMenuMediator.Construct(_profileButtonFactory, _profileSvc, _startGameSvc);
 		}
 	}
 }

@@ -21,6 +21,8 @@ MonoBehaviour:
     AttackCode: 323
     TakeCode: 102
     OpenDoorCode: 116
+    InventoryCode: 101
+    PauseCode: 27
     CameraUpCode: 0
     CameraDownCode: 0
     CameraLeftCode: 0

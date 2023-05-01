@@ -14,8 +14,8 @@ TagManager:
   - Enemy
   - Wall
   - Lamp
-  - 
-  - 
+  - PlayerModel
+  - ItemModel
   - 
   - 
   - 

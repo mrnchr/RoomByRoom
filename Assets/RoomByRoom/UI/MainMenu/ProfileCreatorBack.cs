@@ -2,14 +2,14 @@
 {
 	public class ProfileCreatorBack : WindowBack
 	{
-		private Mediator _mediator;
+		private MainMenuMediator _mainMenuMediator;
 
 		protected override void Awake()
 		{
 			base.Awake();
-			_mediator = FindObjectOfType<Mediator>();
+			_mainMenuMediator = FindObjectOfType<MainMenuMediator>();
 		}
 
-		protected override void HideWindow() => _mediator.SwitchNewProfile(false);
+		protected override void HideWindow() => _mainMenuMediator.SwitchNewProfile(false);
 	}
 }

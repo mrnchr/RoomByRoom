@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
@@ -14,8 +15,8 @@ namespace RoomByRoom
 		public RoomView[] EnemyRooms;
 		public RoomView[] BossRooms;
 		public WeaponView PlayerHand;
-		public WeaponView[] OneHandWeapons;
-		public WeaponView[] TwoHandsWeapons;
+		public WeaponView[] OneHands;
+		public WeaponView[] TwoHands;
 		public WeaponView[] Bows;
 		public ArmorView[] Boots;
 		public ArmorView[] Leggings;

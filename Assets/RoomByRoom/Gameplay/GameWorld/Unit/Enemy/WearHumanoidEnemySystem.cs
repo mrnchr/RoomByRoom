@@ -9,7 +9,7 @@ namespace RoomByRoom
 	public class WearHumanoidEnemySystem : IEcsRunSystem
 	{
 		private readonly EcsCustomInject<GameInfo> _gameInfo = default;
-		private readonly EcsCustomInject<PackedPrefabData> _prefabData = default;
+		private readonly EcsCustomInject<PrefabService> _prefabData = default;
 		private readonly EcsFilterInject<Inc<Bare>> _units = default;
 		private EcsWorld _world;
 

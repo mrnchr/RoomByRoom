@@ -1,4 +1,5 @@
 using System;
+using RoomByRoom.UI.Game;
 
 namespace RoomByRoom
 {
@@ -7,5 +8,6 @@ namespace RoomByRoom
 	{
 		public int RoomCount;
 		public int Money;
+		public WindowType OpenedWindow;
 	}
 }

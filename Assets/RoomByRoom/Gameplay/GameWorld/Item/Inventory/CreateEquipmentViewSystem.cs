@@ -8,7 +8,7 @@ namespace RoomByRoom
 	public class CreateEquipmentViewSystem : IEcsRunSystem
 	{
 		private readonly EcsFilterInject<Inc<Equipped>, Exc<ItemViewRef>> _equipments = default;
-		private readonly EcsCustomInject<PackedPrefabData> _prefabData = default;
+		private readonly EcsCustomInject<PrefabService> _prefabSvc = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
@@ -44,7 +44,7 @@ namespace RoomByRoom
 				: (int)_world.Get<ArmorInfo>(entity).Type;
 
 			// Debug.Log($"itemType: {itemType}, typeNumber: {typeNumber}, prefabIndex: {prefabIndex}");
-			return _prefabData.Value.GetItem(itemType, typeNumber, prefabIndex);
+			return _prefabSvc.Value.GetItem(itemType, typeNumber, prefabIndex);
 		}
 
 		private ItemPlace GetPlace(int entity, ItemType itemType)

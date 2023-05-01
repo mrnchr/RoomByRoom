@@ -8,7 +8,7 @@ namespace RoomByRoom
 	public class SpawnBonusSystem : IEcsRunSystem
 	{
 		private readonly EcsFilterInject<Inc<SpawnCommand>, Exc<BonusViewRef>> _bonuses = default;
-		private readonly EcsCustomInject<PackedPrefabData> _prefabData = default;
+		private readonly EcsCustomInject<PrefabService> _prefabData = default;
 		private EcsWorld _world;
 
 		public void Run(IEcsSystems systems)
