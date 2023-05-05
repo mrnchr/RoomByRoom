@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Data.SQLite;
-using PlasticPipe.PlasticProtocol.Messages;
 using RoomByRoom.Utility;
 
 namespace RoomByRoom.Database
@@ -8,7 +6,7 @@ namespace RoomByRoom.Database
 	public class DBAccessor
 	{
 		public readonly SQLiteCommand Command;
-		private readonly string _dbFileName = Idents.FilePaths.DatabaseFileName;
+		private const string _dbFileName = Idents.FilePaths.DatabaseFileName;
 
 		public DBAccessor()
 		{

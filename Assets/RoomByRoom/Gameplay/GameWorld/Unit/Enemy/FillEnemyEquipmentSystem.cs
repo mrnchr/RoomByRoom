@@ -34,7 +34,7 @@ namespace RoomByRoom
 		{
 			int owner = _world.Get<Owned>(item).Owner;
 			if (IsBare(owner))
-				Utils.AddItemToList(_world.Get<Equipment>(owner).ItemList, item);
+				Utils.AddItemToList(_world.Get<Equipment>(owner).ItemList, _world.PackEntity(item));
 		}
 
 		private bool IsBare(int owner) => _world.Has<Bare>(owner);

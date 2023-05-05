@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: DefaultData
   m_EditorClassIdentifier: 
   GameInfo:
-    RoomCount: 2
+    RoomCount: 0
     Money: 0
+    OpenedWindow: 0
   Player:
     Race:
       Type: 0
     HealthCmp:
-      CurrentPoint: 1000
-      MaxPoint: 1000
+      CurrentPoint: 2000
+      MaxPoint: 2000
     MovableCmp:
       Speed: 5
     JumpableCmp:

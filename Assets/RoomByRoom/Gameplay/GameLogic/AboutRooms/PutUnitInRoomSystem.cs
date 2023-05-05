@@ -87,7 +87,7 @@ namespace RoomByRoom
 		private void PutInSpawn(int unit, Transform spawn)
 		{
 			UnitView unitView = _world.Get<UnitViewRef>(unit).Value;
-			if (Utils.IsUnitOf(_world, unit, UnitType.Player))
+			if (Utils.IsPlayer(_world, unit))
 			{
 				Utils.SetTransform(unitView.transform, spawn);
 			}

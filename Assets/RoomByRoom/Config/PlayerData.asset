@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Armor: {fileID: 11400000, guid: 39ba2a44dc509c14b9a31f94f65d42cb, type: 2}
   TakeItemDistance: 2
-  BackpackSize: 10
-  EquipmentSize: 16
+  BackpackSize: 8
+  EquipmentSize: 8

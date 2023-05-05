@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Codice.Client.Commands;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -40,14 +39,16 @@ namespace RoomByRoom.Utility
 			where T : Enum =>
 			Enum.GetNames(typeof(T)).Length;
 
-		public static bool IsUnitOf(EcsWorld world, int entity, UnitType type) =>
-			world.Get<UnitInfo>(entity).Type == type;
+		public static bool IsUnitOf(EcsWorld world, int unit, UnitType checkType) =>
+			world.Get<UnitInfo>(unit).Type == checkType;
+
+		public static bool IsPlayer(EcsWorld world, int unit) => IsUnitOf(world, unit, UnitType.Player);
 
 		public static bool IsEnemy(UnitType type) => type != UnitType.Player && type != UnitType.Boss;
 		public static bool IsEnemy(EcsWorld world, int unit) => IsEnemy(world.Get<UnitInfo>(unit).Type);
 
 
-		public static void AddItemToList(List<int> list, int item)
+		public static void AddItemToList(List<EcsPackedEntity> list, EcsPackedEntity item)
 		{
 			if (list.Contains(item))
 				throw new ArgumentException("You try to add an item which is in the item list");
@@ -72,24 +73,20 @@ namespace RoomByRoom.Utility
 			from.rotation = to.rotation;
 		}
 
-		public static void PutItemInPlace(Transform item, ItemPlace place)
+		public static void PutItemInPlace(Transform item, Transform place)
 		{
-			item.SetParent(place.Parent);
-			SetTransform(item, place.Point);
+			item.SetParent(place);
+			SetTransform(item, place);
 		}
 
 		public static void UpdateTimer<T>(EcsWorld world, int entity, float time)
-			where T : struct, ITimerable
-		{
-			(world.Has<T>(entity)
-					? ref world.Get<T>(entity)
-					: ref world.Add<T>(entity))
-				.TimeLeft = time;
-		}
+			where T : struct, ITimerable =>
+			world.Update<T>(entity).TimeLeft = time;
 
 		public static int GetOwner(EcsWorld world, int item) => world.Get<Owned>(item).Owner;
 
-		public static void SetWeaponToAnimate(EcsWorld world, int unit) => SetWeaponToAnimate(world, world.Get<MainWeapon>(unit).Entity, unit);
+		public static void SetWeaponToAnimate(EcsWorld world, int unit) =>
+			SetWeaponToAnimate(world, world.Get<MainWeapon>(unit).Entity, unit);
 
 		public static void SetWeaponToAnimate(EcsWorld world, int item, int owner)
 		{
@@ -97,6 +94,18 @@ namespace RoomByRoom.Utility
 			humanoid.SetWeaponToAnimate(world.Get<WeaponInfo>(item).Type);
 		}
 
-		public static void SendDirtyMessage(EcsWorld message) => message.Add<DirtyMessage>(message.NewEntity());
+		public static bool IsMeleeWeapon(ItemType type, int eqType) =>
+			type == ItemType.Weapon && eqType != (int)WeaponType.Bow;
+
+		public static bool IsMeleeWeapon(EcsWorld world, int item) =>
+			IsMeleeWeapon(world.Get<ItemInfo>(item).Type, GetEquipmentType(world, item));
+
+		public static int GetEquipmentType(EcsWorld world, int item) =>
+			world.Get<ItemInfo>(item).Type == ItemType.Weapon
+				? (int)world.Get<WeaponInfo>(item).Type
+				: (int)world.Get<ArmorInfo>(item).Type;
+
+		public static int GetPlayerEntity(EcsWorld world) => world.Filter<ControllerByPlayer>().End().GetRawEntities()[0];
+		public static int GetRoomEntity(EcsWorld world) => world.Filter<RoomInfo>().End().GetRawEntities()[0];
 	}
 }

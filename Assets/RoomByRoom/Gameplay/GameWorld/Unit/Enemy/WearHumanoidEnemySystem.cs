@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
@@ -9,7 +10,7 @@ namespace RoomByRoom
 	public class WearHumanoidEnemySystem : IEcsRunSystem
 	{
 		private readonly EcsCustomInject<GameInfo> _gameInfo = default;
-		private readonly EcsCustomInject<PrefabService> _prefabData = default;
+		private readonly EcsCustomInject<PrefabService> _prefabSvc = default;
 		private readonly EcsFilterInject<Inc<Bare>> _units = default;
 		private EcsWorld _world;
 
@@ -70,8 +71,8 @@ namespace RoomByRoom
 			
 			// Utils.SetWeaponToAnimate(_world, weapon);
 
-			if (weaponType == WeaponType.OneHand)
-				CreateShield(unit);
+			// if (weaponType == WeaponType.OneHand && Rand.Range(0f, 1f) >= 0.5)
+			// 	CreateShield(unit);
 		}
 
 		// TODO: shield has persistent rather than protection
@@ -87,7 +88,7 @@ namespace RoomByRoom
 			_world.Add<Equipped>(item);
 
 			_world.Add<Shape>(item)
-				.PrefabIndex = FastRandom.GetPrefabIndex(_prefabData.Value, itemType, equipmentType);
+				.PrefabIndex = FastRandom.GetPrefabIndex(_prefabSvc.Value, itemType, equipmentType);
 
 			_world.Add<Owned>(item)
 				.Owner = unitEntity;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace RoomByRoom
@@ -24,18 +25,18 @@ namespace RoomByRoom
 	[Serializable]
 	public struct Inventory
 	{
-		[SerializeField] public List<int> ItemList;
+		[SerializeField] public List<EcsPackedEntity> ItemList;
 	}
 
 	[Serializable]
 	public struct Equipment
 	{
-		[SerializeField] public List<int> ItemList;
+		[SerializeField] public List<EcsPackedEntity> ItemList;
 	}
 
 	[Serializable]
 	public struct Backpack
 	{
-		[SerializeField] public List<int> ItemList;
+		[SerializeField] public List<EcsPackedEntity> ItemList;
 	}
 }

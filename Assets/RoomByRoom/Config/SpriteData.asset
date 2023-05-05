@@ -22,10 +22,16 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5c21eaa2f154d5b4fac782020b3f14d7, type: 3}
   TwoHands: []
   Bows: []
-  Boots: []
-  Leggings: []
-  Gloves: []
-  Breastplates: []
-  Helmets: []
-  Shields: []
+  Boots:
+  - {fileID: 21300000, guid: 2ffebff0d63bc914da0f2f49d4ef5919, type: 3}
+  Leggings:
+  - {fileID: 21300000, guid: b691ad53352a30f4f9bb23558b46c12f, type: 3}
+  Gloves:
+  - {fileID: 21300000, guid: ae257a9da082311479a1077c349b5a1f, type: 3}
+  Breastplates:
+  - {fileID: 21300000, guid: 25c620e89d685e043ac2ec21da699848, type: 3}
+  Helmets:
+  - {fileID: 21300000, guid: e96b3b39b62fedd40bcf499f0935efae, type: 3}
+  Shields:
+  - {fileID: 21300000, guid: 48d7ee7613d0aa84294bb13821ff7f41, type: 3}
   Artifacts: []

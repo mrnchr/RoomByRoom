@@ -5,12 +5,7 @@ namespace RoomByRoom.UI.Game.HUD
 {
 	public class Bar : MonoBehaviour
 	{
-		protected Slider _slider;
-
-		protected virtual void Awake()
-		{
-			_slider = GetComponent<Slider>();
-		}
+		[SerializeField] protected Slider _slider;
 		
 		public virtual void SetMaxValue(float maxValue)
 		{

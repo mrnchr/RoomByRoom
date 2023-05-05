@@ -11,5 +11,6 @@ namespace RoomByRoom
 		public OverlayBar ArmorBar;
 		public GameInfo CurrentGame;
 		public Saving CurrentSave;
+		public bool DevTools;
 	}
 }

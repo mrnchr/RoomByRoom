@@ -11,7 +11,9 @@ namespace RoomByRoom
 			_gameInfo = gameInfo;
 		}
 
-		public bool IsBlocking() => _gameInfo.OpenedWindow != WindowType.HUD;
+		public WindowType CurrentState => _gameInfo.OpenedWindow;
+
+		public bool IsBlocking() => CurrentState != WindowType.HUD;
 		public bool IsPause() => _gameInfo.OpenedWindow == WindowType.Pause;
 		public bool IsInventory() => _gameInfo.OpenedWindow == WindowType.Inventory;
 	}

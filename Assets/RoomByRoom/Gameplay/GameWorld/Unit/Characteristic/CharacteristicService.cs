@@ -15,8 +15,9 @@ namespace RoomByRoom
 		private void CalcPhysProtection(int unit)
 		{
 			float totalProtection = _world.Get<Equipment>(unit).ItemList
-				.Where(index => _world.Has<ItemPhysicalProtection>(index))
-				.Sum(index => _world.Get<ItemPhysicalProtection>(index).Point);
+				.Select(x => _world.Unpack(x))
+				.Where(x => _world.Has<ItemPhysicalProtection>(x))
+				.Sum(x => _world.Get<ItemPhysicalProtection>(x).Point);
 
 			// UnityEngine.Debug.Log($"Entity: {unit}, protection: {totalProtection}");
 			_world.Get<UnitPhysicalProtection>(unit)

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Armor: {fileID: 11400000, guid: ad386b7e4ea2bdb4d95baf53dff1944a, type: 2}
   DelayAttackTime: 2
-  AttackDistance: 1.5
+  AttackDistance: 1.2

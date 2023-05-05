@@ -979,7 +979,7 @@ MonoBehaviour:
   _buttonWindow: {fileID: 502791378}
   _profileWindow: {fileID: 800443002}
   _newProfileWindow: {fileID: 840847606}
-  _mediator: {fileID: 480080834}
+  _mainMenuMediator: {fileID: 480080834}
   _profileButton: {fileID: 3014780391840263874, guid: 51cef6bc04bb5d745ab74f7f31943e0e, type: 3}
   _profileGroup: {fileID: 1875852304}
   _config: {fileID: 11400000, guid: d18482ebc8e5cdf458dae86145d75263, type: 2}

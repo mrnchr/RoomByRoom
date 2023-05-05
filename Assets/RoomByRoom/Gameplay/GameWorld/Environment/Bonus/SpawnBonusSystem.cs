@@ -15,19 +15,21 @@ namespace RoomByRoom
 		{
 			_world = systems.GetWorld();
 
-			foreach (int index in _bonuses.Value) 
+			foreach (int index in _bonuses.Value)
+			{
 				PutItemInBonus(SpawnItem(index), SpawnBonus(index));
+				_world.Del<SpawnCommand>(index);
+			}
 		}
 
 		private void PutItemInBonus(ItemView itemView, BonusView bonusView)
 		{
 			Transform transform = itemView.transform;
-			var renderer = itemView.GetComponent<Renderer>();
-			ItemPlace place = bonusView.ItemHolder;
+			Transform place = bonusView.ItemPlace;
 
-			transform.SetParent(place.Parent);
-			transform.position = place.Point.position - renderer.bounds.center;
-			transform.rotation = place.Point.rotation;
+			transform.SetParent(place);
+			transform.localPosition = -itemView.Center.localPosition;
+			transform.rotation = place.rotation;
 		}
 
 		private BonusView SpawnBonus(int bonus)
@@ -50,19 +52,11 @@ namespace RoomByRoom
 			return itemView;
 		}
 
-		private ItemView GetItemPrefab(int item)
-		{
-			ItemType type = _world.Get<ItemInfo>(item).Type;
-
-			// TODO: add artifact type
-			int eqType = GetEquipmentType(type, item);
-			int shape = _world.Get<Shape>(item).PrefabIndex;
-			return _prefabData.Value.GetItem(type, eqType, shape);
-		}
-
-		private int GetEquipmentType(ItemType type, int entity) =>
-			type == ItemType.Armor
-				? (int)_world.Get<ArmorInfo>(entity).Type
-				: (int)_world.Get<WeaponInfo>(entity).Type;
+		// TODO: add artifact type
+		private ItemView GetItemPrefab(int item) =>
+			_prefabData.Value.GetItem(
+				_world.Get<ItemInfo>(item).Type,
+				Utils.GetEquipmentType(_world, item),
+				_world.Get<Shape>(item).PrefabIndex);
 	}
 }

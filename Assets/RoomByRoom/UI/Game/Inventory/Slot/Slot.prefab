@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3459444345091310306}
   - component: {fileID: 2981658725005811716}
   - component: {fileID: 4222460439815226629}
-  - component: {fileID: 5884368536713456565}
   m_Layer: 0
   m_Name: Item
   m_TagString: Untagged
@@ -61,7 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -77,19 +76,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5884368536713456565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8483131424198643037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 1
 --- !u!1 &8844366587484565754
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,6 +89,7 @@ GameObject:
   - component: {fileID: 8844366587484565748}
   - component: {fileID: 1370364767014136887}
   - component: {fileID: -8770939048507225313}
+  - component: {fileID: -4327504184561884283}
   m_Layer: 0
   m_Name: Slot
   m_TagString: Untagged
@@ -181,9 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d188b65d1949468cacedff38d9247941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Item: {fileID: 0}
-  <Info>k__BackingField: {fileID: -8770939048507225313}
-  _itemImage: {fileID: 4222460439815226629}
+  <ItemImage>k__BackingField: {fileID: 4222460439815226629}
 --- !u!114 &-8770939048507225313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,8 +182,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IsEquipped>k__BackingField: 0
-  <WeaponInfo>k__BackingField: {fileID: 0}
-  <ArmorInfo>k__BackingField: {fileID: 0}
+  <Type>k__BackingField: 0
+  _weaponType: 0
+  _armorType: 0
+--- !u!114 &-4327504184561884283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8844366587484565754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad4ca7e1d1524813b946e7b13dda40cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8844366587509378807
 GameObject:
   m_ObjectHideFlags: 0

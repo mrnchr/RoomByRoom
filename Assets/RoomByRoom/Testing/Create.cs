@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Leopotam.EcsLite;
 using RoomByRoom.Utility;
 using UnityEngine;
@@ -170,8 +171,8 @@ namespace RoomByRoom.Testing
 			return ref world.Add<Equipment>(entity)
 				.Assign(x =>
 				{
-					x.ItemList = new List<int>(size);
-					x.ItemList.AddRange(items);
+					x.ItemList = new List<EcsPackedEntity>(size);
+					x.ItemList.AddRange(items.Select(world.PackEntity));
 					return x;
 				});
 		}
@@ -181,8 +182,8 @@ namespace RoomByRoom.Testing
 			return ref world.Add<Inventory>(entity)
 				.Assign(x =>
 				{
-					x.ItemList = new List<int>(size);
-					x.ItemList.AddRange(items);
+					x.ItemList = new List<EcsPackedEntity>(size);
+					x.ItemList.AddRange(items.Select(world.PackEntity));
 					return x;
 				});
 		}
@@ -192,8 +193,8 @@ namespace RoomByRoom.Testing
 			return ref world.Add<Backpack>(entity)
 				.Assign(x =>
 				{
-					x.ItemList = new List<int>(size);
-					x.ItemList.AddRange(items);
+					x.ItemList = new List<EcsPackedEntity>(size);
+					x.ItemList.AddRange(items.Select(world.PackEntity));
 					return x;
 				});
 		}

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FluentAssertions;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
@@ -27,18 +28,21 @@ namespace RoomByRoom
 				.Type = UnitType.Player;
 
 			world.Add<Inventory>(player)
-				.ItemList = new List<int>(_playerData.Value.BackpackSize + _playerData.Value.EquipmentSize);
+				.ItemList = new List<EcsPackedEntity>(_playerData.Value.BackpackSize + _playerData.Value.EquipmentSize);
 
 			world.Add<Equipment>(player)
-				.ItemList = new List<int>(_playerData.Value.EquipmentSize);
+				.ItemList = new List<EcsPackedEntity>(_playerData.Value.EquipmentSize);
 
 			world.Add<Backpack>(player)
-				.ItemList = new List<int>(_playerData.Value.BackpackSize);
+				.ItemList = new List<EcsPackedEntity>(_playerData.Value.BackpackSize);
 
-			world.Add<UnitPhysicalProtection>(player) = savedPlayer.UnitPhysProtectionCmp;
-
-			// // TODO: remove after tests
-			world.Add<Opener>(player);
+			world.Add<UnitPhysicalProtection>(player) = savedPlayer.UnitPhysProtectionCmp
+				.Assign(x =>
+				{
+					x.RestoreSpeed = _playerData.Value.Armor.RestoreSpeed;
+					x.CantRestoreTime = _playerData.Value.Armor.BreakRestoreTime;
+					return x;
+				});
 
 			world.Add<ControllerByPlayer>(player);
 		}

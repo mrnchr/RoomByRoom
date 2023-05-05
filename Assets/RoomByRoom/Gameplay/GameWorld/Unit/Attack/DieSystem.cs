@@ -1,3 +1,4 @@
+using System.Linq;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Utility;
@@ -7,9 +8,7 @@ namespace RoomByRoom
 {
 	public class DieSystem : IEcsRunSystem
 	{
-		private readonly EcsCustomInject<GameInfo> _gameInfo = default;
-		private readonly EcsCustomInject<PrefabService> _prefabData = default;
-		private readonly EcsFilterInject<Inc<Health>> _units = default;
+		private readonly EcsFilterInject<Inc<DieCommand>> _units = default;
 
 		public void Run(IEcsSystems systems)
 		{
@@ -17,21 +16,8 @@ namespace RoomByRoom
 
 			foreach (int index in _units.Value)
 			{
-				if (world.Get<Health>(index).CurrentPoint > 0)
-					continue;
-				Debug.Log($"Entity {index} died");
-
-				// TODO: add player death
-				if (Utils.IsUnitOf(world, index, UnitType.Player))
-					continue;
-
-				int bonus = world.NewEntity();
-				world.Add<Bonus>(bonus)
-					.Item = FastRandom.CreateItem(world, _prefabData.Value, _gameInfo.Value);
-				world.Add<SpawnCommand>(bonus)
-					.Coords = world.Get<UnitViewRef>(index).Value.transform.position;
-
-				foreach (int item in world.Get<Equipment>(index).ItemList)
+				// Debug.Log($"Entity {index} died");
+				foreach (int item in world.Get<Equipment>(index).ItemList.Select(x => world.Unpack(x)))
 				{
 					Object.Destroy(world.Get<ItemViewRef>(item).Value.gameObject);
 					world.DelEntity(item);

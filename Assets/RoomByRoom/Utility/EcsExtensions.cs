@@ -27,6 +27,20 @@ namespace RoomByRoom.Utility
 			world.GetPool<T>().Del(entity);
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static int Unpack(this EcsWorld world, EcsPackedEntity packed)
+		{
+			packed.Unpack(world, out int entity);
+			return entity;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static ref T Update<T>(this EcsWorld world, int entity)
+			where T : struct =>
+			ref world.Has<T>(entity)
+				? ref world.Get<T>(entity)
+				: ref world.Add<T>(entity);
+
 		public static ref T Assign<T>(this ref T obj, Func<T, T> action)
 			where T : struct
 		{

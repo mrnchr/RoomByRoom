@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using RoomByRoom.UI.Game;
 using RoomByRoom.Utility;
 
 namespace RoomByRoom
@@ -12,6 +13,7 @@ namespace RoomByRoom
 		private readonly EcsCustomInject<CharacteristicService> _charSvc = default;
 		private readonly EcsFilterInject<Inc<ControllerByPlayer>> _player = default;
 		private readonly EcsCustomInject<Saving> _savedData = default;
+		private readonly EcsCustomInject<KeepDirtyService> _keepDirtySvc = default;
 		private readonly HashSet<int> _savedItems = new HashSet<int>();
 		private SavedInventory _savedInventory;
 		private EcsWorld _world;
@@ -48,16 +50,16 @@ namespace RoomByRoom
 					return x;
 				});
 
-			Utils.SendDirtyMessage(systems.GetWorld(Idents.Worlds.MessageWorld));
+			_keepDirtySvc.Value.UpdateDirtyMessage(DirtyType.Slots);
 		}
 
 		private void AddItemToInventory(int player, int item)
 		{
-			Utils.AddItemToList(_world.Get<Inventory>(player).ItemList, item);
+			Utils.AddItemToList(_world.Get<Inventory>(player).ItemList, _world.PackEntity(item));
 			Utils.AddItemToList(
 				_world.Has<Equipped>(item)
 					? _world.Get<Equipment>(player).ItemList
-					: _world.Get<Backpack>(player).ItemList, item);
+					: _world.Get<Backpack>(player).ItemList, _world.PackEntity(item));
 		}
 
 		private void CollectEntities()

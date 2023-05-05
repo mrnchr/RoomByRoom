@@ -31,7 +31,7 @@ namespace RoomByRoom
 				_world.Add<Movable>(index)
 					.Assign(_ => GetMoving(index, unitView));
 
-				if (Utils.IsUnitOf(_world, index, UnitType.Player))
+				if (Utils.IsPlayer(_world, index))
 					SetPlayerUnit(index, unitView);
 				else
 					SetEnemyUnit(index, unitView);
@@ -77,33 +77,29 @@ namespace RoomByRoom
 		}
 
 		private Movable GetMoving(int entity, UnitView unit) =>
-			Utils.IsUnitOf(_world, entity, UnitType.Player)
+			Utils.IsPlayer(_world, entity)
 				? _savedData.Value.Player.MovableCmp
 				: unit.MovableCmp;
 
 		private Jumpable GetJumping(int entity, GroundUnitView unit) =>
-			Utils.IsUnitOf(_world, entity, UnitType.Player)
+			Utils.IsPlayer(_world, entity)
 				? _savedData.Value.Player.JumpableCmp
 				: unit.JumpableCmp;
 
 		private UnitView InstantiateUnit(int entity) =>
 			Object.Instantiate(GetUnitPrefab(entity));
 
-		private UnitView GetUnitPrefab(int entity)
-		{
-			UnitType type = _world.Get<UnitInfo>(entity).Type;
-			RaceType race = _world.Get<RaceInfo>(entity).Type;
-
-			// TODO: load player depending on his race
-			return Utils.IsUnitOf(_world, entity, UnitType.Player)
-				? _prefabSvc.Value.Prefabs.BasePlayerUnit
-				: SelectEnemy(type, race);
-		}
+		// TODO: load player depending on his race
+		private UnitView GetUnitPrefab(int entity) =>
+			SelectUnit(_world.Get<UnitInfo>(entity).Type, _world.Get<RaceInfo>(entity).Type);
 
 
-		private UnitView SelectEnemy(UnitType type, RaceType race) =>
-			type == UnitType.Boss
-				? _prefabSvc.Value.Prefabs.BossUnits[(int)race - 1]
-				: _prefabSvc.Value.GetEnemies(race)[(int)type - 1];
+		private UnitView SelectUnit(UnitType type, RaceType race) =>
+			type switch
+			{
+				UnitType.Boss => _prefabSvc.Value.Prefabs.BossUnits[(int)race - 1],
+				UnitType.Player => _prefabSvc.Value.Prefabs.BasePlayerUnit,
+				_ => _prefabSvc.Value.GetEnemies(race)[(int)type - 1]
+			};
 	}
 }

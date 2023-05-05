@@ -9,8 +9,18 @@ namespace RoomByRoom.Utility
 
 		public static class FilePaths
 		{
-			public static string SavingDirectory = @"Assets\_Local\Saves\";
-			public static string DatabaseFileName = @"Assets\_Local\room_by_room.db";
+			public const string SavingDirectory =
+#if UNITY_EDITOR
+				@"Assets\_Local\Saves\";
+#elif UNITY_STANDALONE || DEVELOPMENT_BUILD
+				@"Local\Saves\";
+#endif
+			public const string DatabaseFileName =
+#if UNITY_EDITOR
+				@"Assets\_Local\room_by_room.db";
+#elif UNITY_STANDALONE || DEVELOPMENT_BUILD
+				@"Local\room_by_room.db";
+#endif
 		}
 	}
 }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3816807125199675629}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ItemPlace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 8982740443086614335}
   - component: {fileID: 262402726456322715}
   - component: {fileID: 7444788232097693916}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bonus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,9 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Entity: 0
   Shell: {fileID: 352601663783729789}
-  ItemHolder:
-    Parent: {fileID: 3816807125199675629}
-    Point: {fileID: 3816807125199675629}
+  ItemPlace: {fileID: 3816807125199675629}
 --- !u!54 &262402726456322715
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -132,7 +130,7 @@ GameObject:
   - component: {fileID: 6969867454864218330}
   - component: {fileID: 352601663783729789}
   - component: {fileID: 8831730945775038720}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BonusView
   m_TagString: Untagged
   m_Icon: {fileID: 0}

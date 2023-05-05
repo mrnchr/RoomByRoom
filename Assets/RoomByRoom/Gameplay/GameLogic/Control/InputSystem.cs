@@ -26,12 +26,15 @@ namespace RoomByRoom
 		{
 			foreach (int index in _player.Value)
 			{
+				WindowType type = _blockingSvc.Value.CurrentState;
+
+				GetDeveloper();
 				TurnPause();
 
-				if (_blockingSvc.Value.IsPause()) return;
-				TurnInventory();
+				if (type != WindowType.Pause) 
+					TurnInventory();
 
-				if (_blockingSvc.Value.IsInventory()) return;
+				if (_blockingSvc.Value.IsBlocking()) return;
 				OpenDoor();
 				Move(index);
 				Jump(index);
@@ -39,6 +42,12 @@ namespace RoomByRoom
 				Attack(index);
 				Take(index);
 			}
+		}
+
+		private void GetDeveloper()
+		{
+			if (Input.GetKeyDown(KeyCode.BackQuote))
+				_message.Add<GetDeveloperMessage>(_message.NewEntity());
 		}
 
 		private void TurnPause()

@@ -1,13 +1,14 @@
+#if UNITY_EDITOR
+using Leopotam.EcsLite.UnityEditor;
+#endif
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
-using Leopotam.EcsLite.UnityEditor;
 using RoomByRoom.Debugging;
 using RoomByRoom.UI.Game;
 using RoomByRoom.UI.Game.Inventory;
 using RoomByRoom.Utility;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
@@ -15,40 +16,41 @@ namespace RoomByRoom
 	{
 		// TODO: change to external injection
 		[SerializeField] private InitializeData _initializeData;
-
-		[FormerlySerializedAs("_sceneData"), SerializeField]
-		private SceneInfo _sceneInfo;
-
+		[SerializeField] private SceneInfo _sceneInfo;
 		[SerializeField] private PrefabData _prefabData;
 		[SerializeField] private SpriteData _spriteData;
 		[SerializeField] private Configuration _configuration;
 		[SerializeField] private EnemyData _enemyData;
 		[SerializeField] private PlayerData _playerData;
-		[SerializeField] private InventoryKeeper _inventoryKeeper;
-		[SerializeField] private GameMediator _gameMediator;
+		[SerializeField] private InventoryUpdater _inventoryUpdater;
+		[SerializeField] private GameMediator _mediator;
+		[SerializeField] private ItemDescriptionUpdater _itemDescUpdater;
+		[SerializeField] private CharacteristicStrings _charStrings;
+		[SerializeField] private MouseTracking _mouseTracking;
 		private GameInfo _gameInfo;
 		private EcsWorld _message;
 		private PrefabService _prefabSvc;
-		private SpriteService _spriteSvc;
 		private Saving _saving;
-
+		
 		private IEcsSystems _updateSystems;
 
 		// private IEcsSystems _fixedUpdateSystems;
 		private EcsWorld _world;
+		private EquipService _equipSvc;
 
 		private void Awake()
 		{
 			_saving = new Saving();
 			_prefabSvc = new PrefabService(_prefabData);
-			_spriteSvc = new SpriteService(_spriteData);
 			_gameInfo = new GameInfo();
 
 			_world = new EcsWorld();
 			_message = new EcsWorld();
 			_updateSystems = new EcsSystems(_world);
 
-			_inventoryKeeper.Construct(_world, _spriteSvc);
+			_inventoryUpdater.Construct(_world, _message, new SpriteService(_spriteData));
+			_itemDescUpdater.Construct(new CharacteristicConverter(_charStrings));
+			_mouseTracking.Construct(_message);
 
 #if UNITY_EDITOR
 			_sceneInfo.CurrentGame = _gameInfo;
@@ -58,12 +60,15 @@ namespace RoomByRoom
 
 		private void Start()
 		{
-			var savingSvc = new SavingService(GetSaveName(), _configuration.SaveInFile);
+			var outerData = FindObjectOfType<OuterData>();
+			var savingSvc = new SavingService(outerData.ProfileName, _configuration.SaveInFile);
 			var attackSvc = new AttackService(_world, _message);
 			var charSvc = new CharacteristicService(_world);
 			var blockingSvc = new BlockingService(_gameInfo);
-			var turnWindowSvc = new TurnWindowService(_message);
-			_gameMediator.Construct(turnWindowSvc);
+			var keepDirtySvc = new KeepDirtyService(_message);
+			var sceneSvc = new ReloadSceneService();
+			_equipSvc = new EquipService(_world, charSvc, keepDirtySvc);
+			_mediator.Construct(new TurnWindowService(_message), _equipSvc, sceneSvc);
 
 			_updateSystems
 				.AddWorld(_message, Idents.Worlds.MessageWorld)
@@ -71,7 +76,14 @@ namespace RoomByRoom
 				.Add(new LoadRoomSystem())
 				.Add(new LoadPlayerSystem())
 				.Add(new LoadInventorySystem())
+				.Add(new LoadPlayerHandSystem())
 				.Add(new PickPlayerMainWeaponSystem())
+				.Add(new SetupGameSystem())
+				// IEcsRunSystems
+				.DelHere<GameLoadedMessage>(Idents.Worlds.MessageWorld)
+				.Add(new LoadGameSystem())
+				.Add(new WinUISystem())
+				.Add(new PreparePlayerSystem())
 				.Add(new CreateEnemySystem())
 				.Add(new WearHumanoidEnemySystem())
 				.Add(new FillEnemyEquipmentSystem())
@@ -85,12 +97,14 @@ namespace RoomByRoom
 				.Add(new PutUnitInRoomSystem())
 				.DelHere<OpenDoorMessage>(Idents.Worlds.MessageWorld)
 				.DelHere<RotateCameraMessage>(Idents.Worlds.MessageWorld)
+				.DelHere<GetDeveloperMessage>(Idents.Worlds.MessageWorld)
 				.DelHere<MoveCommand>()
 				.DelHere<RotateCommand>()
 				.DelHere<JumpCommand>()
 				.DelHere<AttackCommand>()
 				.DelHere<TakeCommand>()
 				.Add(new InputSystem())
+				.Add(new GetDeveloperSystem())
 				.Add(new EnemyAISystem())
 				.Add(new TimerSystem<CantAttack>())
 				.Add(new DelTimerSystem<CantAttack>())
@@ -105,34 +119,48 @@ namespace RoomByRoom
 				.Add(new KeepCameraSystem())
 				.Add(new AttackSystem())
 				.Add(new TakeBonusSystem())
+				.DelHere<WindowChangedMessage>(Idents.Worlds.MessageWorld)
 				.Add(new WindowStateSystem())
-				.Add(new GameStateSystem())
+				.Add(new BlockGameSystem())
+				.Add(new DropItemSystem())
+				.Add(new BreakDragSystem())
+				.Add(new UpdateInventorySystem())
 				.DelHere<StartGameMessage>(Idents.Worlds.MessageWorld)
 				.DelHere<NextRoomMessage>(Idents.Worlds.MessageWorld)
 				.Add(new OpenDoorSystem())
+				.Add(new MarkCanDeletedSystem())
+				.Add(new RemoveEntitySystem())
 				.Add(new RecreateRoomSystem())
 				.Add(new TimerSystem<CantRestore>())
 				.Add(new DelTimerSystem<CantRestore>())
 				.Add(new DamageSystem())
 				.Add(new RestoreProtectionSystem())
-				.DelHere<SpawnCommand>()
+				.DelHere<PlayerDyingMessage>(Idents.Worlds.MessageWorld)
+				.Add(new CheckHealthSystem())
+				.Add(new CreateBonusSystem())
 				.Add(new DieSystem())
+				.DelHere<RoomCleanedMessage>(Idents.Worlds.MessageWorld)
+				.Add(new OpenNextRoomSystem())
+				.Add(new CheckWinSystem())
 				.DelHere<SelectCommand>()
 				.DelHere<DeselectCommand>()
 				.Add(new SelectBonusSystem())
 				.Add(new HighlightBonusSystem())
-				.Add(new UpdateHUDSystem())
-				.Add(new UpdateInventorySystem())
+				.Add(new ShowBonusCardSystem())
+				.Add(new UpdateBarSystem())
+				.Add(new UpdateDirtySystem())
+				.Add(new UpdateItemInfoSystem())
+				.Add(new ReloadGameSystem())
+				.Add(new SaveGameSystem())
 #if UNITY_EDITOR
-				.Add(new MarkEnemySystem())
-				.Add(new RemoveEntitySystem())
 				.Add(new AddInventoryInfoSystem())
 				.Add(new CheckInventorySystem())
 				.Add(new EcsWorldDebugSystem())
 				.Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif
 				.Inject(_sceneInfo, _saving, _prefabSvc, _configuration,
-					savingSvc, _initializeData, _gameInfo, attackSvc, _enemyData, charSvc, _playerData, blockingSvc, _gameMediator)
+					savingSvc, _initializeData, _gameInfo, attackSvc, _enemyData, charSvc, _playerData, blockingSvc,
+					_mediator, keepDirtySvc, sceneSvc)
 				.Init();
 
 			// _fixedUpdateSystems = new EcsSystems(_world);
@@ -141,28 +169,6 @@ namespace RoomByRoom
 			//     .AddWorld(message, Idents.Worlds.MessageWorld)
 			//     .Inject(_sceneData, _savedData, _packedPrefabData, _configuration)
 			//     .Init();
-
-			//Destroy(outerData.gameObject);
-		}
-
-		private string GetSaveName()
-		{
-			var outerData = FindObjectOfType<OuterData>();
-			string saveName;
-#if UNITY_EDITOR
-			if (outerData)
-			{
-#endif
-				saveName = outerData.ProfileName;
-				Destroy(outerData.gameObject);
-#if UNITY_EDITOR
-			}
-			else
-			{
-				saveName = _configuration.DefaultSaveName;
-			}
-#endif
-			return saveName;
 		}
 
 		private void Update()

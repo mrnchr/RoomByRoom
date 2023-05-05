@@ -1,4 +1,5 @@
-﻿using Leopotam.EcsLite;
+﻿using System;
+using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace RoomByRoom.Testing.PlayMode
@@ -9,6 +10,14 @@ namespace RoomByRoom.Testing.PlayMode
 		public EcsWorld Message;
 		public IEcsSystems Systems;
 		public EcsWorld World;
+
+		public void Awake()
+		{
+			World = new EcsWorld();
+			Message = new EcsWorld();
+			AttackSvc = new AttackService(World, Message);
+			Systems = new EcsSystems(World);
+		}
 
 		public abstract void Start();
 

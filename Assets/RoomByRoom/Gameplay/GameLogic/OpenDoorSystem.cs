@@ -1,5 +1,6 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using RoomByRoom.UI.Game;
 using RoomByRoom.Utility;
 
 namespace RoomByRoom
@@ -9,6 +10,7 @@ namespace RoomByRoom
 		private readonly EcsCustomInject<GameInfo> _gameInfo = default;
 		private readonly EcsFilterInject<Inc<OpenDoorMessage>> _openDoorMsg = Idents.Worlds.MessageWorld;
 		private readonly EcsFilterInject<Inc<Opener>> _opener = default;
+		private readonly EcsCustomInject<KeepDirtyService> _keepDirtySvc = default;
 		private EcsWorld _message;
 
 		public void Run(IEcsSystems systems)
@@ -24,19 +26,18 @@ namespace RoomByRoom
 				CreateNextRoom();
 
 				++_gameInfo.Value.RoomCount;
+				_keepDirtySvc.Value.UpdateDirtyMessage(DirtyType.RoomCount);
 			}
 		}
 
-		private void CreateNextRoom()
-		{
+		private void CreateNextRoom() =>
 			_message.Add<NextRoomMessage>(_message.NewEntity())
 				.Assign(x =>
 				{
 					x.Race.Type = FastRandom.GetEnemyRace();
-					x.Room.Type = GetRoomType(_gameInfo.Value.RoomCount);
+					x.Room.Type = RoomType.Enemy; // GetRoomType(_gameInfo.Value.RoomCount);
 					return x;
 				});
-		}
 
 		private void StartGame()
 		{

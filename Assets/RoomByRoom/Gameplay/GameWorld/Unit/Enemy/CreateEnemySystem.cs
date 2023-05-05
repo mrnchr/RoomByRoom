@@ -73,7 +73,7 @@ namespace RoomByRoom
 				});
 
 			_world.Add<Equipment>(enemy)
-					.ItemList = new List<int>();
+					.ItemList = new List<EcsPackedEntity>();
 
 			_world.Add<UnitPhysicalProtection>(enemy)
 				.Assign(

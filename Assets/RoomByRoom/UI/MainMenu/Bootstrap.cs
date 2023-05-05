@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RoomByRoom.Initialization;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace RoomByRoom.UI.MainMenu
@@ -12,7 +13,7 @@ namespace RoomByRoom.UI.MainMenu
 		[SerializeField] private GameObject _errorMessageObject;
 		
 		[Header("Window Switcher Construction")]
-		[SerializeField] private WindowSwitcher _windowSwitcher;
+		[SerializeField] private MenuWindowSwitcher _windowSwitcher;
 		[SerializeField] private GameObject _buttonWindow;
 		[SerializeField] private GameObject _profileWindow;
 		[SerializeField] private GameObject _newProfileWindow;
@@ -35,6 +36,8 @@ namespace RoomByRoom.UI.MainMenu
 
 		private void Awake()
 		{
+			Environment.Prepare();
+			
 			_outerData.transform.SetParent(null);
 			DontDestroyOnLoad(_outerData);
 			_profileSvc = new ProfileService(_config.SaveInFile);

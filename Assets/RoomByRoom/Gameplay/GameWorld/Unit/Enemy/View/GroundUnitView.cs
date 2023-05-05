@@ -7,8 +7,8 @@ namespace RoomByRoom
 	{
 		[FormerlySerializedAs("JumpingCmp")] public Jumpable JumpableCmp;
 		public LayerMask GroundMask;
-		private static readonly int _isRunning = Animator.StringToHash("IsRunning");
-		private static readonly int _isJumping = Animator.StringToHash("IsFlying");
+		protected static readonly int _isRunning = Animator.StringToHash("IsRunning");
+		protected static readonly int _isJumping = Animator.StringToHash("IsFlying");
 
 		public virtual void AnimateRun(bool isRun) => Anim.SetBool(_isRunning, isRun);
 		public virtual void AnimateJump(bool isJump) => Anim.SetBool(_isJumping, isJump);

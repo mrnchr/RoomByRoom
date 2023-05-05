@@ -16,17 +16,16 @@ namespace RoomByRoom
 
 		public void SetAttackTriggers(int unit, bool isAttack)
 		{
-			ref MainWeapon mainWeapon = ref _world.Get<MainWeapon>(unit);
-			var weapon = (WeaponView)_world.Get<ItemViewRef>(mainWeapon.Entity).Value;
-			weapon.SetActiveAttackTriggers(isAttack);
+			int mainWeapon = _world.Get<MainWeapon>(unit).Entity;
+			if (_world.Has<ItemViewRef>(mainWeapon))
+			{
+				var weapon = (WeaponView)_world.Get<ItemViewRef>(mainWeapon).Value;
+				weapon.SetActiveAttackTriggers(isAttack);
+			}
 
 			if (!isAttack && Utils.IsUnitOf(_world, unit, UnitType.Humanoid))
 				_message.Add<DelayAttackMessage>(_message.NewEntity())
-					.Assign(x =>
-					{
-						x.Unit = unit;
-						return x;
-					});
+					.Unit = unit;
 		}
 
 		public void Damage(int damaged, int weapon)
@@ -48,6 +47,6 @@ namespace RoomByRoom
 		}
 
 		private bool CanFight(int a, int b) =>
-			Utils.IsUnitOf(_world, a, UnitType.Player) || Utils.IsUnitOf(_world, b, UnitType.Player);
+			Utils.IsPlayer(_world, a) || Utils.IsPlayer(_world, b);
 	}
 }

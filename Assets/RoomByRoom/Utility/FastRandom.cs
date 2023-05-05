@@ -85,15 +85,15 @@ namespace RoomByRoom.Utility
 					max = 1.5f / 2;
 					break;
 				case WeaponType.Bow:
-					min = 1.25f;
+					min = 1f;
 					max = 1.5f;
 					break;
 				case WeaponType.OneHand:
-					min = 1.5f;
+					min = 1.25f;
 					max = 1.75f;
 					break;
 				case WeaponType.TwoHands:
-					min = 1.75f;
+					min = 1.5f;
 					max = 2f;
 					break;
 			}

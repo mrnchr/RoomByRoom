@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: EnemyArmor
   m_EditorClassIdentifier: 
   RestoreSpeed: 5
-  BreakRestoreTime: 2
+  BreakRestoreTime: 5

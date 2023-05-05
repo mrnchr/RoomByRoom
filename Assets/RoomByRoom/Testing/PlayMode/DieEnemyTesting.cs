@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using FluentAssertions;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using NUnit.Framework;
@@ -35,7 +36,7 @@ namespace RoomByRoom.Testing.PlayMode
 			secondSystem.Run(systems);
 			thirdSystem.Run(systems);
 
-			foreach (int index in world.Get<Equipment>(enemy).ItemList)
+			foreach (int index in world.Get<Equipment>(enemy).ItemList.Select(world.Unpack))
 				Create.ItemViewRefCmp(world, index);
 
 			// Act

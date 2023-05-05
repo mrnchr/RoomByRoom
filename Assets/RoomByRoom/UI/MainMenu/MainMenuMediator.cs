@@ -4,7 +4,7 @@ namespace RoomByRoom.UI.MainMenu
 {
 	public class MainMenuMediator : MonoBehaviour
 	{
-		private WindowSwitcher _windowSwitcher;
+		private MenuWindowSwitcher _windowSwitcher;
 		private ProfileSelectorWindow _profileSelectorWindow;
 		private ProfileButtonFactory _profileFactory;
 		private ProfileService _profileSvc;
@@ -13,7 +13,7 @@ namespace RoomByRoom.UI.MainMenu
 
 		private void Awake()
 		{
-			_windowSwitcher = FindObjectOfType<WindowSwitcher>();
+			_windowSwitcher = FindObjectOfType<MenuWindowSwitcher>();
 			_profileSelectorWindow = FindObjectOfType<ProfileSelectorWindow>();
 			_profileCreatorWindow = FindObjectOfType<ProfileCreatorWindow>();
 		}

@@ -18,9 +18,11 @@ namespace RoomByRoom.Debugging
 				var inv = _world.Get<UnitViewRef>(index)
 					.Value.gameObject.AddComponent<DebugInventory>();
 
+				inv.Construct(_world);
+
 				inv.Equipment = _world.Get<Equipment>(index).ItemList;
 
-				if (Utils.IsUnitOf(_world, index, UnitType.Player))
+				if (Utils.IsPlayer(_world, index))
 				{
 					inv.Backpack = _world.Get<Backpack>(index).ItemList;
 					inv.Inventory = _world.Get<Inventory>(index).ItemList;

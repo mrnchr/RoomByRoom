@@ -12,10 +12,8 @@ namespace RoomByRoom
 		{
 			try
 			{
-				using (var fs = new FileStream(Idents.FilePaths.SavingDirectory + fromProfile, FileMode.Open))
-				{
-					saving = (Saving)_formatter.Deserialize(fs);
-				}
+				using var fs = new FileStream(Idents.FilePaths.SavingDirectory + fromProfile, FileMode.Open);
+				saving = (Saving)_formatter.Deserialize(fs);
 
 				return true;
 			}

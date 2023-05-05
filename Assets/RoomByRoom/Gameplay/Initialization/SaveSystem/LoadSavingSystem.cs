@@ -9,7 +9,6 @@ namespace RoomByRoom
 		private readonly EcsCustomInject<InitializeData> _defaultData = default;
 		private readonly EcsCustomInject<Saving> _savedData = default;
 		private readonly EcsCustomInject<SavingService> _savingSvc = default;
-		private EcsCustomInject<GameInfo> _gameInfo;
 
 		public void PreInit(IEcsSystems systems)
 		{
@@ -22,13 +21,7 @@ namespace RoomByRoom
 			{
 				SetDefaultData();
 				_savingSvc.Value.SaveData(_savedData.Value);
-				SetSessionData();
 			}
-		}
-
-		private void SetSessionData()
-		{
-			_gameInfo.Value = _savedData.Value.GameSave;
 		}
 
 		private void SetDefaultData()

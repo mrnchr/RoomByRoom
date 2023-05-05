@@ -27,11 +27,8 @@ namespace RoomByRoom
 		{
 			int roomEntity = _world.NewEntity();
 
-			_world.Add<RaceInfo>(roomEntity)
-				.Assign(x => x = nextRoom.Race);
-
-			_world.Add<RoomInfo>(roomEntity)
-				.Assign(x => x = nextRoom.Room);
+			_world.Add<RaceInfo>(roomEntity) = nextRoom.Race;
+			_world.Add<RoomInfo>(roomEntity) = nextRoom.Room;
 		}
 
 		private void DeleteRoom()

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Leopotam.EcsLite;
 using NUnit.Framework;
@@ -8,28 +9,31 @@ namespace RoomByRoom.Testing.PlayMode
 {
 	public class TakeBonusTesting
 	{
-		private List<int> _backpack;
-		private int _bonus;
-		private List<int> _equipment;
-		private int _hands;
-		private List<int> _inventory;
-		private int _item;
-		private ItemCreator _itemCreator;
-		private int _player;
+		private EcsWorld _world;
+		private EcsWorld _message;
 		private IEcsSystems _systems;
 		private TakeBonusSystem _testSystem;
-		private EcsWorld _world;
+		private int _bonus;
+		private int _hands;
+		private int _item;
+		private int _player;
+		private ItemCreator _itemCreator;
+		private List<EcsPackedEntity> _inventory;
+		private List<EcsPackedEntity> _equipment;
+		private List<EcsPackedEntity> _backpack;
 
 		[SetUp]
 		public void SetUp()
 		{
 			_testSystem = new TakeBonusSystem();
 			_world = new EcsWorld();
-			_systems = Setup.Systems(new EcsSystems(_world), null, _testSystem);
+			_message = new EcsWorld();
+			_systems = Setup.Systems(new EcsSystems(_world), _message, _testSystem);
 
 			_player = _world.NewEntity();
 			_bonus = _world.NewEntity();
 			_world.Add<TakeCommand>(_player);
+			Create.UnitViewRefCmp(_world, _player, Create.GO<HumanoidView>());
 			_world.Add<Selected>(_bonus);
 			_equipment = Create.EquipmentCmp(_world, _player).ItemList;
 			_inventory = Create.InventoryCmp(_world, _player).ItemList;
@@ -47,8 +51,8 @@ namespace RoomByRoom.Testing.PlayMode
 				HasInHands = true
 			};
 			_hands = _itemCreator.CreateEntity(_world);
-			_world.Get<Equipment>(_player).ItemList.Add(_hands);
-			_world.Get<Inventory>(_player).ItemList.Add(_hands);
+			_world.Get<Equipment>(_player).ItemList.Add(_world.PackEntity(_hands));
+			_world.Get<Inventory>(_player).ItemList.Add(_world.PackEntity(_hands));
 			_world.Add<MainWeapon>(_player).Entity = _hands;
 		}
 
@@ -68,8 +72,8 @@ namespace RoomByRoom.Testing.PlayMode
 
 			// Assert
 			_world.Has<Equipped>(_item).Should().Be(true);
-			_inventory.Should().ContainSingle(x => x == _item);
-			_equipment.Should().ContainSingle(x => x == _item);
+			_inventory.Select(_world.Unpack).Should().ContainSingle(x => _item == x);
+			_equipment.Select(_world.Unpack).Should().ContainSingle(x => _item == x);
 		}
 
 		[Test]
@@ -81,8 +85,8 @@ namespace RoomByRoom.Testing.PlayMode
 				Type = ItemType.Armor
 			};
 			int oldItem = _itemCreator.CreateEntity(_world);
-			_equipment.Add(oldItem);
-			_inventory.Add(oldItem);
+			_equipment.Add(_world.PackEntity(oldItem));
+			_inventory.Add(_world.PackEntity(oldItem));
 
 			_itemCreator = new ItemCreator
 			{
@@ -108,8 +112,8 @@ namespace RoomByRoom.Testing.PlayMode
 				Type = ItemType.Weapon
 			};
 			int oldItem = _itemCreator.CreateEntity(_world);
-			_equipment.Add(oldItem);
-			_inventory.Add(oldItem);
+			_equipment.Add(_world.PackEntity(oldItem));
+			_inventory.Add(_world.PackEntity(oldItem));
 
 			_itemCreator = new ItemCreator
 			{
@@ -137,7 +141,7 @@ namespace RoomByRoom.Testing.PlayMode
 				Weapon = WeaponType.OneHand
 			};
 			int eqItem = _itemCreator.CreateEntity(_world);
-			_equipment.Add(eqItem);
+			_equipment.Add(_world.PackEntity(eqItem));
 
 			_itemCreator = new ItemCreator
 			{
@@ -151,7 +155,7 @@ namespace RoomByRoom.Testing.PlayMode
 			_testSystem.Run(_systems);
 
 			// Assert
-			_backpack.Should().ContainSingle(x => x == _item);
+			_backpack.Select(_world.Unpack).Should().ContainSingle(x => x == _item);
 		}
 
 		[Test]
@@ -164,7 +168,7 @@ namespace RoomByRoom.Testing.PlayMode
 				Weapon = WeaponType.TwoHands
 			};
 			int eqItem = _itemCreator.CreateEntity(_world);
-			_equipment.Add(eqItem);
+			_equipment.Add(_world.PackEntity(eqItem));
 
 			_itemCreator = new ItemCreator
 			{
@@ -178,7 +182,7 @@ namespace RoomByRoom.Testing.PlayMode
 			_testSystem.Run(_systems);
 
 			// Assert
-			_backpack.Should().ContainSingle(x => x == _item);
+			_backpack.Select(_world.Unpack).Should().ContainSingle(x => x == _item);
 		}
 
 		[Test]
@@ -191,7 +195,7 @@ namespace RoomByRoom.Testing.PlayMode
 				Armor = ArmorType.Shield
 			};
 			int eqItem = creator.CreateEntity(_world);
-			_equipment.Add(eqItem);
+			_equipment.Add(_world.PackEntity(eqItem));
 
 			creator = new ItemCreator
 			{
@@ -205,7 +209,7 @@ namespace RoomByRoom.Testing.PlayMode
 			_testSystem.Run(_systems);
 
 			// Assert
-			_backpack.Should().ContainSingle(x => x == newItem);
+			_backpack.Select(_world.Unpack).Should().ContainSingle(x => x == newItem);
 		}
 
 		[Test]
@@ -218,7 +222,7 @@ namespace RoomByRoom.Testing.PlayMode
 				Weapon = WeaponType.TwoHands
 			};
 			int eqItem = creator.CreateEntity(_world);
-			_equipment.Add(eqItem);
+			_equipment.Add(_world.PackEntity(eqItem));
 
 			creator = new ItemCreator
 			{
@@ -232,7 +236,7 @@ namespace RoomByRoom.Testing.PlayMode
 			_testSystem.Run(_systems);
 
 			// Assert
-			_backpack.Should().ContainSingle(x => x == newItem);
+			_backpack.Select(_world.Unpack).Should().ContainSingle(x => x == newItem);
 		}
 
 		[Test]
@@ -240,7 +244,7 @@ namespace RoomByRoom.Testing.PlayMode
 		{
 			// Arrange
 			for (int i = _equipment.Count; i < _equipment.Capacity; i++)
-				_equipment.Add(i);
+				_equipment.Add(_world.PackEntity(i));
 
 			var creator = new ItemCreator
 			{
@@ -254,7 +258,7 @@ namespace RoomByRoom.Testing.PlayMode
 			_testSystem.Run(_systems);
 
 			// Assert
-			_backpack.Should().ContainSingle(x => x == newItem);
+			_backpack.Select(_world.Unpack).Should().ContainSingle(x => x == newItem);
 		}
 
 		[Test]
@@ -262,10 +266,10 @@ namespace RoomByRoom.Testing.PlayMode
 		{
 			// Arrange
 			for (int i = _equipment.Count; i < _equipment.Capacity; i++)
-				_equipment.Add(i);
+				_equipment.Add(_world.PackEntity(i));
 
 			for (int i = _backpack.Count; i < _backpack.Capacity; i++)
-				_backpack.Add(i);
+				_backpack.Add(_world.PackEntity(i));
 
 			var creator = new ItemCreator
 			{
@@ -330,8 +334,8 @@ namespace RoomByRoom.Testing.PlayMode
 			isHandsViewActive.Should().BeFalse();
 			bool isHandsNotEquipped = _world.Has<Equipped>(_hands);
 			isHandsNotEquipped.Should().BeFalse();
-			_equipment.Should().NotContain(_hands);
-			_inventory.Should().NotContain(_hands);
+			_equipment.Select(_world.Unpack).Should().NotContain(_hands);
+			_inventory.Select(_world.Unpack).Should().NotContain(_hands);
 		}
 
 		[Test]
@@ -372,8 +376,8 @@ namespace RoomByRoom.Testing.PlayMode
 				HasInHands = true
 			};
 			int bow = _itemCreator.CreateEntity(_world);
-			_equipment.Add(bow);
-			_inventory.Add(bow);
+			_equipment.Add(_world.PackEntity(bow));
+			_inventory.Add(_world.PackEntity(bow));
 			_world.Get<MainWeapon>(_player).Entity = bow;
 
 			_world.Del<InHands>(_hands);

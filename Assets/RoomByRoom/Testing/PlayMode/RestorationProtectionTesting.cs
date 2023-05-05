@@ -19,7 +19,7 @@ namespace RoomByRoom.Testing.PlayMode
 
 			IEnumerator WaitToStopTest()
 			{
-				yield return new WaitForSeconds(10);
+				yield return new WaitForSeconds(200);
 				exit = true;
 				LogAssert.Expect(LogType.Exception, "The waiting time for the test has been exceeded");
 			}
@@ -32,6 +32,9 @@ namespace RoomByRoom.Testing.PlayMode
 			yield return new WaitWhile(() => eng.World == null || exit);
 			eng.StartCoroutine(WaitToStopTest());
 
+			var camera = new GameObject().AddComponent<Camera>();
+			camera.tag = "MainCamera";
+			
 			var roomObj = (GameObject)Object.Instantiate(Resources.Load("StartRoom Variant"));
 			var roomView = roomObj.GetComponent<RoomView>();
 
@@ -42,13 +45,14 @@ namespace RoomByRoom.Testing.PlayMode
 			playerView.AttackCtr.SetService(eng.AttackSvc);
 
 			int enemy = eng.World.NewEntity();
-			var enemyObj = (GameObject)Object.Instantiate(Resources.Load("HumanoidEnemy Variant"));
+			var enemyObj = (GameObject)Object.Instantiate(Resources.Load("DarkHumanoid Variant"));
 			var enemyView = enemyObj.GetComponent<HumanoidView>();
 			enemyView.Entity = enemy;
 			enemyView.AttackCtr.SetService(eng.AttackSvc);
 
-			playerView.transform.position = roomView.SpawnPoints[0].UnitSpawn.position;
-			enemyView.transform.position = playerView.transform.position + new Vector3(1f, 0, 1.5f);
+			var plTransform = playerView.transform;
+			plTransform.position = roomView.SpawnPoints[0].UnitSpawn.position;
+			enemyView.transform.position = plTransform.position + new Vector3(0.5f, 0, 0.5f);
 
 			int weapon = eng.World.NewEntity();
 			eng.World.Add<WeaponInfo>(weapon).Type = WeaponType.OneHand;
@@ -56,10 +60,8 @@ namespace RoomByRoom.Testing.PlayMode
 			var weaponView = weaponObj.GetComponent<WeaponView>();
 			weaponView.Entity = weapon;
 
-			ItemPlace place = playerView.GetWeaponPlace(WeaponType.OneHand);
-			weaponView.transform.SetParent(place.Parent);
-			weaponView.transform.position = place.Point.position;
-			weaponView.transform.rotation = place.Point.rotation;
+			Transform place = playerView.GetWeaponPlace(WeaponType.OneHand);
+			Utils.PutItemInPlace(weaponView.transform, place);
 
 			// Engine eng = Object.FindObjectOfType<Engine>();
 			// Debug.Log(eng);
@@ -105,10 +107,6 @@ namespace RoomByRoom.Testing.PlayMode
 	{
 		public override void Start()
 		{
-			World = new EcsWorld();
-			Message = new EcsWorld();
-			Systems = new EcsSystems(World);
-			AttackSvc = new AttackService(World, Message);
 			Systems
 				.AddWorld(Message, Idents.Worlds.MessageWorld)
 				.Add(new AttackSystem())

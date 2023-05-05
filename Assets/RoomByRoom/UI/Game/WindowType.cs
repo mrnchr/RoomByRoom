@@ -2,8 +2,11 @@
 {
 	public enum WindowType
 	{
-		HUD = 0,
-		Inventory = 1,
-		Pause = 2
+		None = 0,
+		HUD = 1,
+		Inventory = 2,
+		Pause = 3,
+		Win = 4,
+		Lose = 5
 	}
 }
