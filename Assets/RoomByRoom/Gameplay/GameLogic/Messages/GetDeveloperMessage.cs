@@ -1,6 +1,6 @@
 ﻿namespace RoomByRoom
 {
-	public struct GetDeveloperMessage
-	{
-	}
+  public struct GetDeveloperMessage
+  {
+  }
 }

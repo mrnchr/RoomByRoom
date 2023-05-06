@@ -5,45 +5,45 @@ using UnityEngine;
 
 namespace RoomByRoom
 {
-	public class MoveSystem : IEcsRunSystem
-	{
-		private readonly EcsFilterInject<Inc<MoveCommand>> _units = default;
-		private EcsWorld _world;
+  public class MoveSystem : IEcsRunSystem
+  {
+    private readonly EcsFilterInject<Inc<MoveCommand>> _units = default;
+    private EcsWorld _world;
 
-		public void Run(IEcsSystems systems)
-		{
-			_world = systems.GetWorld();
+    public void Run(IEcsSystems systems)
+    {
+      _world = systems.GetWorld();
 
-			foreach (int index in _units.Value) 
-				Move(index);
-		}
+      foreach (int index in _units.Value)
+        Move(index);
+    }
 
-		private void Move(int entity)
-		{
-			UnitView unitView = _world.Get<UnitViewRef>(entity).Value;
-			Vector3 endVelocity = GetVelocity(entity, unitView);
-			unitView.Rb.velocity = endVelocity;
-			
-			if(unitView is HumanoidView humanoid)
-				humanoid.AnimateRun(GetRawDirection(entity) != Vector3.zero);
-		}
+    private void Move(int entity)
+    {
+      UnitView unitView = _world.Get<UnitViewRef>(entity).Value;
+      Vector3 endVelocity = GetVelocity(entity, unitView);
+      unitView.Rb.velocity = endVelocity;
 
-		private float GetSpeed(int entity) => _world.Get<Movable>(entity).Speed;
+      if (unitView is HumanoidView humanoid)
+        humanoid.AnimateRun(GetRawDirection(entity) != Vector3.zero);
+    }
 
-		private Vector3 GetVelocity(int entity, UnitView unitView)
-		{
-			Vector3 endDirection = GetRawDirection(entity);
-			if (unitView is PlayerView playerView)
-			{
-				endDirection = playerView.CameraHolder.TransformDirection(endDirection);
-				endDirection.y = 0;
-			}
+    private float GetSpeed(int entity) => _world.Get<Movable>(entity).Speed;
 
-			endDirection = endDirection.normalized * GetSpeed(entity);
-			endDirection.y = unitView.Rb.velocity.y;
-			return endDirection;
-		}
+    private Vector3 GetVelocity(int entity, UnitView unitView)
+    {
+      Vector3 endDirection = GetRawDirection(entity);
+      if (unitView is PlayerView playerView)
+      {
+        endDirection = playerView.CameraHolder.TransformDirection(endDirection);
+        endDirection.y = 0;
+      }
 
-		private Vector3 GetRawDirection(int entity) => _world.Get<MoveCommand>(entity).MoveDirection;
-	}
+      endDirection = endDirection.normalized * GetSpeed(entity);
+      endDirection.y = unitView.Rb.velocity.y;
+      return endDirection;
+    }
+
+    private Vector3 GetRawDirection(int entity) => _world.Get<MoveCommand>(entity).MoveDirection;
+  }
 }

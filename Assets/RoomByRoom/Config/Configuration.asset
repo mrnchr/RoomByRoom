@@ -30,4 +30,4 @@ MonoBehaviour:
   MouseSensitivity: {x: 1, y: 1}
   DefaultSaveName: Jack
   IsNewGame: 0
-  SaveInFile: 1
+  SaveInFile: 0

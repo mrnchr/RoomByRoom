@@ -2,8 +2,8 @@
 
 namespace RoomByRoom
 {
-	public struct UpdateItemInfoMessage
-	{
-		public EcsPackedEntity? Item;
-	}
+  public struct UpdateItemInfoMessage
+  {
+    public EcsPackedEntity? Item;
+  }
 }

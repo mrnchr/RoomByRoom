@@ -1,6 +1,6 @@
 ﻿namespace RoomByRoom
 {
-	public struct PlayerDyingMessage
-	{
-	}
+  public struct PlayerDyingMessage
+  {
+  }
 }

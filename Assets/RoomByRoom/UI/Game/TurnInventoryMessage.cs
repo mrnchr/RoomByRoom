@@ -1,6 +1,6 @@
 ﻿namespace RoomByRoom.UI.Game
 {
-	public struct TurnInventoryMessage
-	{
-	}
+  public struct TurnInventoryMessage
+  {
+  }
 }

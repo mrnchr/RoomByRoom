@@ -3,27 +3,27 @@ using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
-	[Serializable]
-	public struct UnitPhysicalProtection
-	{
-		public float CurrentPoint;
-		public float MaxPoint;
+  [Serializable]
+  public struct UnitPhysicalProtection
+  {
+    public float CurrentPoint;
+    public float MaxPoint;
 
-		[FormerlySerializedAs("BreakRestoreTime")]
-		public float CantRestoreTime;
+    [FormerlySerializedAs("BreakRestoreTime")]
+    public float CantRestoreTime;
 
-		public float RestoreSpeed;
-	}
+    public float RestoreSpeed;
+  }
 
-	[Serializable]
-	public struct Health
-	{
-		public float CurrentPoint;
-		[FormerlySerializedAs("Point")] public float MaxPoint;
-	}
+  [Serializable]
+  public struct Health
+  {
+    public float CurrentPoint;
+    [FormerlySerializedAs("Point")] public float MaxPoint;
+  }
 
-	public struct CantRestore : ITimerable
-	{
-		public float TimeLeft { get; set; }
-	}
+  public struct CantRestore : ITimerable
+  {
+    public float TimeLeft { get; set; }
+  }
 }

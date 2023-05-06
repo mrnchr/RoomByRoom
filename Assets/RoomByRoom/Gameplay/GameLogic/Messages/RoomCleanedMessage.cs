@@ -1,6 +1,6 @@
 ﻿namespace RoomByRoom
 {
-	public struct RoomCleanedMessage
-	{
-	}
+  public struct RoomCleanedMessage
+  {
+  }
 }

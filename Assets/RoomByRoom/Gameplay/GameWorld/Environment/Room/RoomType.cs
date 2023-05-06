@@ -1,9 +1,9 @@
 ﻿namespace RoomByRoom
 {
-	public enum RoomType
-	{
-		Start,
-		Enemy,
-		Boss
-	}
+  public enum RoomType
+  {
+    Start,
+    Enemy,
+    Boss
+  }
 }

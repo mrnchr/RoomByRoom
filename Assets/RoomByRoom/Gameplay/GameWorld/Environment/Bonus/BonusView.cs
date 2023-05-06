@@ -2,9 +2,9 @@
 
 namespace RoomByRoom
 {
-	public class BonusView : View
-	{
-		public Renderer Shell;
-		public Transform ItemPlace;
-	}
+  public class BonusView : View
+  {
+    public Renderer Shell;
+    public Transform ItemPlace;
+  }
 }

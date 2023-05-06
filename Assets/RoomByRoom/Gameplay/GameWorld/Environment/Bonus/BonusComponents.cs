@@ -2,30 +2,30 @@
 
 namespace RoomByRoom
 {
-	public struct Selected
-	{
-	}
+  public struct Selected
+  {
+  }
 
-	public struct DeselectCommand
-	{
-	}
+  public struct DeselectCommand
+  {
+  }
 
-	public struct SelectCommand
-	{
-	}
+  public struct SelectCommand
+  {
+  }
 
-	public struct SpawnCommand
-	{
-		public Vector3 Coords;
-	}
+  public struct SpawnCommand
+  {
+    public Vector3 Coords;
+  }
 
-	public struct BonusViewRef
-	{
-		public BonusView Value;
-	}
+  public struct BonusViewRef
+  {
+    public BonusView Value;
+  }
 
-	public struct Bonus
-	{
-		public int Item;
-	}
+  public struct Bonus
+  {
+    public int Item;
+  }
 }

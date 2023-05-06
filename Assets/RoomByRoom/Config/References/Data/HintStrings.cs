@@ -2,9 +2,9 @@
 
 namespace RoomByRoom
 {
-	public class HintStrings
-	{
-		public string CleanRoom;
-		public KeyCode CleanRoomButton;
-	}
+  public class HintStrings
+  {
+    public string CleanRoom;
+    public KeyCode CleanRoomButton;
+  }
 }

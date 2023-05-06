@@ -2,8 +2,8 @@
 
 namespace RoomByRoom
 {
-	public struct DirtyMessage
-	{
-		public DirtyType DirtyFlags;
-	}
+  public struct DirtyMessage
+  {
+    public DirtyType DirtyFlags;
+  }
 }

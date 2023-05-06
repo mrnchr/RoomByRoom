@@ -1,6 +1,6 @@
 ﻿namespace RoomByRoom.UI.Game.HUD
 {
-	public class WorldSpaceBar : Bar
-	{
-	}
+  public class WorldSpaceBar : Bar
+  {
+  }
 }

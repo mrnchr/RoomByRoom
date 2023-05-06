@@ -2,19 +2,19 @@ using UnityEngine;
 
 namespace RoomByRoom
 {
-	public class WeaponView : ItemView
-	{
-		public Collider[] AttackTriggers;
+  public class WeaponView : ItemView
+  {
+    public Collider[] AttackTriggers;
 
-		private void Awake()
-		{
-			SetActiveAttackTriggers(false);
-		}
+    private void Awake()
+    {
+      SetActiveAttackTriggers(false);
+    }
 
-		public void SetActiveAttackTriggers(bool isActive)
-		{
-			foreach (Collider trigger in AttackTriggers) 
-				trigger.enabled = isActive;
-		}
-	}
+    public void SetActiveAttackTriggers(bool isActive)
+    {
+      foreach (Collider trigger in AttackTriggers)
+        trigger.enabled = isActive;
+    }
+  }
 }

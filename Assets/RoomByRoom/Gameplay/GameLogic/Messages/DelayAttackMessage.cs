@@ -1,7 +1,7 @@
 ﻿namespace RoomByRoom
 {
-	public struct DelayAttackMessage
-	{
-		public int Unit;
-	}
+  public struct DelayAttackMessage
+  {
+    public int Unit;
+  }
 }

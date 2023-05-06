@@ -1,6 +1,6 @@
 ﻿namespace RoomByRoom.UI.Game
 {
-	public struct TurnPauseMessage
-	{
-	}
+  public struct TurnPauseMessage
+  {
+  }
 }

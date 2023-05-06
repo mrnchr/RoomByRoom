@@ -1,10 +1,10 @@
 namespace RoomByRoom
 {
-	public enum WeaponType
-	{
-		None,
-		OneHand,
-		TwoHands,
-		Bow
-	}
+  public enum WeaponType
+  {
+    None,
+    OneHand,
+    TwoHands,
+    Bow
+  }
 }

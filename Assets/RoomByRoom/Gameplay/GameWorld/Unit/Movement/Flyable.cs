@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-	public struct Flyable
-	{
-	}
+  public struct Flyable
+  {
+  }
 }

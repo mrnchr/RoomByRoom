@@ -1,6 +1,6 @@
 ﻿namespace RoomByRoom
 {
-	public struct GameLoadedMessage
-	{
-	}
+  public struct GameLoadedMessage
+  {
+  }
 }

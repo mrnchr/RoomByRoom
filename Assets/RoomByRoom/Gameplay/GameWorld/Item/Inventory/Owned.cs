@@ -1,7 +1,7 @@
 namespace RoomByRoom
 {
-	public struct Owned
-	{
-		public int Owner;
-	}
+  public struct Owned
+  {
+    public int Owner;
+  }
 }

@@ -2,48 +2,48 @@
 
 namespace RoomByRoom.UI.MainMenu
 {
-	public class ProfileCreatorWindow : MonoBehaviour
-	{
-		private bool _isInputCorrected;
-		private Configuration _config;
-		private MainMenuMediator _mainMenuMediator;
-		private ProfileFieldView _newProfileField;
-		private GameObject _errorMessage;
-		private readonly char[] _invalidFileNameSymbols = { '/', '\\', ':', '*', '?', '\"', '<', '>', '|' };
+  public class ProfileCreatorWindow : MonoBehaviour
+  {
+    private bool _isInputCorrected;
+    private Configuration _config;
+    private MainMenuMediator _mainMenuMediator;
+    private ProfileFieldView _newProfileField;
+    private GameObject _errorMessage;
+    private readonly char[] _invalidFileNameSymbols = { '/', '\\', ':', '*', '?', '\"', '<', '>', '|' };
 
-		private void Awake()
-		{
-			_mainMenuMediator = FindObjectOfType<MainMenuMediator>();
-			_isInputCorrected = true;
-		}
+    private void Awake()
+    {
+      _mainMenuMediator = FindObjectOfType<MainMenuMediator>();
+      _isInputCorrected = true;
+    }
 
-		public void Construct(Configuration config, ProfileFieldView fieldView, GameObject errorMessage)
-		{
-			_config = config;
-			_newProfileField = fieldView;
-			_errorMessage = errorMessage;
-			
-			_newProfileField.OnValueChanged += CheckProfileName;
-		}
+    public void Construct(Configuration config, ProfileFieldView fieldView, GameObject errorMessage)
+    {
+      _config = config;
+      _newProfileField = fieldView;
+      _errorMessage = errorMessage;
 
-		private void CheckProfileName(string text)
-		{
-			_isInputCorrected = !ContainsInvalidFileNameSymbols(text);
-			_errorMessage.SetActive(!_isInputCorrected);
-		}
+      _newProfileField.OnValueChanged += CheckProfileName;
+    }
 
-		private bool ContainsInvalidFileNameSymbols(string text) => text.IndexOfAny(_invalidFileNameSymbols) >= 0;
+    private void CheckProfileName(string text)
+    {
+      _isInputCorrected = !ContainsInvalidFileNameSymbols(text);
+      _errorMessage.SetActive(!_isInputCorrected);
+    }
 
-		public void Show()
-		{
-			_mainMenuMediator.SwitchNewProfile(true);
-			_newProfileField.InputField.text = _config.DefaultSaveName;
-		}
+    private bool ContainsInvalidFileNameSymbols(string text) => text.IndexOfAny(_invalidFileNameSymbols) >= 0;
 
-		public void TryStartGame()
-		{
-			if (_isInputCorrected)
-				_mainMenuMediator.StartGame(_newProfileField.InputField.text);
-		}
-	}
+    public void Show()
+    {
+      _mainMenuMediator.SwitchNewProfile(true);
+      _newProfileField.InputField.text = _config.DefaultSaveName;
+    }
+
+    public void TryStartGame()
+    {
+      if (_isInputCorrected)
+        _mainMenuMediator.StartGame(_newProfileField.InputField.text);
+    }
+  }
 }

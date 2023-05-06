@@ -3,38 +3,40 @@ using UnityEngine.Serialization;
 
 namespace RoomByRoom.UI.Game
 {
-	public class ItemRenderUpdater : MonoBehaviour
-	{
-		[FormerlySerializedAs("_parent"),SerializeField] private Transform _weaponParent;
-		[SerializeField] private Transform _armorParent;
-		private GameObject _current;
+  public class ItemRenderUpdater : MonoBehaviour
+  {
+    [FormerlySerializedAs("_parent"), SerializeField]
+    private Transform _weaponParent;
 
-		private void Awake()
-		{
-			CleanChildren(_weaponParent);
-			CleanChildren(_armorParent);
-		}
+    [SerializeField] private Transform _armorParent;
+    private GameObject _current;
 
-		private void CleanChildren(Transform parent)
-		{
-			for (int i = 0; i < parent.childCount; i++)
-				Destroy(parent.GetChild(i).gameObject);
-		}
+    private void Awake()
+    {
+      CleanChildren(_weaponParent);
+      CleanChildren(_armorParent);
+    }
 
-		public void UpdateRender(ItemView item = null)
-		{
-			if(_current)
-				Destroy(_current);
+    private void CleanChildren(Transform parent)
+    {
+      for (var i = 0; i < parent.childCount; i++)
+        Destroy(parent.GetChild(i).gameObject);
+    }
 
-			if (!item) return;
+    public void UpdateRender(ItemView item = null)
+    {
+      if (_current)
+        Destroy(_current);
 
-			Transform parent = item is ArmorView ? _armorParent : _weaponParent;
-			ItemView newItem = Instantiate(item, parent.position, parent.rotation, parent);
+      if (!item) return;
 
-			_current = newItem.gameObject;
-			foreach(Transform child in _current.GetComponentsInChildren<Transform>())
-				child.gameObject.layer = LayerMask.NameToLayer("ItemModel");
-			_current.transform.localPosition = -item.Center.localPosition;
-		}
-	}
+      Transform parent = item is ArmorView ? _armorParent : _weaponParent;
+      ItemView newItem = Instantiate(item, parent.position, parent.rotation, parent);
+
+      _current = newItem.gameObject;
+      foreach (Transform child in _current.GetComponentsInChildren<Transform>())
+        child.gameObject.layer = LayerMask.NameToLayer("ItemModel");
+      _current.transform.localPosition = -item.Center.localPosition;
+    }
+  }
 }

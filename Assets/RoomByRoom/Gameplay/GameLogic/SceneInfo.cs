@@ -4,13 +4,13 @@ using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
-	public class SceneInfo : MonoBehaviour
-	{
-		public Camera MainCamera;
-		public OverlayBar HealthBar;
-		public OverlayBar ArmorBar;
-		public GameInfo CurrentGame;
-		public Saving CurrentSave;
-		public bool DevTools;
-	}
+  public class SceneInfo : MonoBehaviour
+  {
+    public Camera MainCamera;
+    public OverlayBar HealthBar;
+    public OverlayBar ArmorBar;
+    public GameInfo CurrentGame;
+    public Saving CurrentSave;
+    public bool DevTools;
+  }
 }

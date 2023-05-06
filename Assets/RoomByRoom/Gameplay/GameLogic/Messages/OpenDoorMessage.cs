@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-	public struct OpenDoorMessage
-	{
-	}
+  public struct OpenDoorMessage
+  {
+  }
 }

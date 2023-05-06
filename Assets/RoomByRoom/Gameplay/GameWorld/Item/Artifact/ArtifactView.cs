@@ -1,6 +1,6 @@
 namespace RoomByRoom
 {
-	public class ArtifactView : ItemView
-	{
-	}
+  public class ArtifactView : ItemView
+  {
+  }
 }

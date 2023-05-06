@@ -2,23 +2,23 @@ using System;
 
 namespace RoomByRoom
 {
-	[Serializable]
-	public struct WeaponInfo
-	{
-		public WeaponType Type;
-	}
+  [Serializable]
+  public struct WeaponInfo
+  {
+    public WeaponType Type;
+  }
 
-	public struct NotVisible
-	{
-	}
+  public struct NotVisible
+  {
+  }
 
-	public struct InHands
-	{
-	}
+  public struct InHands
+  {
+  }
 
-	[Serializable]
-	public struct ItemPhysicalDamage
-	{
-		public float Point;
-	}
+  [Serializable]
+  public struct ItemPhysicalDamage
+  {
+    public float Point;
+  }
 }

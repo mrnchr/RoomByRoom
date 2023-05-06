@@ -1,6 +1,6 @@
 ﻿namespace RoomByRoom
 {
-	public struct WinMessage
-	{
-	}
+  public struct WinMessage
+  {
+  }
 }

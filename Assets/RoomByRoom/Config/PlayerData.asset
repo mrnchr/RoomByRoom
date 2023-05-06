@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b229806004b146e2b32ef6b22683bf50, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  Armor: {fileID: 11400000, guid: 39ba2a44dc509c14b9a31f94f65d42cb, type: 2}
+  Armor:
+    RestoreSpeed: 10
+    BreakRestoreTime: 1
+  MovableCmp:
+    Speed: 5
+  JumpableCmp:
+    JumpForce: 5
   TakeItemDistance: 2
   BackpackSize: 8
   EquipmentSize: 8

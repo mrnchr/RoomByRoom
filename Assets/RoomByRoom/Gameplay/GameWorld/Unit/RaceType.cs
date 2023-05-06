@@ -1,10 +1,10 @@
 namespace RoomByRoom
 {
-	public enum RaceType
-	{
-		None,
-		Sand,
-		Water,
-		Dark
-	}
+  public enum RaceType
+  {
+    None,
+    Sand,
+    Water,
+    Dark
+  }
 }

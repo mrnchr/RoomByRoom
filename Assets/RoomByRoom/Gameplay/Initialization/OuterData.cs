@@ -2,8 +2,8 @@
 
 namespace RoomByRoom
 {
-	public class OuterData : MonoBehaviour
-	{
-		[HideInInspector] public string ProfileName;
-	}
+  public class OuterData : MonoBehaviour
+  {
+    [HideInInspector] public string ProfileName;
+  }
 }

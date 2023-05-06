@@ -1,6 +1,6 @@
 ﻿namespace RoomByRoom.Gameplay.GameWorld.Unit.Player
 {
-	public struct Died
-	{
-	}
+  public struct Died
+  {
+  }
 }

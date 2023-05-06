@@ -2,16 +2,16 @@ using UnityEngine;
 
 namespace RoomByRoom
 {
-	public class ArmorView : ItemView
-	{
-		public Animator Anim;
+  public class ArmorView : ItemView
+  {
+    public Animator Anim;
 
-		public void OnStartAttackAnimation()
-		{
-		}
+    public void OnStartAttackAnimation()
+    {
+    }
 
-		public void OnStopAttackAnimation()
-		{
-		}
-	}
+    public void OnStopAttackAnimation()
+    {
+    }
+  }
 }
