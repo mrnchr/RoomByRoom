@@ -60,8 +60,8 @@ namespace RoomByRoom
 
     private void Start()
     {
-      var outerData = FindObjectOfType<OuterData>();
-      var savingSvc = new SavingService(outerData.ProfileName, _configuration.SaveInFile);
+      string profileName = FindObjectOfType<OuterData>()?.ProfileName ?? _configuration.DefaultSaveName;
+      var savingSvc = new SavingService(profileName, _configuration.SaveInFile);
       var attackSvc = new AttackService(_world, _message);
       var charSvc = new CharacteristicService(_world);
       var blockingSvc = new BlockingService(_gameInfo);
