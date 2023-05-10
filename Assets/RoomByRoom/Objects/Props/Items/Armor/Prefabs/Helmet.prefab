@@ -64,7 +64,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -4973734387028869240, guid: dfb400faba15f2e4bbdd4666c1933475, type: 3}
-  - {fileID: 7075211226988114051, guid: dfb400faba15f2e4bbdd4666c1933475, type: 3}
+  - {fileID: 2100000, guid: 25214cb04158a8340b8b9734eb02f7ab, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Entity: 0
   Center: {fileID: 6351519725540579360}
+  Anim: {fileID: 0}
 --- !u!1 &3642798880085417127
 GameObject:
   m_ObjectHideFlags: 0
