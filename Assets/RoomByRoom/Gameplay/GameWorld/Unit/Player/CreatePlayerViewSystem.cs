@@ -1,5 +1,6 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using RoomByRoom.Config.Data;
 using UnityEngine;
 
 namespace RoomByRoom

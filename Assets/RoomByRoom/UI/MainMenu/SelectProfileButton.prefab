@@ -257,19 +257,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6275810428713590905}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3014780391840263874}
-        m_TargetAssemblyTypeName: RoomByRoom.UI.MainMenu.ProfileView, GameAssembly
-        m_MethodName: Select
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &3014780391840263874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,5 +270,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ae990c6255e4a13a1fa6956e223178b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 9097371446780249512}
-  _button: {fileID: 8186643455927645709}
+  <Text>k__BackingField: {fileID: 9097371446780249512}

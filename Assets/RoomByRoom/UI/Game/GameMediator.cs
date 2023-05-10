@@ -52,6 +52,7 @@ namespace RoomByRoom.UI.Game
     public void UpdateItemDescription(params Characteristic[] chars) => _itemDesc.UpdateDescription(chars);
     public void UpdateRoomCount(string text) => _roomCount.SetText(text);
     public void ChangeEquip(int item) => _equipSvc.ChangeEquip(item);
+    public void ChangeEquip(EcsPackedEntity packedItem) => _equipSvc.ChangeEquip(packedItem);
     public void BreakDragItem() => _itemDragger.BreakDrag();
     public List<EcsPackedEntity> ClearCan() => _can.Clear();
     public void SetActiveBonusCard(bool active) => _bonusCard.SetActive(active);

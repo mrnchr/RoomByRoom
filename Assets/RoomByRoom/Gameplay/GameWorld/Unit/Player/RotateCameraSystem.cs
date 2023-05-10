@@ -1,5 +1,6 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using RoomByRoom.Control;
 using RoomByRoom.Utility;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace RoomByRoom
 {
   public class RotateCameraSystem : IEcsRunSystem
   {
-    private readonly EcsCustomInject<Configuration> _configuration = default;
+    private readonly EcsCustomInject<Configuration> _config = default;
     private readonly EcsFilterInject<Inc<ControllerByPlayer, UnitViewRef>> _player = default;
     private readonly EcsFilterInject<Inc<RotateCameraMessage>> _rotateCameraMsgs = Idents.Worlds.MessageWorld;
     private float _xRotation;
@@ -30,7 +31,7 @@ namespace RoomByRoom
     private Vector2 CalculateRotation(int message)
     {
       ref RotateCameraMessage rotateMessage = ref _rotateCameraMsgs.Pools.Inc1.Get(message);
-      Vector2 rotation = rotateMessage.RotateDirection * _configuration.Value.MouseSensitivity;
+      Vector2 rotation = rotateMessage.RotateDirection * _config.Value.MouseSensitivity;
       _xRotation -= rotation.y;
       if (_xRotation is < -60 or > 60)
       {

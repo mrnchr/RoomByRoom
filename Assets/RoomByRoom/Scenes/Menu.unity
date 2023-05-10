@@ -242,7 +242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchorMin.x
@@ -250,7 +250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_SizeDelta.x
@@ -290,11 +290,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 175
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -150
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -451,7 +451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchorMin.x
@@ -459,7 +459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_SizeDelta.x
@@ -499,11 +499,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 175
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -350
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -815,6 +815,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Options
       objectReference: {fileID: 0}
+    - target: {fileID: 5651217030337496233, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
 --- !u!1 &480080833
@@ -877,7 +881,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &502791379
 RectTransform:
   m_ObjectHideFlags: 0
@@ -900,7 +904,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -200, y: 100}
-  m_SizeDelta: {x: 350, y: 400}
+  m_SizeDelta: {x: 350, y: 300}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &502791380
 MonoBehaviour:
@@ -973,16 +977,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _profileCreatorWindow: {fileID: 1756775280}
-  _profileFieldView: {fileID: 1495686797}
-  _errorMessageObject: {fileID: 589028636}
-  _windowSwitcher: {fileID: 1778620714}
-  _buttonWindow: {fileID: 502791378}
-  _profileWindow: {fileID: 800443002}
-  _newProfileWindow: {fileID: 840847606}
   _mainMenuMediator: {fileID: 480080834}
   _profileGroup: {fileID: 6359067132932719534, guid: 856ee75d90ba6894d8dd5a3eb9f7fdcd, type: 3}
   _profileParent: {fileID: 1875852304}
-  _config: {fileID: 11400000, guid: d18482ebc8e5cdf458dae86145d75263, type: 2}
+  _defaultData: {fileID: 11400000, guid: 10190f82db0bafe4093f6d598f4be63d, type: 2}
+  _configSo: {fileID: 11400000, guid: d18482ebc8e5cdf458dae86145d75263, type: 2}
+  _config:
+    Controller:
+      Forward: 0
+      Back: 0
+      Left: 0
+      Right: 0
+      Jump: 0
+      Attack: 0
+      Take: 0
+      OpenDoor: 0
+      Inventory: 0
+      Pause: 0
+      CameraUp: 0
+      CameraDown: 0
+      CameraLeft: 0
+      CameraRight: 0
+    MouseSensitivity: {x: 0, y: 0}
+    IsNewGame: 0
+    SaveInFile: 0
   _outerData: {fileID: 10014626}
 --- !u!1 &589028636
 GameObject:
@@ -1138,7 +1156,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &800443003
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1566,7 +1584,6 @@ GameObject:
   - component: {fileID: 1495686796}
   - component: {fileID: 1495686795}
   - component: {fileID: 1495686794}
-  - component: {fileID: 1495686797}
   m_Layer: 5
   m_Name: EnterProfileField
   m_TagString: Untagged
@@ -1674,19 +1691,7 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1495686797}
-        m_TargetAssemblyTypeName: RoomByRoom.UI.MainMenu.ProfileFieldView, GameAssembly
-        m_MethodName: OnFieldChanged
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1743,18 +1748,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1495686792}
   m_CullTransparentMesh: 1
---- !u!114 &1495686797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1495686792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e635c4bad6d4dcf83eb16502cf862d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1561792205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1937,6 +1930,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e50bff9571ec408c886545c90a68e116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputField: {fileID: 1495686794}
+  _errorMessage: {fileID: 589028636}
 --- !u!1 &1778620712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1981,6 +1976,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2172b04995ef446982da023fdc14b8cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buttonWindow: {fileID: 502791378}
+  _profileWindow: {fileID: 800443002}
+  _newProfileWindow: {fileID: 840847606}
 --- !u!1 &1866331907
 GameObject:
   m_ObjectHideFlags: 0
@@ -2520,7 +2518,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 480080834}
-        m_TargetAssemblyTypeName: RoomByRoom.UI.MainMenu.Mediator, GameAssembly
+        m_TargetAssemblyTypeName: RoomByRoom.UI.MainMenu.MainMenuMediator, GameAssembly
         m_MethodName: TryStartGame
         m_Mode: 1
         m_Arguments:
@@ -2739,7 +2737,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchorMin.x
@@ -2747,7 +2745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2787,11 +2785,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 175
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5362621194926587415, guid: 9ecb532fcab3eb34f8e0382c28d2205b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

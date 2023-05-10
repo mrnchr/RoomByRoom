@@ -13,11 +13,16 @@ MonoBehaviour:
   m_Name: EnemyData
   m_EditorClassIdentifier: 
   Armor:
-    RestoreSpeed: 5
-    BreakRestoreTime: 5
+    RestoreSpeed: 7
+    BreakRestoreTime: 3
+  Animation:
+    StartAttackFrame: 0
+    EndAttackFrame: 0
+    StartPunchFrame: 0
+    EndPunchFrame: 0
+  AttackDelay: 2
   MovableCmp:
     Speed: 3
   JumpableCmp:
     JumpForce: 5
-  DelayAttackTime: 2
   AttackDistance: 1.2

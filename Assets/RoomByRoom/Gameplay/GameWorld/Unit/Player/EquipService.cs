@@ -29,6 +29,8 @@ namespace RoomByRoom
       else
         Equip(item);
     }
+    
+    public void ChangeEquip(EcsPackedEntity packedItem) => ChangeEquip(_world.Unpack(packedItem));
 
     private void Equip(int item)
     {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using RoomByRoom.Database;
@@ -11,11 +12,13 @@ namespace RoomByRoom.UI.MainMenu
   {
     private readonly bool _saveInFile;
     private readonly SQLiteCommand _comm;
+    [SuppressMessage("ReSharper", "PrivateFieldCanBeConvertedToLocalVariable", Justification = "Destructor closes connection")] 
     private readonly DBAccessor _db;
 
     public ProfileService(bool saveInFile)
     {
       _saveInFile = saveInFile;
+      if (saveInFile) return;
       _db = new DBAccessor();
       _comm = _db.Command;
     }
@@ -37,7 +40,7 @@ namespace RoomByRoom.UI.MainMenu
       return profileNames.ToArray();
     }
 
-    private string[] LoadFromFile()
+    private static string[] LoadFromFile()
     {
       var profileFolder = new DirectoryInfo(Idents.FilePaths.SavingDirectory);
       return profileFolder.GetFiles()
@@ -57,10 +60,8 @@ namespace RoomByRoom.UI.MainMenu
         RemoveFromDB(profileName);
     }
 
-    private void RemoveFile(string profileName)
-    {
+    private static void RemoveFile(string profileName) =>
       File.Delete(Idents.FilePaths.SavingDirectory + profileName);
-    }
 
     private void RemoveFromDB(string profileName)
     {

@@ -1,4 +1,5 @@
 using Leopotam.EcsLite;
+using RoomByRoom.Config.Data;
 using Rand = UnityEngine.Random;
 
 namespace RoomByRoom.Utility
@@ -101,7 +102,7 @@ namespace RoomByRoom.Utility
       return GetRandomFunctionValue(min, max, roomCount);
     }
 
-    private static float GetRandomFunctionValue(float min, float max, int roomCount) =>
+    public static float GetRandomFunctionValue(float min, float max, int roomCount) =>
       Rand.Range(min, max) * roomCount * 10;
 
     public static int GetEnemyRoom(int enemyRoomCount) => Rand.Range(0, enemyRoomCount);

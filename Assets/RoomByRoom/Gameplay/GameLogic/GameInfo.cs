@@ -8,6 +8,7 @@ namespace RoomByRoom
   {
     public int RoomCount;
     public int Money;
+    public bool IsWin;
     public WindowType OpenedWindow;
   }
 }

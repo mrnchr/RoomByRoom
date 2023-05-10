@@ -1,5 +1,6 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using RoomByRoom.Config.Data;
 using RoomByRoom.Utility;
 
 namespace RoomByRoom
@@ -17,9 +18,10 @@ namespace RoomByRoom
       {
         ref UnitViewRef unitViewRef = ref _attacks.Pools.Inc2.Get(attack);
         unitViewRef.Value.StartAttackAnimation();
-
-        if (Utils.IsUnitOf(world, attack, UnitType.Humanoid))
-          Utils.UpdateTimer<CantAttack>(world, attack, _enemyData.Value.Armor.BreakRestoreTime);
+        
+        if(Utils.IsUnitOf(world, attack, UnitType.Humanoid))
+          world.Add<CantAttack>(attack)
+            .TimeLeft = _enemyData.Value.Armor.BreakRestoreTime;
       }
     }
   }

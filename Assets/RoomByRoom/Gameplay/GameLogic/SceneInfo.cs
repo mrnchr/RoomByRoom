@@ -1,3 +1,4 @@
+using RoomByRoom.Control;
 using RoomByRoom.UI.Game.HUD;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -11,6 +12,7 @@ namespace RoomByRoom
     public OverlayBar ArmorBar;
     public GameInfo CurrentGame;
     public Saving CurrentSave;
+    public Configuration Config;
     public bool DevTools;
   }
 }

@@ -29,7 +29,7 @@ namespace RoomByRoom
     public void AddArmorAnimator(Animator armorAnim)
     {
       _armorAnimators.Add(armorAnim);
-      SyncAnimParameters(armorAnim);
+      SyncAnimState(armorAnim);
     }
 
     public void RemoveArmorAnimator(Animator armorAnim)
@@ -37,8 +37,15 @@ namespace RoomByRoom
       _armorAnimators.Remove(armorAnim);
     }
 
-    private void SyncAnimParameters(Animator anim)
+    private void SyncAnimState(Animator anim)
     {
+      anim.StopPlayback();
+      for (int i = 0; i < Anim.layerCount; i++)
+      {
+        AnimatorStateInfo currentState = Anim.GetCurrentAnimatorStateInfo(i);
+        anim.Play(currentState.fullPathHash, i, currentState.normalizedTime);
+      }
+
       anim.SetBool(_isRunning, Anim.GetBool(_isRunning));
       anim.SetBool(_isJumping, Anim.GetBool(_isJumping));
       anim.SetInteger(_weapon, Anim.GetInteger(_weapon));
@@ -53,16 +60,16 @@ namespace RoomByRoom
       _armorAnimators.ForEach(x => x.SetInteger(_weapon, (int)type));
     }
 
-    public override void AnimateJump(bool isJump)
+    public override void AnimateJump(bool jump)
     {
-      base.AnimateJump(isJump);
-      _armorAnimators.ForEach(x => x.SetBool(_isJumping, isJump));
+      base.AnimateJump(jump);
+      _armorAnimators.ForEach(x => x.SetBool(_isJumping, jump));
     }
 
-    public override void AnimateRun(bool isRun)
+    public override void AnimateRun(bool run)
     {
-      base.AnimateRun(isRun);
-      _armorAnimators.ForEach(x => x.SetBool(_isRunning, isRun));
+      base.AnimateRun(run);
+      _armorAnimators.ForEach(x => x.SetBool(_isRunning, run));
     }
 
     // TODO: change when there is a bow

@@ -12,9 +12,9 @@ namespace RoomByRoom.Initialization
       if (!Directory.Exists(Idents.FilePaths.SavingDirectory))
       {
         Directory.CreateDirectory(Idents.FilePaths.SavingDirectory);
-        var db = new DBAccessor();
-        db.Command.CommandText = File.ReadAllText(Application.dataPath + "/Dump/room_by_room.sql");
-        db.Command.ExecuteNonQuery();
+        // var db = new DBAccessor();
+        // db.Command.CommandText = File.ReadAllText(Application.streamingAssetsPath + "/room_by_room.sql");
+        // db.Command.ExecuteNonQuery();
       }
     }
   }

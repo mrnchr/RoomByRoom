@@ -9,51 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8661e64fe09f5458c1c61d8660012d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d6fa1b34cce41f29cf3053d83593614, type: 3}
   m_Name: DefaultData
   m_EditorClassIdentifier: 
-  GameInfo:
-    RoomCount: 0
-    Money: 0
-    OpenedWindow: 0
-  Player:
-    Race:
-      Type: 0
-    HealthCmp:
-      CurrentPoint: 2000
-      MaxPoint: 2000
-    MovableCmp:
-      Speed: 5
-    JumpableCmp:
-      JumpForce: 5
-    UnitPhysProtectionCmp:
-      CurrentPoint: 0
-      MaxPoint: 0
-      CantRestoreTime: 0
-      RestoreSpeed: 0
-  Room:
-    Info:
-      Type: 0
-    Race:
-      Type: 0
-  Inventory:
-    Item:
-    - BoundEntity: 0
-      ComponentInfo:
-        Type: 0
-    Weapon:
-    - BoundEntity: 0
-      ComponentInfo:
-        Type: 0
-    Armor: []
-    PhysDamage:
-    - BoundEntity: 0
-      ComponentInfo:
-        Point: 50
-    PhysProtection: []
-    Equipped:
-    - BoundEntity: 0
-    Shape:
-    - BoundEntity: 0
-      ComponentInfo:
-        PrefabIndex: -1
+  ProfileName: Jack

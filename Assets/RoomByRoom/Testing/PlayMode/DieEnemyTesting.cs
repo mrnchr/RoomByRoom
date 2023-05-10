@@ -3,6 +3,7 @@ using FluentAssertions;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using NUnit.Framework;
+using RoomByRoom.Config.Data;
 using RoomByRoom.Utility;
 using UnityEngine;
 

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections;
-using FluentAssertions;
-using Leopotam.EcsLite;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RoomByRoom.UI.Game.Inventory
 {
   public class ItemDragger : MonoBehaviour
   {
     [SerializeField] private Transform _inventory;
+    [SerializeField] private GameMediator _mediator;
     private Slot _lastSlot;
     private Slot _newSlot;
     private bool _isDrag;
@@ -19,6 +16,7 @@ namespace RoomByRoom.UI.Game.Inventory
     private void Awake()
     {
       _inventoryUpdater = FindObjectOfType<InventoryUpdater>();
+      _mediator = FindObjectOfType<GameMediator>();
     }
 
     public void BeginDrag(Slot slot)
@@ -48,6 +46,8 @@ namespace RoomByRoom.UI.Game.Inventory
       if (_can)
       {
         _can.DropItem(slot);
+        if(slot.Info.IsEquipped && slot.Item != null)
+          _mediator.ChangeEquip(slot.Item.Value);
         slot.SetItem();
         return;
       }

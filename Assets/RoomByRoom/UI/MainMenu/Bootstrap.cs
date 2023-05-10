@@ -1,6 +1,7 @@
-﻿using RoomByRoom.Initialization;
+﻿using RoomByRoom.Config.Data;
+using RoomByRoom.Control;
+using RoomByRoom.Initialization;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace RoomByRoom.UI.MainMenu
 {
@@ -8,29 +9,19 @@ namespace RoomByRoom.UI.MainMenu
   public class Bootstrap : MonoBehaviour
   {
     [Header("Profile Creator Window Construction"), SerializeField]
-		 private ProfileCreatorWindow _profileCreatorWindow;
-
-    [SerializeField] private ProfileFieldView _profileFieldView;
-    [SerializeField] private GameObject _errorMessageObject;
-
-    [Header("Window Switcher Construction"), SerializeField]
-		 private MenuWindowSwitcher _windowSwitcher;
-
-    [SerializeField] private GameObject _buttonWindow;
-    [SerializeField] private GameObject _profileWindow;
-    [SerializeField] private GameObject _newProfileWindow;
+		private ProfileCreatorWindow _profileCreatorWindow;
 
     [Header("Mediator Construction"), SerializeField]
-		 private MainMenuMediator _mainMenuMediator;
+		private MainMenuMediator _mainMenuMediator;
 
     [Header("Profile Button Factory Construction"), SerializeField]
-		 private ProfileGroup _profileGroup;
-
+		private ProfileGroup _profileGroup;
     [SerializeField] private Transform _profileParent;
 
-    [Header("Others"), SerializeField]
-		 private Configuration _config;
-
+    [Header("Others")]
+    [SerializeField] private DefaultData _defaultData;
+    [SerializeField] private ConfigurationSO _configSo;
+    [SerializeField] private Configuration _config;
     [SerializeField] private OuterData _outerData;
 
     private StartGameService _startGameSvc;
@@ -43,13 +34,20 @@ namespace RoomByRoom.UI.MainMenu
 
       _outerData.transform.SetParent(null);
       DontDestroyOnLoad(_outerData);
+      LoadConfig(new ConfigSavingService());
       _profileSvc = new ProfileService(_config.SaveInFile);
       _profileGroupFactory = new ProfileGroupFactory(_profileGroup, _profileParent, _mainMenuMediator);
       _startGameSvc = new StartGameService(_outerData);
 
-      _profileCreatorWindow.Construct(_config, _profileFieldView, _errorMessageObject);
-      _windowSwitcher.Construct(_buttonWindow, _profileWindow, _newProfileWindow);
+      _profileCreatorWindow.Construct(_defaultData.ProfileName);
       _mainMenuMediator.Construct(_profileGroupFactory, _profileSvc, _startGameSvc);
+    }
+    
+    private void LoadConfig(ConfigSavingService cfgSavingSvc)
+    {
+      if (cfgSavingSvc.LoadData(ref _config)) return;
+      _config = _configSo.Value;
+      cfgSavingSvc.SaveData(_config);
     }
   }
 }

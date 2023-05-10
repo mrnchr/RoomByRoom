@@ -16,8 +16,7 @@ namespace RoomByRoom
       foreach (int index in _units.Value)
       {
         var groundView = (GroundUnitView)_units.Pools.Inc1.Get(index).Value;
-        bool checkSphere = Physics.CheckSphere(groundView.transform.position, 0.1f, groundView.GroundMask,
-                                               QueryTriggerInteraction.Ignore);
+        bool checkSphere = Physics.CheckSphere(groundView.transform.position, 0.1f, groundView.GroundMask);
         if (groundView.Rb.velocity.y < 0 && checkSphere)
           groundView.AnimateJump(false);
       }

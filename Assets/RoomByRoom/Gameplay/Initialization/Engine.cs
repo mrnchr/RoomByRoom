@@ -4,6 +4,8 @@ using Leopotam.EcsLite.UnityEditor;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
+using RoomByRoom.Config.Data;
+using RoomByRoom.Control;
 using RoomByRoom.Debugging;
 using RoomByRoom.UI.Game;
 using RoomByRoom.UI.Game.Inventory;
@@ -19,7 +21,7 @@ namespace RoomByRoom
     [SerializeField] private SceneInfo _sceneInfo;
     [SerializeField] private PrefabData _prefabData;
     [SerializeField] private SpriteData _spriteData;
-    [SerializeField] private Configuration _configuration;
+    [SerializeField] private DefaultData _defaultData;
     [SerializeField] private EnemyData _enemyData;
     [SerializeField] private PlayerData _playerData;
     [SerializeField] private InventoryUpdater _inventoryUpdater;
@@ -31,6 +33,7 @@ namespace RoomByRoom
     private EcsWorld _message;
     private PrefabService _prefabSvc;
     private Saving _saving;
+    private Configuration _config;
 
     private IEcsSystems _updateSystems;
 
@@ -38,6 +41,11 @@ namespace RoomByRoom
     private EcsWorld _world;
     private EquipService _equipSvc;
 
+    public void Construct(Configuration config)
+    {
+      _config = config;
+    }
+    
     private void Awake()
     {
       _saving = new Saving();
@@ -55,13 +63,13 @@ namespace RoomByRoom
 #if UNITY_EDITOR
       _sceneInfo.CurrentGame = _gameInfo;
       _sceneInfo.CurrentSave = _saving;
+      _sceneInfo.Config = _config;
 #endif
     }
 
     private void Start()
     {
-      var outerData = FindObjectOfType<OuterData>();
-      var savingSvc = new SavingService(outerData.ProfileName, _configuration.SaveInFile);
+      var savingSvc = new SavingService(GetProfileName(), _config.SaveInFile);
       var attackSvc = new AttackService(_world, _message);
       var charSvc = new CharacteristicService(_world);
       var blockingSvc = new BlockingService(_gameInfo);
@@ -128,6 +136,7 @@ namespace RoomByRoom
         .DelHere<StartGameMessage>(Idents.Worlds.MessageWorld)
         .DelHere<NextRoomMessage>(Idents.Worlds.MessageWorld)
         .Add(new OpenDoorSystem())
+        .Add(new CheckWinSystem())
         .Add(new MarkCanDeletedSystem())
         .Add(new RemoveEntitySystem())
         .Add(new RecreateRoomSystem())
@@ -141,7 +150,6 @@ namespace RoomByRoom
         .Add(new DieSystem())
         .DelHere<RoomCleanedMessage>(Idents.Worlds.MessageWorld)
         .Add(new OpenNextRoomSystem())
-        .Add(new CheckWinSystem())
         .DelHere<SelectCommand>()
         .DelHere<DeselectCommand>()
         .Add(new SelectBonusSystem())
@@ -158,9 +166,9 @@ namespace RoomByRoom
         .Add(new EcsWorldDebugSystem())
         .Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif
-        .Inject(_sceneInfo, _saving, _prefabSvc, _configuration,
+        .Inject(_sceneInfo, _saving, _prefabSvc, _config,
                 savingSvc, _initializeData, _gameInfo, attackSvc, _enemyData, charSvc, _playerData, blockingSvc,
-                _mediator, keepDirtySvc, sceneSvc)
+                _mediator, keepDirtySvc, sceneSvc, _equipSvc)
         .Init();
 
       // _fixedUpdateSystems = new EcsSystems(_world);
@@ -169,6 +177,19 @@ namespace RoomByRoom
       //     .AddWorld(message, Idents.Worlds.MessageWorld)
       //     .Inject(_sceneData, _savedData, _packedPrefabData, _configuration)
       //     .Init();
+    }
+
+    private string GetProfileName()
+    {
+      string profileName = _defaultData.ProfileName;
+      OuterData outerData = FindObjectOfType<OuterData>();
+      if (outerData)
+      {
+        profileName = outerData.ProfileName;
+        Destroy(outerData.gameObject);
+      }
+
+      return profileName;
     }
 
     private void Update()

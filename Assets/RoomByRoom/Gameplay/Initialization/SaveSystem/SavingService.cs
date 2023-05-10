@@ -4,20 +4,20 @@ namespace RoomByRoom
 {
   public class SavingService
   {
-    private readonly string _profile;
+    public readonly string ProfileName;
     private readonly ISaver _saver;
 
-    public SavingService(string profile, bool saveInFile)
+    public SavingService(string profileName, bool saveInFile)
     {
       _saver = saveInFile ? new Serializator() : new DBGameSaver();
-      _profile = profile;
+      ProfileName = profileName;
     }
 
-    public bool LoadData(ref Saving saving) => _saver.LoadData(_profile, ref saving);
+    public bool LoadData(ref Saving saving) => _saver.LoadData(ProfileName, ref saving);
 
     public void SaveData(Saving saving)
     {
-      _saver.SaveData(_profile, saving);
+      _saver.SaveData(ProfileName, saving);
     }
   }
 }

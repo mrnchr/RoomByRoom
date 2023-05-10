@@ -18,19 +18,18 @@ namespace RoomByRoom
       foreach (int index in _units.Value)
       {
         var groundView = (GroundUnitView)_world.Get<UnitViewRef>(index).Value;
+        bool checkSphere = Physics.CheckSphere(groundView.transform.position, 0.01f, groundView.GroundMask);
 
-        bool checkSphere = Physics.CheckSphere(groundView.transform.position, 0.01f, groundView.GroundMask,
-                                               QueryTriggerInteraction.Ignore);
-
-        if (!checkSphere)
-          continue;
+        if (!checkSphere) continue;
         float jumpForce = _world.Get<Jumpable>(index).JumpForce;
-        groundView.Rb.velocity = Vector3.Scale(groundView.Rb.velocity, new Vector3(1, 0, 1));
+        groundView.Rb.velocity = ClearVertical(groundView.Rb.velocity);
         groundView.Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         groundView.AnimateJump(true);
         _world.Add<CantJump>(index)
           .TimeLeft = 0.2f;
       }
     }
+
+    private static Vector3 ClearVertical(Vector3 velocity) => Vector3.Scale(velocity, new Vector3(1, 0, 1));
   }
 }

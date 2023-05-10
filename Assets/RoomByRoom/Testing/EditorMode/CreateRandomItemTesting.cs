@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Leopotam.EcsLite;
 using NUnit.Framework;
+using RoomByRoom.Config.Data;
 using RoomByRoom.Utility;
 
 namespace RoomByRoom.Testing.EditorMode

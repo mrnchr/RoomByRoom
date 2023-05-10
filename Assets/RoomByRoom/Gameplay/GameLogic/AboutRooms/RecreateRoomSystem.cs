@@ -9,24 +9,25 @@ namespace RoomByRoom
   {
     private readonly EcsFilterInject<Inc<NextRoomMessage>> _nextRoomMsg = Idents.Worlds.MessageWorld;
     private readonly EcsFilterInject<Inc<RoomViewRef>> _room = default;
+    private readonly EcsCustomInject<GameInfo> _gameInfo = default;
     private EcsWorld _world;
 
     public void Run(IEcsSystems systems)
     {
+      if (_gameInfo.Value.IsWin) return;
       _world = systems.GetWorld();
       EcsWorld message = systems.GetWorld(Idents.Worlds.MessageWorld);
 
       foreach (int index in _nextRoomMsg.Value)
       {
         DeleteRoom();
-        CreateRoom(message.Get<NextRoomMessage>(index));
+        CreateRoom(ref message.Get<NextRoomMessage>(index));
       }
     }
 
-    private void CreateRoom(NextRoomMessage nextRoom)
+    private void CreateRoom(ref NextRoomMessage nextRoom)
     {
       int roomEntity = _world.NewEntity();
-
       _world.Add<RaceInfo>(roomEntity) = nextRoom.Race;
       _world.Add<RoomInfo>(roomEntity) = nextRoom.Room;
     }

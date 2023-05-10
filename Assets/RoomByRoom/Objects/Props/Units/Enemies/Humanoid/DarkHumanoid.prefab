@@ -735,7 +735,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3054812531130734739}
-  - {fileID: 2257131867604647964}
   m_Father: {fileID: 5805036895803953691}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -797,15 +796,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Entity: 0
-  MovableCmp:
-    Speed: 3
   Anim: {fileID: 0}
   AttackCtr: {fileID: 0}
   Rb: {fileID: 0}
   HealthBar: {fileID: 432021116411249490}
   ArmorBar: {fileID: 8457337726562431552}
-  JumpableCmp:
-    JumpForce: 5
   GroundMask:
     serializedVersion: 2
     m_Bits: 200
@@ -1099,12 +1094,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6363305905226938386}
-  m_LocalRotation: {x: -0.20777985, y: -0, z: 0.000000026077036, w: 0.97817564}
-  m_LocalPosition: {x: 0, y: 0.0019546193, z: -0.00022927689}
+  m_LocalRotation: {x: -0.00000013411045, y: -0.000000020751159, z: 0.000000026013979, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0013999991, z: 0.0001499978}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5587964791752095356}
+  m_Father: {fileID: 3054812531130734739}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6936860083755016931
@@ -1201,6 +1196,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 678675654874422471}
+  - {fileID: 2257131867604647964}
   m_Father: {fileID: 5587964791752095356}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

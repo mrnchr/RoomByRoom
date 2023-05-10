@@ -1,5 +1,6 @@
 ﻿using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using RoomByRoom.Config.Data;
 using RoomByRoom.Utility;
 
 namespace RoomByRoom
@@ -19,7 +20,7 @@ namespace RoomByRoom
       foreach (int index in _delayMsgs.Value)
       {
         int unit = _message.Get<DelayAttackMessage>(index).Unit;
-        Utils.UpdateTimer<CantAttack>(_world, unit, _enemyCfg.Value.DelayAttackTime);
+        Utils.UpdateTimer<CantAttack>(_world, unit, _enemyCfg.Value.AttackDelay);
         _message.DelEntity(index);
       }
     }

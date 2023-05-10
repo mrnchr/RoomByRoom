@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using RoomByRoom.Config.Data;
 using RoomByRoom.Utility;
 
 namespace RoomByRoom
@@ -14,6 +15,7 @@ namespace RoomByRoom
 
     public void Run(IEcsSystems systems)
     {
+      if (_gameInfo.Value.IsWin) return;
       _world = systems.GetWorld();
       EcsWorld message = systems.GetWorld(Idents.Worlds.MessageWorld);
 
