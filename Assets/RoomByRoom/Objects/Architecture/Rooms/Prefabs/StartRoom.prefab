@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5563806231175931649}
   - component: {fileID: 8834171157475731620}
   - component: {fileID: 6736734773026708590}
-  m_Layer: 0
-  m_Name: StartRoom (1)
+  - component: {fileID: 1146787355868296719}
+  m_Layer: 7
+  m_Name: StartRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5079300502834445755}
-  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
@@ -87,6 +88,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1146787355868296719
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5079300502834445755}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5551418225153903260, guid: ab96540ced875934b849b362f54f5aca, type: 3}
 --- !u!1 &8889388803606691716
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +113,7 @@ GameObject:
   - component: {fileID: 6573041176160240800}
   - component: {fileID: 6697253823063337066}
   - component: {fileID: 359561541327681943}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +196,7 @@ GameObject:
   - component: {fileID: 1333885552819299003}
   - component: {fileID: 8457536152484099590}
   - component: {fileID: 6972544822946779263}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Door3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +280,7 @@ GameObject:
   - component: {fileID: 8904143752694181400}
   - component: {fileID: 7996390200593716807}
   - component: {fileID: 3276659374405118920}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Door4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
