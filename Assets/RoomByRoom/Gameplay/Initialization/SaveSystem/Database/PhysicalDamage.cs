@@ -1,25 +1,34 @@
-using System.Data.SQLite;
+using LinqToDB.Mapping;
 
 namespace RoomByRoom.Database
 {
-  public class PhysicalDamageTable : ITable<BoundComponent<ItemPhysicalDamage>>
+  [Table("phys_damage")]
+  public class PhysDamageTable : IComponentTable<BoundComponent<ItemPhysicalDamage>>
   {
-    public string GetTableName() => "phys_damage";
+    [PrimaryKey, Column("id")]
+    public int Id { get; set; }
+    
+    [PrimaryKey, Column("profile_name")]
+    public string ProfileName { get; set; } 
+    
+    [Column("point")]
+    public float Point { get; set; }
 
-    public BoundComponent<ItemPhysicalDamage> Pull(SQLiteDataReader row)
+    public BoundComponent<ItemPhysicalDamage> GetComponent() =>
+      new BoundComponent<ItemPhysicalDamage>
+      {
+        BoundEntity = Id,
+        ComponentInfo = new ItemPhysicalDamage
+        {
+          Point = Point
+        }
+      };
+
+    public void SetComponent(BoundComponent<ItemPhysicalDamage> comp, string profileName)
     {
-      var comp = new BoundComponent<ItemPhysicalDamage>();
-      comp.BoundEntity = row.GetInt32(0);
-      comp.ComponentInfo.Point = row.GetFloat(2);
-      return comp;
+      Id = comp.BoundEntity;
+      ProfileName = profileName;
+      Point = comp.ComponentInfo.Point;
     }
-
-    public string GetTextToPut(BoundComponent<ItemPhysicalDamage> comp, string toProfile) =>
-      "insert or replace into phys_damage values " +
-      "(" +
-      $"{comp.BoundEntity}, " +
-      $"\'{toProfile}\', " +
-      $"{comp.ComponentInfo.Point}" +
-      ");";
   }
 }

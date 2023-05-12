@@ -55,7 +55,7 @@ namespace RoomByRoom
         Type = _world.Get<ItemInfo>(item).Type,
         EqType = Utils.GetEquipmentType(_world, item),
         IsEquipped = _world.Has<Equipped>(item),
-        Shape = _world.Get<Shape>(item).PrefabIndex
+        Shape = _world.Get<ShapeInfo>(item).PrefabIndex
       };
   }
 }

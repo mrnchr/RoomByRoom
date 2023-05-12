@@ -1,25 +1,34 @@
-using System.Data.SQLite;
+using LinqToDB.Mapping;
 
 namespace RoomByRoom.Database
 {
-  public class ShapeTable : ITable<BoundComponent<Shape>>
+  [Table("shape")]
+  public class ShapeTable : IComponentTable<BoundComponent<ShapeInfo>>
   {
-    public string GetTableName() => "shape";
+    [PrimaryKey, Column("id")]
+    public int Id { get; set; }
+    
+    [PrimaryKey, Column("profile_name")]
+    public string ProfileName { get; set; } 
+    
+    [Column("pref_index")]
+    public int PrefabIndex { get; set; }
 
-    public BoundComponent<Shape> Pull(SQLiteDataReader row)
+    public BoundComponent<ShapeInfo> GetComponent() =>
+      new BoundComponent<ShapeInfo>
+      {
+        BoundEntity = Id,
+        ComponentInfo = new ShapeInfo
+        {
+          PrefabIndex = PrefabIndex
+        }
+      };
+
+    public void SetComponent(BoundComponent<ShapeInfo> comp, string profileName)
     {
-      var comp = new BoundComponent<Shape>();
-      comp.BoundEntity = row.GetInt32(0);
-      comp.ComponentInfo.PrefabIndex = row.GetInt32(2);
-      return comp;
+      Id = comp.BoundEntity;
+      ProfileName = profileName;
+      PrefabIndex = comp.ComponentInfo.PrefabIndex;
     }
-
-    public string GetTextToPut(BoundComponent<Shape> comp, string toProfile) =>
-      "insert or replace into shape values " +
-      "(" +
-      $"{comp.BoundEntity}, " +
-      $"\'{toProfile}\', " +
-      $"{comp.ComponentInfo.PrefabIndex}" +
-      ");";
   }
 }

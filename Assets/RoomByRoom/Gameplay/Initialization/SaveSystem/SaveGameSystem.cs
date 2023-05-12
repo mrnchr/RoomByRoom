@@ -84,7 +84,7 @@ namespace RoomByRoom
         PhysDamage = SelectComponents<ItemPhysicalDamage>(playerItems),
         PhysProtection = SelectComponents<ItemPhysicalProtection>(playerItems),
         Equipped = SelectComponents<Equipped>(playerItems),
-        Shape = SelectComponents<Shape>(playerItems)
+        Shape = SelectComponents<ShapeInfo>(playerItems)
       };
     }
 

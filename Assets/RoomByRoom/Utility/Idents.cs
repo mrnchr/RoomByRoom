@@ -11,23 +11,24 @@ namespace RoomByRoom.Utility
     {
       public const string SavingDirectory =
 #if UNITY_EDITOR
-        @"Local\Saves\";
+        "Local";
+        //@"Local\Saves\";
 #elif UNITY_STANDALONE || DEVELOPMENT_BUILD
-				@".local\Saves\";
+				//@"Local\Saves\";
 #endif
       
       public const string DatabaseFileName =
 #if UNITY_EDITOR
         @"Local\room_by_room.db";
 #elif UNITY_STANDALONE || DEVELOPMENT_BUILD
-				@".local\room_by_room.db";
+				@"Local\room_by_room.db";
 #endif
       
       public const string ConfigFileName =
 #if UNITY_EDITOR
         @"Local\config.xml";
 #elif UNITY_STANDALONE || DEVELOPMENT_BUILD
-				@".local\config.xml";
+				@"Local\config.xml";
 #endif
     }
   }

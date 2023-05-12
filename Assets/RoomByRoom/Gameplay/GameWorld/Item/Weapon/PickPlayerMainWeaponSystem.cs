@@ -26,7 +26,7 @@ namespace RoomByRoom
     private bool IsBow(int item) => _world.Get<WeaponInfo>(item).Type == WeaponType.Bow;
 
     private void AddMainWeapon(int item) =>
-      _world.Add<MainWeapon>(Utils.GetOwner(_world, item))
+      _world.Get<MainWeapon>(Utils.GetOwner(_world, item))
         .Entity = item;
   }
 }

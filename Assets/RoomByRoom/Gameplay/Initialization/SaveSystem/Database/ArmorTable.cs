@@ -1,25 +1,34 @@
-using System.Data.SQLite;
+using LinqToDB.Mapping;
 
 namespace RoomByRoom.Database
 {
-  public class ArmorTable : ITable<BoundComponent<ArmorInfo>>
+  [Table("armor")]
+  public class ArmorTable : IComponentTable<BoundComponent<ArmorInfo>>
   {
-    public string GetTableName() => "armor";
+    [PrimaryKey, Column("id")]
+    public int Id { get; set; }
+    
+    [PrimaryKey, Column("profile_name")]
+    public string ProfileName { get; set; } 
+    
+    [Column("armor_type")]
+    public int ArmorType { get; set; }
 
-    public BoundComponent<ArmorInfo> Pull(SQLiteDataReader row)
+    public BoundComponent<ArmorInfo> GetComponent() =>
+      new BoundComponent<ArmorInfo>
+      {
+        BoundEntity = Id,
+        ComponentInfo = new ArmorInfo
+        {
+          Type = (ArmorType) ArmorType
+        }
+      };
+
+    public void SetComponent(BoundComponent<ArmorInfo> comp, string profileName)
     {
-      var comp = new BoundComponent<ArmorInfo>();
-      comp.BoundEntity = row.GetInt32(0);
-      comp.ComponentInfo.Type = (ArmorType)row.GetInt32(2);
-      return comp;
+      Id = comp.BoundEntity;
+      ProfileName = profileName;
+      ArmorType = (int)comp.ComponentInfo.Type;
     }
-
-    public string GetTextToPut(BoundComponent<ArmorInfo> comp, string toProfile) =>
-      "insert or replace into weapon values " +
-      "(" +
-      $"{comp.BoundEntity}, " +
-      $"\'{toProfile}\', " +
-      $"{(int)comp.ComponentInfo.Type}" +
-      ");";
   }
 }

@@ -139,7 +139,7 @@ namespace RoomByRoom.Utility
           .Point = GetPhysicalDamage((WeaponType)equipmentType, gameInfo.RoomCount);
       }
 
-      world.Add<Shape>(item)
+      world.Add<ShapeInfo>(item)
         .PrefabIndex = GetPrefabIndex(prefabService, type, equipmentType);
 
       return item;

@@ -30,4 +30,4 @@ MonoBehaviour:
       CameraRight: 0
     MouseSensitivity: {x: 1, y: 1}
     IsNewGame: 0
-    SaveInFile: 1
+    SaveInFile: 0

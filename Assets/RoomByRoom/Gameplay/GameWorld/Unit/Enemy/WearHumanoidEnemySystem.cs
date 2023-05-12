@@ -88,7 +88,7 @@ namespace RoomByRoom
 
       _world.Add<Equipped>(item);
 
-      _world.Add<Shape>(item)
+      _world.Add<ShapeInfo>(item)
         .PrefabIndex = FastRandom.GetPrefabIndex(_prefabSvc.Value, itemType, equipmentType);
 
       _world.Add<Owned>(item)

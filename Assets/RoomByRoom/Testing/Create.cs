@@ -247,9 +247,9 @@ namespace RoomByRoom.Testing
       where T : MonoBehaviour =>
       new GameObject().AddComponent<T>();
 
-    public static ref Shape ShapeCmp(EcsWorld world, int item, int shape)
+    public static ref ShapeInfo ShapeCmp(EcsWorld world, int item, int shape)
     {
-      return ref world.Add<Shape>(item)
+      return ref world.Add<ShapeInfo>(item)
         .Assign(x =>
         {
           x.PrefabIndex = shape;

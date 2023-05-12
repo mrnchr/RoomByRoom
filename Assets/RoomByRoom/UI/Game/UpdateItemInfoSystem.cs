@@ -4,8 +4,6 @@ using Leopotam.EcsLite.Di;
 using RoomByRoom.Config.Data;
 using RoomByRoom.UI.Game;
 using RoomByRoom.Utility;
-using UnityEditor;
-using UnityEngine;
 
 namespace RoomByRoom
 {
@@ -62,7 +60,7 @@ namespace RoomByRoom
 
     private ItemView GetPrefab(int entity, ItemType itemType)
     {
-      int prefabIndex = _world.Get<Shape>(entity).PrefabIndex;
+      int prefabIndex = _world.Get<ShapeInfo>(entity).PrefabIndex;
       int typeNumber = itemType == ItemType.Weapon
         ? (int)_world.Get<WeaponInfo>(entity).Type
         : (int)_world.Get<ArmorInfo>(entity).Type;

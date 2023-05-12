@@ -58,6 +58,6 @@ namespace RoomByRoom
       _prefabData.Value.GetItem(
         _world.Get<ItemInfo>(item).Type,
         Utils.GetEquipmentType(_world, item),
-        _world.Get<Shape>(item).PrefabIndex);
+        _world.Get<ShapeInfo>(item).PrefabIndex);
   }
 }

@@ -52,7 +52,7 @@ namespace RoomByRoom
 
     private ItemView GetPrefab(int entity, ItemType itemType)
     {
-      int prefabIndex = _world.Get<Shape>(entity).PrefabIndex;
+      int prefabIndex = _world.Get<ShapeInfo>(entity).PrefabIndex;
       int typeNumber = itemType == ItemType.Weapon
         ? (int)_world.Get<WeaponInfo>(entity).Type
         : (int)_world.Get<ArmorInfo>(entity).Type;

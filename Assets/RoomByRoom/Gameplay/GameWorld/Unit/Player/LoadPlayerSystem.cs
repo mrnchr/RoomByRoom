@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using FluentAssertions;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using RoomByRoom.Config.Data;
 using RoomByRoom.Utility;
-using UnityEngine;
 
 namespace RoomByRoom
 {
@@ -45,6 +43,8 @@ namespace RoomByRoom
           return x;
         });
 
+      world.Add<MainWeapon>(player)
+        .Entity = -1;
       world.Add<ControllerByPlayer>(player);
     }
   }

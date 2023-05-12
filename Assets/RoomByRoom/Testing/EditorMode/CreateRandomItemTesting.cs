@@ -24,7 +24,7 @@ namespace RoomByRoom.Testing.EditorMode
 
         // Assert
         world.Has<ItemInfo>(item).Should().Be(true);
-        world.Has<Shape>(item).Should().Be(true);
+        world.Has<ShapeInfo>(item).Should().Be(true);
         if (world.Get<ItemInfo>(item).Type == ItemType.Armor)
         {
           world.Has<ArmorInfo>(item).Should().Be(true);

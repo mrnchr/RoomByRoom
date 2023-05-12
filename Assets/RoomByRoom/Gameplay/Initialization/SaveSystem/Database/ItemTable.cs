@@ -1,27 +1,34 @@
-using System.Data.SQLite;
+using LinqToDB.Mapping;
 
 namespace RoomByRoom.Database
 {
-  public class ItemTable : ITable<BoundComponent<ItemInfo>>
+  [Table("item")]
+  public class ItemTable : IComponentTable<BoundComponent<ItemInfo>>
   {
-    public string GetTableName() => "item";
+    [PrimaryKey]
+    public int Id { get; set; }
+    
+    [Column("profile_name"), PrimaryKey]
+    public string ProfileName { get; set; } 
+    
+    [Column("item_type")]
+    public int ItemType { get; set; }
 
-    public BoundComponent<ItemInfo> Pull(SQLiteDataReader row)
-    {
-      var comp = new BoundComponent<ItemInfo>
+    public BoundComponent<ItemInfo> GetComponent() =>
+      new BoundComponent<ItemInfo>
       {
-        BoundEntity = row.GetInt32(0)
+        BoundEntity = Id,
+        ComponentInfo = new ItemInfo
+        {
+          Type = (ItemType)ItemType
+        }
       };
-      comp.ComponentInfo.Type = (ItemType)row.GetInt32(2);
-      return comp;
-    }
 
-    public string GetTextToPut(BoundComponent<ItemInfo> comp, string toProfile) =>
-      "insert or replace into item values " +
-      "(" +
-      $"{comp.BoundEntity}, " +
-      $"\'{toProfile}\', " +
-      $"{(int)comp.ComponentInfo.Type}" +
-      ");";
+    public void SetComponent(BoundComponent<ItemInfo> comp, string profileName)
+    {
+      Id = comp.BoundEntity;
+      ProfileName = profileName;
+      ItemType = (int)comp.ComponentInfo.Type;
+    }
   }
 }

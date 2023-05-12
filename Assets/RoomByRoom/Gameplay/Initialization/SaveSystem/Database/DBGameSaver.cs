@@ -1,110 +1,108 @@
 ﻿using System.Collections.Generic;
-using System.Data.SQLite;
+using System.Linq;
+using LinqToDB;
+using LinqToDB.Tools;
 
 namespace RoomByRoom.Database
 {
   public class DBGameSaver : ISaver
   {
-    private readonly SQLiteCommand _comm;
+    private readonly DbAccessor _db;
 
     public DBGameSaver()
     {
-      _comm = new DBAccessor().Command;
+      _db = new DbAccessor();
     }
 
     public bool LoadData(string profile, ref Saving saving)
     {
-      _comm.CommandText = $"select * from profile where name = \'{profile}\';";
-      SQLiteDataReader profileRow = _comm.ExecuteReader();
+      using DbRoomByRoomConnection conn = _db.GetConnection();
+      var profiles = from p in conn.TProfile
+        where p.Name == profile
+        select p;
 
-      if (!profileRow.Read())
-      {
-        profileRow.Close();
+      if (!profiles.Any())
         return false;
-      }
 
-      var index = 1;
-
-      saving.GameSave.RoomCount = profileRow.GetInt32(index++);
-      saving.Player.Race.Type = (RaceType)profileRow.GetInt32(index++);
-      saving.Player.HealthCmp.MaxPoint = profileRow.GetFloat(index++);
-      saving.Player.MovableCmp.Speed = profileRow.GetFloat(index++);
-      saving.Player.JumpableCmp.JumpForce = profileRow.GetFloat(index++);
-      saving.Room.Info.Type = (RoomType)profileRow.GetInt32(index++);
-      saving.Room.Race.Type = (RaceType)profileRow.GetInt32(index++);
-
-      profileRow.Close();
-
-      List<BoundComponent<TValue>> PullComponent<T, TValue>()
-        where T : ITable<BoundComponent<TValue>>, new()
-        where TValue : struct
+      foreach (ProfileTable p in profiles)
       {
-        var compTable = new T();
-        _comm.CommandText = $"select * from {compTable.GetTableName()} where profile_name = \'{profile}\';";
-        profileRow = _comm.ExecuteReader();
-        var comps = new List<BoundComponent<TValue>>();
-
-        while (profileRow.Read()) comps.Add(compTable.Pull(profileRow));
-
-        profileRow.Close();
-        return comps;
+        saving.GameSave.RoomCount = p.RoomCount;
+        saving.Player.Race.Type = (RaceType)p.PlayerRace;
+        saving.Player.HealthCmp.CurrentPoint = p.PlayerHealth;
+        saving.Player.HealthCmp.MaxPoint = p.PlayerMaxHealth;
+        saving.Player.MovableCmp.Speed = p.PlayerSpeed;
+        saving.Player.JumpableCmp.JumpForce = p.PlayerJumpForce;
+        saving.Room.Info.Type = (RoomType)p.RoomType;
+        saving.Room.Race.Type = (RaceType)p.RoomRace;
       }
 
-      saving.Inventory.Item = PullComponent<ItemTable, ItemInfo>();
-      saving.Inventory.Weapon = PullComponent<WeaponTable, WeaponInfo>();
-      saving.Inventory.Armor = PullComponent<ArmorTable, ArmorInfo>();
-      saving.Inventory.PhysProtection = PullComponent<PhysProtectionTable, ItemPhysicalProtection>();
-      saving.Inventory.PhysDamage = PullComponent<PhysicalDamageTable, ItemPhysicalDamage>();
-      saving.Inventory.Equipped = PullComponent<EquippedTable, Equipped>();
-      saving.Inventory.Shape = PullComponent<ShapeTable, Shape>();
+      PullComps(conn.TArmor, saving.Inventory.Armor);
+      PullComps(conn.TEquipped, saving.Inventory.Equipped);
+      PullComps(conn.TItem, saving.Inventory.Item);
+      PullComps(conn.TShape, saving.Inventory.Shape);
+      PullComps(conn.TWeapon, saving.Inventory.Weapon);
+      PullComps(conn.TPhysDamage, saving.Inventory.PhysDamage);
+      PullComps(conn.TPhysProtection, saving.Inventory.PhysProtection);
 
       return true;
+
+      void PullComps<T, TComp>(ITable<T> table, List<BoundComponent<TComp>> to)
+        where T : IComponentTable<BoundComponent<TComp>>
+        where TComp : struct =>
+        to.AddRange(from c in table
+                    where c.ProfileName == profile
+                    select c.GetComponent());
     }
 
     public void SaveData(string profile, Saving saving)
     {
       DeleteData(profile);
 
-      // Save current profile
-      _comm.CommandText = "insert or replace into profile values " +
-                          "(" +
-                          $"\'{profile}\', " +
-                          $"{saving.GameSave.RoomCount}, " +
-                          $"{(int)saving.Player.Race.Type}, " +
-                          $"{saving.Player.HealthCmp.MaxPoint}, " +
-                          $"{saving.Player.MovableCmp.Speed}, " +
-                          $"{saving.Player.JumpableCmp.JumpForce}, " +
-                          $"{(int)saving.Room.Info.Type}, " +
-                          $"{(int)saving.Room.Race.Type} " +
-                          ");";
-      _comm.ExecuteNonQuery();
+      using var conn = _db.GetConnection();
+      conn.TProfile.Insert(() => new ProfileTable
+      {
+        Name = profile,
+        RoomCount = saving.GameSave.RoomCount,
+        PlayerRace = (int)saving.Player.Race.Type,
+        PlayerHealth = saving.Player.HealthCmp.CurrentPoint,
+        PlayerMaxHealth = saving.Player.HealthCmp.MaxPoint,
+        PlayerSpeed = saving.Player.MovableCmp.Speed,
+        PlayerJumpForce = saving.Player.JumpableCmp.JumpForce,
+        RoomType = (int)saving.Room.Info.Type,
+        RoomRace = (int)saving.Room.Race.Type
+      });
 
-      // Save current profile's inventory
-      void PutComponent<T, TValue>(List<BoundComponent<TValue>> comps)
-        where T : ITable<BoundComponent<TValue>>, new()
+      GetTableComps<ItemTable, ItemInfo>(saving.Inventory.Item).ForEach(x => conn.Insert(x));
+      GetTableComps<WeaponTable, WeaponInfo>(saving.Inventory.Weapon).ForEach(x => conn.Insert(x));
+      GetTableComps<ArmorTable, ArmorInfo>(saving.Inventory.Armor).ForEach(x => conn.Insert(x));
+      GetTableComps<ShapeTable, ShapeInfo>(saving.Inventory.Shape).ForEach(x => conn.Insert(x));
+      GetTableComps<EquippedTable, Equipped>(saving.Inventory.Equipped).ForEach(x => conn.Insert(x));
+      GetTableComps<PhysDamageTable, ItemPhysicalDamage>(saving.Inventory.PhysDamage).ForEach(x => conn.Insert(x));
+      GetTableComps<PhysProtectionTable, ItemPhysicalProtection>(saving.Inventory.PhysProtection)
+        .ForEach(x => conn.Insert(x));
+
+      List<T> GetTableComps<T, TValue>(List<BoundComponent<TValue>> comps)
+        where T : IComponentTable<BoundComponent<TValue>>, new()
         where TValue : struct
       {
-        var compTable = new T();
+        List<T> tableComps = new List<T>();
         foreach (var comp in comps)
         {
-          _comm.CommandText = compTable.GetTextToPut(comp, profile);
-          _comm.ExecuteNonQuery();
+          T tComp = new T();
+          tComp.SetComponent(comp, profile);
+          tableComps.Add(tComp);
         }
-      }
 
-      PutComponent<ItemTable, ItemInfo>(saving.Inventory.Item);
-      PutComponent<WeaponTable, WeaponInfo>(saving.Inventory.Weapon);
-      PutComponent<ArmorTable, ArmorInfo>(saving.Inventory.Armor);
-      PutComponent<PhysProtectionTable, ItemPhysicalProtection>(saving.Inventory.PhysProtection);
-      PutComponent<PhysicalDamageTable, ItemPhysicalDamage>(saving.Inventory.PhysDamage);
-      PutComponent<EquippedTable, Equipped>(saving.Inventory.Equipped);
-      PutComponent<ShapeTable, Shape>(saving.Inventory.Shape);
+        return tableComps;
+      }
     }
 
     private void DeleteData(string profile)
     {
-      _comm.CommandText = $"delete from profile where name = \'{profile}\';";
-      _comm.ExecuteNonQuery();
+      using var conn = _db.GetConnection();
+      conn.TProfile
+        .Where(x => x.Name == profile)
+        .Delete();
     }
   }
 }

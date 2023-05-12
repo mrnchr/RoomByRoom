@@ -3,6 +3,7 @@ using System.Data.SQLite;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using LinqToDB;
 using RoomByRoom.Database;
 using RoomByRoom.Utility;
 
@@ -11,16 +12,14 @@ namespace RoomByRoom.UI.MainMenu
   public class ProfileService
   {
     private readonly bool _saveInFile;
-    private readonly SQLiteCommand _comm;
     [SuppressMessage("ReSharper", "PrivateFieldCanBeConvertedToLocalVariable", Justification = "Destructor closes connection")] 
-    private readonly DBAccessor _db;
+    private readonly DbAccessor _db;
 
     public ProfileService(bool saveInFile)
     {
       _saveInFile = saveInFile;
       if (saveInFile) return;
-      _db = new DBAccessor();
-      _comm = _db.Command;
+      _db = new DbAccessor();
     }
 
     public string[] Load() =>
@@ -30,14 +29,10 @@ namespace RoomByRoom.UI.MainMenu
 
     private string[] LoadFromDB()
     {
-      _comm.CommandText = "SELECT name FROM profile";
-      SQLiteDataReader reader = _comm.ExecuteReader();
-      var profileNames = new List<string>();
-
-      while (reader.Read())
-        profileNames.Add(reader.GetString(0));
-
-      return profileNames.ToArray();
+      using var db = _db.GetConnection();
+      return (from p in db.TProfile
+        select p.Name)
+        .ToArray();
     }
 
     private static string[] LoadFromFile()
@@ -65,8 +60,10 @@ namespace RoomByRoom.UI.MainMenu
 
     private void RemoveFromDB(string profileName)
     {
-      _comm.CommandText = $"delete from profile where name = \'{profileName}\';";
-      _comm.ExecuteNonQuery();
+      using var db = _db.GetConnection();
+      db.TProfile
+        .Where(x => x.Name == profileName)
+        .Delete();
     }
   }
 }

@@ -1,20 +1,30 @@
 {
-  "name": "Testing",
-  "rootNamespace": "",
-  "references": [
-    "GameAssembly",
-    "Leopotam.EcsLite",
-    "Leopotam.EcsLite.Di"
-  ],
-  "includePlatforms": [],
-  "excludePlatforms": [],
-  "allowUnsafeCode": false,
-  "overrideReferences": true,
-  "precompiledReferences": [],
-  "autoReferenced": false,
-  "defineConstraints": [
-    "UNITY_INCLUDE_TESTS"
-  ],
-  "versionDefines": [],
-  "noEngineReferences": false
+    "name": "Testing",
+    "rootNamespace": "",
+    "references": [
+        "GameAssembly",
+        "Leopotam.EcsLite",
+        "Leopotam.EcsLite.Di",
+        "Leopotam.EcsLite.ExtendedSystems",
+        "Leopotam.EcsLite.UnityEditor",
+        "UnityEngine.TestRunner",
+        "Leopotam.EcsLite.UnityEditor.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WindowsStandalone64"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "FluentAssertions.dll",
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

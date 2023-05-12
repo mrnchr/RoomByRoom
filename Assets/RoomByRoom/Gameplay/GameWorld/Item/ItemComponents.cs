@@ -14,7 +14,7 @@ namespace RoomByRoom
   }
 
   [Serializable]
-  public struct Shape
+  public struct ShapeInfo
   {
     public int PrefabIndex;
   }

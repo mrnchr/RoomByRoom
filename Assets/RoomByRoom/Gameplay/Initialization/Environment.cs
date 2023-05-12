@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using LinqToDB.Data;
 using RoomByRoom.Database;
 using RoomByRoom.Utility;
 using UnityEngine;
@@ -12,9 +13,8 @@ namespace RoomByRoom.Initialization
       if (!Directory.Exists(Idents.FilePaths.SavingDirectory))
       {
         Directory.CreateDirectory(Idents.FilePaths.SavingDirectory);
-        // var db = new DBAccessor();
-        // db.Command.CommandText = File.ReadAllText(Application.streamingAssetsPath + "/room_by_room.sql");
-        // db.Command.ExecuteNonQuery();
+        using var db = new DbAccessor().GetConnection();
+        db.Execute(File.ReadAllText(Application.streamingAssetsPath + "/room_by_room.sql"));
       }
     }
   }
