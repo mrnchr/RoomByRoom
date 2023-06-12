@@ -14,6 +14,7 @@ namespace RoomByRoom.UI.MainMenu
     private readonly bool _saveInFile;
     [SuppressMessage("ReSharper", "PrivateFieldCanBeConvertedToLocalVariable", Justification = "Destructor closes connection")] 
     private readonly DbAccessor _db;
+    
 
     public ProfileService(bool saveInFile)
     {

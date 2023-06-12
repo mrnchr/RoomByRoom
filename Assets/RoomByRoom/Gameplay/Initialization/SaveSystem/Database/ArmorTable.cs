@@ -5,14 +5,11 @@ namespace RoomByRoom.Database
   [Table("armor")]
   public class ArmorTable : IComponentTable<BoundComponent<ArmorInfo>>
   {
-    [PrimaryKey, Column("id")]
-    public int Id { get; set; }
-    
-    [PrimaryKey, Column("profile_name")]
-    public string ProfileName { get; set; } 
-    
-    [Column("armor_type")]
-    public int ArmorType { get; set; }
+    [PrimaryKey, Column("id")] public int Id { get; set; }
+
+    [PrimaryKey, Column("profile_name")] public string ProfileName { get; set; }
+
+    [Column("armor_type")] public int ArmorType { get; set; }
 
     public BoundComponent<ArmorInfo> GetComponent() =>
       new BoundComponent<ArmorInfo>
@@ -20,7 +17,7 @@ namespace RoomByRoom.Database
         BoundEntity = Id,
         ComponentInfo = new ArmorInfo
         {
-          Type = (ArmorType) ArmorType
+          Type = (ArmorType)ArmorType
         }
       };
 

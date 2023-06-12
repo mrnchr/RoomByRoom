@@ -11,10 +11,9 @@ namespace RoomByRoom.Utility
     {
       public const string SavingDirectory =
 #if UNITY_EDITOR
-        "Local";
-        //@"Local\Saves\";
+        @"Local\Saves\";
 #elif UNITY_STANDALONE || DEVELOPMENT_BUILD
-				//@"Local\Saves\";
+				@"Local\Saves\";
 #endif
       
       public const string DatabaseFileName =

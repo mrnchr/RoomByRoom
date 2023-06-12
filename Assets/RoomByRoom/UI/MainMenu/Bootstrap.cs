@@ -30,7 +30,7 @@ namespace RoomByRoom.UI.MainMenu
 
     private void Awake()
     {
-      Environment.Prepare();
+      Environment.Prepare(_configSo.Value.SaveInFile);
 
       _outerData.transform.SetParent(null);
       DontDestroyOnLoad(_outerData);

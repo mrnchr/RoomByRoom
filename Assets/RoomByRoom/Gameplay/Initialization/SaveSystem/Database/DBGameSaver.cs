@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using LinqToDB;
-using LinqToDB.Tools;
 
 namespace RoomByRoom.Database
 {
@@ -9,20 +8,16 @@ namespace RoomByRoom.Database
   {
     private readonly DbAccessor _db;
 
-    public DBGameSaver()
-    {
-      _db = new DbAccessor();
-    }
+    public DBGameSaver() => _db = new DbAccessor();
 
     public bool LoadData(string profile, ref Saving saving)
     {
-      using DbRoomByRoomConnection conn = _db.GetConnection();
+      using var conn = _db.GetConnection();
       var profiles = from p in conn.TProfile
         where p.Name == profile
         select p;
 
-      if (!profiles.Any())
-        return false;
+      if (!profiles.Any()) return false;
 
       foreach (ProfileTable p in profiles)
       {
