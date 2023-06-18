@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace RoomByRoom
+namespace RoomByRoom.Scene
 {
-  public class ReloadSceneService
+  public class ScenePreloader
   {
     private AsyncOperation _load;
 
-    public void ReloadScene()
+    public void PreloadScene(int buildIndex)
     {
-      _load = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+      _load = SceneManager.LoadSceneAsync(buildIndex);
       _load.allowSceneActivation = false;
     }
 

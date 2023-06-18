@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using LinqToDB;
 using RoomByRoom.UI.Game;
 using RoomByRoom.Utility;
 
@@ -9,22 +10,19 @@ namespace RoomByRoom
 {
   public class LoadInventorySystem : IEcsInitSystem
   {
-    private readonly Dictionary<int, int> _boundItems = new Dictionary<int, int>();
     private readonly EcsCustomInject<CharacteristicService> _charSvc = default;
     private readonly EcsFilterInject<Inc<ControllerByPlayer>> _player = default;
-    private readonly EcsCustomInject<Saving> _savedData = default;
+    private readonly EcsCustomInject<GameSave> _savedData = default;
     private readonly EcsCustomInject<KeepDirtyService> _keepDirtySvc = default;
+    private readonly Dictionary<int, int> _boundItems = new Dictionary<int, int>();
     private readonly HashSet<int> _savedItems = new HashSet<int>();
-    private SavedInventory _savedInventory;
+    private InventorySave _inventorySave;
     private EcsWorld _world;
 
     public void Init(IEcsSystems systems)
     {
-      if (_player.Value.GetEntitiesCount() == 0)
-        throw new TimeoutException("It is impossible to create inventory for the player. The entity does not exist");
-
       _world = systems.GetWorld();
-      _savedInventory = _savedData.Value.Inventory;
+      _inventorySave = _savedData.Value.InventorySave;
 
       CollectEntities();
 
@@ -33,7 +31,7 @@ namespace RoomByRoom
 
       LoadEntities();
 
-      int player = _player.Value.GetRawEntities()[0];
+      int player = Utils.GetPlayerEntity(_world);
       foreach (int itemEntity in _boundItems.Values)
       {
         _world.Add<Owned>(itemEntity)
@@ -66,37 +64,35 @@ namespace RoomByRoom
     {
       void CollectEntity<T>(BoundComponent<T> component)
         where T : struct =>
-        _savedItems.Add(component.BoundEntity);
+        _savedItems.Add(component.Entity);
 
-      ProcessComponents(_savedInventory.Item, CollectEntity);
-      ProcessComponents(_savedInventory.Weapon, CollectEntity);
-      ProcessComponents(_savedInventory.Armor, CollectEntity);
-      ProcessComponents(_savedInventory.PhysDamage, CollectEntity);
-      ProcessComponents(_savedInventory.PhysProtection, CollectEntity);
-      ProcessComponents(_savedInventory.Equipped, CollectEntity);
-      ProcessComponents(_savedInventory.Shape, CollectEntity);
+      ProcessComponents(_inventorySave.Item, CollectEntity);
+      ProcessComponents(_inventorySave.Weapon, CollectEntity);
+      ProcessComponents(_inventorySave.Armor, CollectEntity);
+      ProcessComponents(_inventorySave.PhysDamage, CollectEntity);
+      ProcessComponents(_inventorySave.PhysProtection, CollectEntity);
+      ProcessComponents(_inventorySave.Equipped, CollectEntity);
+      ProcessComponents(_inventorySave.Shape, CollectEntity);
     }
-
-    private void ProcessComponents<T>(List<BoundComponent<T>> components, Action<BoundComponent<T>> action)
-      where T : struct =>
-      components.ForEach(action);
 
     private void LoadEntities()
     {
-      void LoadComponent<T>(BoundComponent<T> component)
-        where T : struct
-      {
-        _world.Add<T>(_boundItems[component.BoundEntity])
-          .Assign(x => component.ComponentInfo);
-      }
+      ProcessComponents(_inventorySave.Item, LoadComponent);
+      ProcessComponents(_inventorySave.Weapon, LoadComponent);
+      ProcessComponents(_inventorySave.Armor, LoadComponent);
+      ProcessComponents(_inventorySave.PhysDamage, LoadComponent);
+      ProcessComponents(_inventorySave.PhysProtection, LoadComponent);
+      ProcessComponents(_inventorySave.Equipped, LoadComponent);
+      ProcessComponents(_inventorySave.Shape, LoadComponent);
 
-      ProcessComponents(_savedInventory.Item, LoadComponent);
-      ProcessComponents(_savedInventory.Weapon, LoadComponent);
-      ProcessComponents(_savedInventory.Armor, LoadComponent);
-      ProcessComponents(_savedInventory.PhysDamage, LoadComponent);
-      ProcessComponents(_savedInventory.PhysProtection, LoadComponent);
-      ProcessComponents(_savedInventory.Equipped, LoadComponent);
-      ProcessComponents(_savedInventory.Shape, LoadComponent);
+      void LoadComponent<T>(BoundComponent<T> component)
+        where T : struct =>
+        _world.Add<T>(_boundItems[component.Entity])
+          .Assign(_ => component.ComponentInfo);
     }
+
+    private static void ProcessComponents<T>(List<BoundComponent<T>> components, Action<BoundComponent<T>> action)
+      where T : struct =>
+      components.ForEach(action);
   }
 }

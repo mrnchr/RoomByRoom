@@ -17,7 +17,7 @@ namespace RoomByRoom.Database
     public BoundComponent<ItemPhysicalProtection> GetComponent() =>
       new BoundComponent<ItemPhysicalProtection>
       {
-        BoundEntity = Id,
+        Entity = Id,
         ComponentInfo = new ItemPhysicalProtection
         {
           Point = Point
@@ -26,7 +26,7 @@ namespace RoomByRoom.Database
 
     public void SetComponent(BoundComponent<ItemPhysicalProtection> comp, string profileName)
     {
-      Id = comp.BoundEntity;
+      Id = comp.Entity;
       ProfileName = profileName;
       Point = comp.ComponentInfo.Point;
     }

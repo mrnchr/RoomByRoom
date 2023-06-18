@@ -37,7 +37,8 @@ namespace RoomByRoom
         if (type == ItemType.Weapon)
           itemView.gameObject.SetActive(_world.Has<InHands>(index));
 
-        if (Utils.IsPlayer(_world, Utils.GetOwner(_world, index)))
+        int unit = Utils.GetOwner(_world, index);
+        if (Utils.IsUnitOf(_world, unit, UnitType.Player))
           _keepDirtySvc.Value.UpdateDirtyMessage(DirtyType.PlayerModel);
       }
     }

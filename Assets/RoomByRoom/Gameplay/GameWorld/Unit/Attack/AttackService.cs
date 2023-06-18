@@ -47,6 +47,6 @@ namespace RoomByRoom
     }
 
     private bool CanFight(int a, int b) =>
-      Utils.IsPlayer(_world, a) || Utils.IsPlayer(_world, b);
+      Utils.IsUnitOf(_world, a, UnitType.Player) || Utils.IsUnitOf(_world, b, UnitType.Player);
   }
 }

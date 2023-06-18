@@ -17,7 +17,7 @@ namespace RoomByRoom.Database
     public BoundComponent<ItemPhysicalDamage> GetComponent() =>
       new BoundComponent<ItemPhysicalDamage>
       {
-        BoundEntity = Id,
+        Entity = Id,
         ComponentInfo = new ItemPhysicalDamage
         {
           Point = Point
@@ -26,7 +26,7 @@ namespace RoomByRoom.Database
 
     public void SetComponent(BoundComponent<ItemPhysicalDamage> comp, string profileName)
     {
-      Id = comp.BoundEntity;
+      Id = comp.Entity;
       ProfileName = profileName;
       Point = comp.ComponentInfo.Point;
     }

@@ -1,6 +1,6 @@
 ﻿using RoomByRoom.Config.Data;
 using RoomByRoom.Control;
-using RoomByRoom.Initialization;
+using RoomByRoom.Utility;
 using UnityEngine;
 
 namespace RoomByRoom.UI.MainMenu
@@ -18,36 +18,23 @@ namespace RoomByRoom.UI.MainMenu
 		private ProfileGroup _profileGroup;
     [SerializeField] private Transform _profileParent;
 
-    [Header("Others")]
-    [SerializeField] private DefaultData _defaultData;
-    [SerializeField] private ConfigurationSO _configSo;
-    [SerializeField] private Configuration _config;
-    [SerializeField] private OuterData _outerData;
-
+    private OuterData _outerData;
     private StartGameService _startGameSvc;
     private ProfileService _profileSvc;
     private ProfileGroupFactory _profileGroupFactory;
 
     private void Awake()
     {
-      Environment.Prepare(_configSo.Value.SaveInFile);
-
+      _outerData = new GameObject("OuterData").AddComponent<OuterData>()
+        .SetConfig(new ConfigSaveService(Idents.FilePaths.ConfigFileName).Load());
       _outerData.transform.SetParent(null);
       DontDestroyOnLoad(_outerData);
-      LoadConfig(new ConfigSavingService());
-      _profileSvc = new ProfileService(_config.SaveInFile);
+      
+      _profileSvc = new ProfileService();
       _profileGroupFactory = new ProfileGroupFactory(_profileGroup, _profileParent, _mainMenuMediator);
       _startGameSvc = new StartGameService(_outerData);
 
-      _profileCreatorWindow.Construct(_defaultData.ProfileName);
       _mainMenuMediator.Construct(_profileGroupFactory, _profileSvc, _startGameSvc);
-    }
-    
-    private void LoadConfig(ConfigSavingService cfgSavingSvc)
-    {
-      if (cfgSavingSvc.LoadData(ref _config)) return;
-      _config = _configSo.Value;
-      cfgSavingSvc.SaveData(_config);
     }
   }
 }

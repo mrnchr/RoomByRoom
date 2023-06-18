@@ -5,26 +5,20 @@ namespace RoomByRoom.Gameplay.Initialization
 {
   public class Bootstrap : MonoBehaviour
   {
-    [SerializeField] private ConfigurationSO _defaultConfig;
+    [SerializeField] private GameSaveSO _defaultGameSave; 
     private Configuration _config;
-
     private Engine _engine;
+    private GameSaveService _gameSaveSvc;
+    private OuterData _outerData;
+
     private void Awake()
     {
-      LoadConfig(new ConfigSavingService());
+      _outerData = FindObjectOfType<OuterData>();
+      _config = _outerData.Config;
+      _gameSaveSvc = new GameSaveService(_outerData.ProfileName, _defaultGameSave.Value);
+      
       _engine = FindObjectOfType<Engine>();
-    }
-
-    private void LoadConfig(ConfigSavingService cfgSavingSvc)
-    {
-      if (cfgSavingSvc.LoadData(ref _config)) return;
-      _config = _defaultConfig.Value;
-      cfgSavingSvc.SaveData(_config);
-    }
-
-    private void Start()
-    {
-      _engine.Construct(_config);
+      _engine.Construct(_config, _gameSaveSvc);
     }
   }
 }

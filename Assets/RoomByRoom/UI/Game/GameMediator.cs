@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Leopotam.EcsLite;
+using RoomByRoom.Scene;
 using RoomByRoom.UI.Game.HUD;
 using RoomByRoom.UI.Game.Inventory;
 using UnityEngine;
@@ -21,9 +22,9 @@ namespace RoomByRoom.UI.Game
     private EquipService _equipSvc;
     private ItemDragger _itemDragger;
     private WinUISwitcher _winUI;
-    private ReloadSceneService _sceneSvc;
+    private ScenePreloader _sceneSvc;
 
-    public void Construct(TurnWindowService turnWindowSvc, EquipService equipSvc, ReloadSceneService sceneSvc)
+    public void Construct(TurnWindowService turnWindowSvc, EquipService equipSvc, ScenePreloader sceneSvc)
     {
       _turnWindowSvc = turnWindowSvc;
       _equipSvc = equipSvc;

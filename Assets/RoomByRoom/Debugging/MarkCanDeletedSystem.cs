@@ -44,8 +44,11 @@ namespace RoomByRoom.Debugging
         _world.Add<CanBeDeleted>(index);
     }
 
-    private bool IsPlayerWeapon(int entity) =>
-      _world.Has<Owned>(entity)
-      && Utils.IsPlayer(_world, _world.Get<Owned>(entity).Owner);
+    private bool IsPlayerWeapon(int entity)
+    {
+      int unit = _world.Get<Owned>(entity).Owner;
+      return _world.Has<Owned>(entity)
+             && Utils.IsUnitOf(_world, unit, UnitType.Player);
+    }
   }
 }

@@ -22,7 +22,7 @@ namespace RoomByRoom.Debugging
 
         inv.Equipment = _world.Get<Equipment>(index).ItemList;
 
-        if (Utils.IsPlayer(_world, index))
+        if (Utils.IsUnitOf(_world, index, UnitType.Player))
         {
           inv.Backpack = _world.Get<Backpack>(index).ItemList;
           inv.Inventory = _world.Get<Inventory>(index).ItemList;

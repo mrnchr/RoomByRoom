@@ -7,34 +7,6 @@ namespace RoomByRoom.Utility
 {
   public static class Utils
   {
-    public static string ListToString<T>(List<T> list)
-    {
-      var s = "{ ";
-      for (var i = 0; i < list.Count; i++)
-      {
-        s += list[i].ToString();
-        if (i < list.Count - 1)
-          s += ", ";
-      }
-
-      s += " }";
-      return s;
-    }
-
-    public static string Print<T>(this List<T> list)
-    {
-      var s = "{ ";
-      for (var i = 0; i < list.Count; i++)
-      {
-        s += list[i].ToString();
-        if (i < list.Count - 1)
-          s += ", ";
-      }
-
-      s += " }";
-      return s;
-    }
-
     public static int GetEnumLength<T>()
       where T : Enum =>
       Enum.GetNames(typeof(T)).Length;
@@ -42,11 +14,8 @@ namespace RoomByRoom.Utility
     public static bool IsUnitOf(EcsWorld world, int unit, UnitType checkType) =>
       world.Get<UnitInfo>(unit).Type == checkType;
 
-    public static bool IsPlayer(EcsWorld world, int unit) => IsUnitOf(world, unit, UnitType.Player);
-
     public static bool IsEnemy(UnitType type) => type != UnitType.Player && type != UnitType.Boss;
     public static bool IsEnemy(EcsWorld world, int unit) => IsEnemy(world.Get<UnitInfo>(unit).Type);
-
 
     public static void AddItemToList(List<EcsPackedEntity> list, EcsPackedEntity item)
     {
@@ -63,9 +32,6 @@ namespace RoomByRoom.Utility
         obj = max;
       return obj;
     }
-
-    public static float Clamp(float value, float min = float.MaxValue, float max = float.MaxValue) =>
-      value.Clamp(min, max);
 
     public static void SetTransform(Transform from, Transform to)
     {

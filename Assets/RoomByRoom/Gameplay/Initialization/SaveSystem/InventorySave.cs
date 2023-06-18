@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace RoomByRoom
 {
   [Serializable]
-  public class SavedInventory
+  public class InventorySave
   {
     public List<BoundComponent<ArmorInfo>> Armor = new List<BoundComponent<ArmorInfo>>();
     public List<BoundComponent<Equipped>> Equipped = new List<BoundComponent<Equipped>>();

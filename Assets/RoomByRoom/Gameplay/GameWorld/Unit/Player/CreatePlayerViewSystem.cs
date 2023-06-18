@@ -10,7 +10,7 @@ namespace RoomByRoom
     private readonly EcsCustomInject<AttackService> _attackSvc = default;
     private readonly EcsCustomInject<PrefabService> _prefabService = default;
     private readonly EcsFilterInject<Inc<ControllerByPlayer>, Exc<UnitViewRef>> _player = default;
-    private readonly EcsCustomInject<Saving> _savedData = default;
+    private readonly EcsCustomInject<GameSave> _savedData = default;
 
     public void Run(IEcsSystems systems)
     {
@@ -19,7 +19,7 @@ namespace RoomByRoom
       foreach (int index in _player.Value)
       {
         // Create player entity from save
-        ref SavedPlayer savedPlayer = ref _savedData.Value.Player;
+        ref PlayerSave playerSave = ref _savedData.Value.Player;
         // Spawn player in the world
         GameObject player = Object.Instantiate(_prefabService.Value.Prefabs.BasePlayerUnit.gameObject);
         var playerView = player.GetComponent<PlayerView>();
@@ -32,11 +32,11 @@ namespace RoomByRoom
 
         // Add Moving component
         ref Movable movable = ref world.GetPool<Movable>().Add(index);
-        movable = savedPlayer.MovableCmp;
+        movable = playerSave.MovableCmp;
 
         // Add Jumping component
         ref Jumpable jumpable = ref world.GetPool<Jumpable>().Add(index);
-        jumpable = savedPlayer.JumpableCmp;
+        jumpable = playerSave.JumpableCmp;
       }
     }
   }

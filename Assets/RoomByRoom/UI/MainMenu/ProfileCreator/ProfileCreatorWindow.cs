@@ -11,7 +11,6 @@ namespace RoomByRoom.UI.MainMenu
     [SerializeField] private GameObject _equalMessage;
     private bool _isInputError;
     private bool _isInputEqual;
-    private string _defaultProfileName;
     private MainMenuMediator _mainMenuMediator;
     private readonly char[] _invalidFileNameSymbols = { '/', '\\', ':', '*', '?', '\"', '<', '>', '|' };
 
@@ -21,15 +20,9 @@ namespace RoomByRoom.UI.MainMenu
       _inputField.onValueChanged.AddListener(CheckProfileName);
     }
 
-    public void Construct(string defaultProfileName)
-    {
-      _defaultProfileName = defaultProfileName;
-    }
-
     public void Show()
     {
       _mainMenuMediator.SwitchNewProfile(true);
-      _inputField.text = _defaultProfileName;
     }
 
     public void StartGame()

@@ -9,37 +9,38 @@ namespace RoomByRoom
   internal class LoadPlayerSystem : IEcsInitSystem
   {
     private readonly EcsCustomInject<PlayerData> _playerData = default;
-    private readonly EcsCustomInject<Saving> _savedData = default;
+    private readonly EcsCustomInject<GameSave> _gameSave = default;
 
     public void Init(IEcsSystems systems)
     {
+      PlayerSave playerSave = _gameSave.Value.Player;
+      PlayerData playerData = _playerData.Value;
       EcsWorld world = systems.GetWorld();
-      SavedPlayer savedPlayer = _savedData.Value.Player;
 
       int player = world.NewEntity();
       world.Add<RaceInfo>(player)
-        .Assign(x => savedPlayer.Race);
+        .Assign(x => playerSave.Race);
 
       world.Add<Health>(player)
-        .Assign(x => savedPlayer.HealthCmp);
+        .Assign(x => playerSave.HealthCmp);
 
       world.Add<UnitInfo>(player)
         .Type = UnitType.Player;
 
       world.Add<Inventory>(player)
-        .ItemList = new List<EcsPackedEntity>(_playerData.Value.BackpackSize + _playerData.Value.EquipmentSize);
+        .ItemList = new List<EcsPackedEntity>(playerData.BackpackSize + playerData.EquipmentSize);
 
       world.Add<Equipment>(player)
-        .ItemList = new List<EcsPackedEntity>(_playerData.Value.EquipmentSize);
+        .ItemList = new List<EcsPackedEntity>(playerData.EquipmentSize);
 
       world.Add<Backpack>(player)
-        .ItemList = new List<EcsPackedEntity>(_playerData.Value.BackpackSize);
+        .ItemList = new List<EcsPackedEntity>(playerData.BackpackSize);
 
-      world.Add<UnitPhysicalProtection>(player) = savedPlayer.UnitPhysProtectionCmp
+      world.Add<UnitPhysicalProtection>(player) = playerSave.UnitPhysProtectionCmp
         .Assign(x =>
         {
-          x.RestoreSpeed = _playerData.Value.Armor.RestoreSpeed;
-          x.CantRestoreTime = _playerData.Value.Armor.BreakRestoreTime;
+          x.RestoreSpeed = playerData.Armor.RestoreSpeed;
+          x.CantRestoreTime = playerData.Armor.CantRestoreTime;
           return x;
         });
 

@@ -17,7 +17,7 @@ namespace RoomByRoom.Database
     public BoundComponent<ShapeInfo> GetComponent() =>
       new BoundComponent<ShapeInfo>
       {
-        BoundEntity = Id,
+        Entity = Id,
         ComponentInfo = new ShapeInfo
         {
           PrefabIndex = PrefabIndex
@@ -26,7 +26,7 @@ namespace RoomByRoom.Database
 
     public void SetComponent(BoundComponent<ShapeInfo> comp, string profileName)
     {
-      Id = comp.BoundEntity;
+      Id = comp.Entity;
       ProfileName = profileName;
       PrefabIndex = comp.ComponentInfo.PrefabIndex;
     }

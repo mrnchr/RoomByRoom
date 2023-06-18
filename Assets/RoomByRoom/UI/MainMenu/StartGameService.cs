@@ -14,7 +14,7 @@ namespace RoomByRoom.UI.MainMenu
     public void StartGame(string profileName)
     {
       _outerData.ProfileName = profileName;
-      SceneManager.LoadScene(1);
+      SceneManager.LoadScene(2);
     }
   }
 }

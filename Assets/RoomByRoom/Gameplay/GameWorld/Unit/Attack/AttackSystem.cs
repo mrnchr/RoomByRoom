@@ -21,7 +21,7 @@ namespace RoomByRoom
         
         if(Utils.IsUnitOf(world, attack, UnitType.Humanoid))
           world.Add<CantAttack>(attack)
-            .TimeLeft = _enemyData.Value.Armor.BreakRestoreTime;
+            .TimeLeft = _enemyData.Value.Armor.CantRestoreTime;
       }
     }
   }

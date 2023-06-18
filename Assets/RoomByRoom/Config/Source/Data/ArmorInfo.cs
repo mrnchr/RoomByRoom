@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine.Serialization;
 
 namespace RoomByRoom.Config.Data
 {
@@ -6,6 +7,6 @@ namespace RoomByRoom.Config.Data
   public struct ArmorInfo
   {
     public float RestoreSpeed;
-    public float BreakRestoreTime;
+    [FormerlySerializedAs("BreakRestoreTime")] public float CantRestoreTime;
   }
 }

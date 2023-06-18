@@ -1,4 +1,5 @@
 using System;
+using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
@@ -6,7 +7,7 @@ namespace RoomByRoom
   public struct BoundComponent<T>
     where T : struct
   {
-    public int BoundEntity;
+    public int Entity;
     public T ComponentInfo;
   }
 }

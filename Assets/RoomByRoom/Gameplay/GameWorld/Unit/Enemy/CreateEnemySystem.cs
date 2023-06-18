@@ -82,7 +82,7 @@ namespace RoomByRoom
           x =>
           {
             x.RestoreSpeed = _enemyData.Value.Armor.RestoreSpeed;
-            x.CantRestoreTime = _enemyData.Value.Armor.BreakRestoreTime;
+            x.CantRestoreTime = _enemyData.Value.Armor.CantRestoreTime;
             return x;
           });
     }

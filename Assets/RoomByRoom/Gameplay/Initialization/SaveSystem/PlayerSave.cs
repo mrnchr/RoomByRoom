@@ -3,7 +3,7 @@ using System;
 namespace RoomByRoom
 {
   [Serializable]
-  public struct SavedPlayer
+  public struct PlayerSave
   {
     public RaceInfo Race;
     public Health HealthCmp;

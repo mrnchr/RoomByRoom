@@ -19,7 +19,7 @@ namespace RoomByRoom
       foreach (int index in _units.Value)
       {
         if (_world.Get<Health>(index).CurrentPoint > 0) continue;
-        if (Utils.IsPlayer(_world, index))
+        if (Utils.IsUnitOf(_world, index, UnitType.Player))
         {
           _message.Add<PlayerDyingMessage>(_message.NewEntity());
           _world.Add<Died>(index);

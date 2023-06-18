@@ -25,18 +25,18 @@ namespace RoomByRoom
   [Serializable]
   public struct Inventory
   {
-    [SerializeField] public List<EcsPackedEntity> ItemList;
+    public List<EcsPackedEntity> ItemList;
   }
 
   [Serializable]
   public struct Equipment
   {
-    [SerializeField] public List<EcsPackedEntity> ItemList;
+    public List<EcsPackedEntity> ItemList;
   }
 
   [Serializable]
   public struct Backpack
   {
-    [SerializeField] public List<EcsPackedEntity> ItemList;
+    public List<EcsPackedEntity> ItemList;
   }
 }

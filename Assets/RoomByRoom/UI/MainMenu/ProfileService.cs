@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using LinqToDB;
@@ -11,22 +9,16 @@ namespace RoomByRoom.UI.MainMenu
 {
   public class ProfileService
   {
-    private readonly bool _saveInFile;
     [SuppressMessage("ReSharper", "PrivateFieldCanBeConvertedToLocalVariable", Justification = "Destructor closes connection")] 
     private readonly DbAccessor _db;
     
 
-    public ProfileService(bool saveInFile)
+    public ProfileService()
     {
-      _saveInFile = saveInFile;
-      if (saveInFile) return;
       _db = new DbAccessor();
     }
 
-    public string[] Load() =>
-      _saveInFile
-        ? LoadFromFile()
-        : LoadFromDB();
+    public string[] Load() => LoadFromDB();
 
     private string[] LoadFromDB()
     {
@@ -36,28 +28,7 @@ namespace RoomByRoom.UI.MainMenu
         .ToArray();
     }
 
-    private static string[] LoadFromFile()
-    {
-      var profileFolder = new DirectoryInfo(Idents.FilePaths.SavingDirectory);
-      return profileFolder.GetFiles()
-#if UNITY_EDITOR
-        .Where(x => !x.Name.EndsWith(".meta"))
-#endif
-        .OrderByDescending(x => x.LastWriteTime)
-        .Select(x => x.Name)
-        .ToArray();
-    }
-
-    public void Delete(string profileName)
-    {
-      if (_saveInFile)
-        RemoveFile(profileName);
-      else
-        RemoveFromDB(profileName);
-    }
-
-    private static void RemoveFile(string profileName) =>
-      File.Delete(Idents.FilePaths.SavingDirectory + profileName);
+    public void Delete(string profileName) => RemoveFromDB(profileName);
 
     private void RemoveFromDB(string profileName)
     {

@@ -11,7 +11,7 @@ namespace RoomByRoom
   {
     private readonly EcsCustomInject<AttackService> _attackSvc = default;
     private readonly EcsCustomInject<PrefabService> _prefabSvc = default;
-    private readonly EcsCustomInject<Saving> _savedData = default;
+    private readonly EcsCustomInject<GameSave> _savedData = default;
     private readonly EcsCustomInject<SceneInfo> _sceneInfo = default;
     private readonly EcsCustomInject<EnemyData> _enemyData = default;
     private readonly EcsFilterInject<Inc<UnitInfo>, Exc<UnitViewRef>> _units = default;
@@ -33,7 +33,7 @@ namespace RoomByRoom
         _world.Add<Movable>(index)
           .Assign(_ => GetMoving(index, unitView));
 
-        if (Utils.IsPlayer(_world, index))
+        if (Utils.IsUnitOf(_world, index, UnitType.Player))
           SetPlayerUnit(index, unitView);
         else
           SetEnemyUnit(index, unitView);
@@ -79,12 +79,12 @@ namespace RoomByRoom
     }
 
     private Movable GetMoving(int entity, UnitView unit) =>
-      Utils.IsPlayer(_world, entity)
+      Utils.IsUnitOf(_world, entity, UnitType.Player)
         ? _savedData.Value.Player.MovableCmp
         : _enemyData.Value.MovableCmp;
 
     private Jumpable GetJumping(int entity, GroundUnitView unit) =>
-      Utils.IsPlayer(_world, entity)
+      Utils.IsUnitOf(_world, entity, UnitType.Player)
         ? _savedData.Value.Player.JumpableCmp
         : _enemyData.Value.JumpableCmp;
 

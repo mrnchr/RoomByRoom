@@ -14,12 +14,12 @@ namespace RoomByRoom.Database
     public BoundComponent<Equipped> GetComponent() =>
       new BoundComponent<Equipped>
       {
-        BoundEntity = Id
+        Entity = Id
       };
 
     public void SetComponent(BoundComponent<Equipped> comp, string profileName)
     {
-      Id = comp.BoundEntity;
+      Id = comp.Entity;
       ProfileName = profileName;
     }
   }

@@ -1,15 +1,17 @@
 ﻿using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using RoomByRoom.Scene;
 using RoomByRoom.Utility;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RoomByRoom
 {
   public class ReloadGameSystem : IEcsRunSystem
   {
     private readonly EcsFilterInject<Inc<PlayerDyingMessage>> _dieMsgs = Idents.Worlds.MessageWorld;
-    private readonly EcsCustomInject<ReloadSceneService> _sceneSvc = default;
-    private readonly EcsCustomInject<SavingService> _savingSvc = default;
+    private readonly EcsCustomInject<ScenePreloader> _sceneSvc = default;
+    private readonly EcsCustomInject<GameSaveService> _savingSvc = default;
 
     public void Run(IEcsSystems systems)
     {
@@ -19,7 +21,7 @@ namespace RoomByRoom
         outerData.ProfileName = _savingSvc.Value.ProfileName;
         Object.DontDestroyOnLoad(outerData);
         
-        _sceneSvc.Value.ReloadScene();
+        _sceneSvc.Value.PreloadScene(SceneManager.GetActiveScene().buildIndex);
       }
     }
   }

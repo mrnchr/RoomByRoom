@@ -7,21 +7,22 @@ using Leopotam.EcsLite.ExtendedSystems;
 using RoomByRoom.Config.Data;
 using RoomByRoom.Control;
 using RoomByRoom.Debugging;
+using RoomByRoom.Scene;
 using RoomByRoom.UI.Game;
 using RoomByRoom.UI.Game.Inventory;
 using RoomByRoom.Utility;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RoomByRoom
 {
   public sealed class Engine : MonoBehaviour
   {
     // TODO: change to external injection
-    [SerializeField] private InitializeData _initializeData;
+    [FormerlySerializedAs("_gameData"),FormerlySerializedAs("_initializeData"),SerializeField] private GameSaveSO _gameSaveSo;
     [SerializeField] private SceneInfo _sceneInfo;
     [SerializeField] private PrefabData _prefabData;
     [SerializeField] private SpriteData _spriteData;
-    [SerializeField] private DefaultData _defaultData;
     [SerializeField] private EnemyData _enemyData;
     [SerializeField] private PlayerData _playerData;
     [SerializeField] private InventoryUpdater _inventoryUpdater;
@@ -32,7 +33,7 @@ namespace RoomByRoom
     private GameInfo _gameInfo;
     private EcsWorld _message;
     private PrefabService _prefabSvc;
-    private Saving _saving;
+    private GameSave _gameSave;
     private Configuration _config;
 
     private IEcsSystems _updateSystems;
@@ -40,15 +41,17 @@ namespace RoomByRoom
     // private IEcsSystems _fixedUpdateSystems;
     private EcsWorld _world;
     private EquipService _equipSvc;
+    private GameSaveService _gameSaveSvc;
 
-    public void Construct(Configuration config)
+    public void Construct(Configuration config, GameSaveService gameSaveSvc)
     {
       _config = config;
+      _gameSaveSvc = gameSaveSvc;
     }
     
     private void Awake()
     {
-      _saving = new Saving();
+      _gameSave = new GameSave();
       _prefabSvc = new PrefabService(_prefabData);
       _gameInfo = new GameInfo();
 
@@ -62,25 +65,25 @@ namespace RoomByRoom
 
 #if UNITY_EDITOR
       _sceneInfo.CurrentGame = _gameInfo;
-      _sceneInfo.CurrentSave = _saving;
+      _sceneInfo.CurrentSave = _gameSave;
       _sceneInfo.Config = _config;
 #endif
     }
 
     private void Start()
     {
-      var savingSvc = new SavingService(GetProfileName(), _config.SaveInFile);
       var attackSvc = new AttackService(_world, _message);
       var charSvc = new CharacteristicService(_world);
       var blockingSvc = new BlockingService(_gameInfo);
       var keepDirtySvc = new KeepDirtyService(_message);
-      var sceneSvc = new ReloadSceneService();
+      var sceneSvc = new ScenePreloader();
       _equipSvc = new EquipService(_world, charSvc, keepDirtySvc);
       _mediator.Construct(new TurnWindowService(_message), _equipSvc, sceneSvc);
+      _gameSave.Copy(_gameSaveSvc.LoadProfile());
 
       _updateSystems
         .AddWorld(_message, Idents.Worlds.MessageWorld)
-        .Add(new LoadSavingSystem())
+        // IEcsInitSystems
         .Add(new LoadRoomSystem())
         .Add(new LoadPlayerSystem())
         .Add(new LoadInventorySystem())
@@ -166,8 +169,8 @@ namespace RoomByRoom
         .Add(new EcsWorldDebugSystem())
         .Add(new EcsWorldDebugSystem(Idents.Worlds.MessageWorld))
 #endif
-        .Inject(_sceneInfo, _saving, _prefabSvc, _config,
-                savingSvc, _initializeData, _gameInfo, attackSvc, _enemyData, charSvc, _playerData, blockingSvc,
+        .Inject(_sceneInfo, _gameSave, _prefabSvc, _config,
+                _gameSaveSvc, _gameSaveSo, _gameInfo, attackSvc, _enemyData, charSvc, _playerData, blockingSvc,
                 _mediator, keepDirtySvc, sceneSvc, _equipSvc)
         .Init();
 
@@ -177,19 +180,6 @@ namespace RoomByRoom
       //     .AddWorld(message, Idents.Worlds.MessageWorld)
       //     .Inject(_sceneData, _savedData, _packedPrefabData, _configuration)
       //     .Init();
-    }
-
-    private string GetProfileName()
-    {
-      string profileName = _defaultData.ProfileName;
-      OuterData outerData = FindObjectOfType<OuterData>();
-      if (outerData)
-      {
-        profileName = outerData.ProfileName;
-        Destroy(outerData.gameObject);
-      }
-
-      return profileName;
     }
 
     private void Update()

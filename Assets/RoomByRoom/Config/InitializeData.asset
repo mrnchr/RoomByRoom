@@ -12,49 +12,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8661e64fe09f5458c1c61d8660012d, type: 3}
   m_Name: InitializeData
   m_EditorClassIdentifier: 
-  GameInfo:
-    RoomCount: 0
-    Money: 0
-    IsWin: 0
-    OpenedWindow: 0
-  Player:
-    Race:
-      Type: 0
-    HealthCmp:
-      CurrentPoint: 500
-      MaxPoint: 500
-    MovableCmp:
-      Speed: 5
-    JumpableCmp:
-      JumpForce: 5
-    UnitPhysProtectionCmp:
-      CurrentPoint: 0
-      MaxPoint: 0
-      CantRestoreTime: 0
-      RestoreSpeed: 0
-  Room:
-    Info:
-      Type: 0
-    Race:
-      Type: 0
-  Inventory:
-    Item:
-    - BoundEntity: 0
-      ComponentInfo:
+  Value:
+    Game:
+      RoomCount: 0
+      Money: 0
+      IsWin: 0
+      OpenedWindow: 0
+    Player:
+      Race:
         Type: 0
-    Weapon:
-    - BoundEntity: 0
-      ComponentInfo:
+      HealthCmp:
+        CurrentPoint: 500
+        MaxPoint: 500
+      MovableCmp:
+        Speed: 5
+      JumpableCmp:
+        JumpForce: 5
+      UnitPhysProtectionCmp:
+        CurrentPoint: 0
+        MaxPoint: 0
+        CantRestoreTime: 0
+        RestoreSpeed: 0
+    Room:
+      Info:
         Type: 0
-    Armor: []
-    PhysDamage:
-    - BoundEntity: 0
-      ComponentInfo:
-        Point: 10
-    PhysProtection: []
-    Equipped:
-    - BoundEntity: 0
-    Shape:
-    - BoundEntity: 0
-      ComponentInfo:
-        PrefabIndex: -1
+      Race:
+        Type: 0
+    InventorySave:
+      Armor: []
+      Equipped:
+      - Entity: 0
+      Item:
+      - Entity: 0
+        ComponentInfo:
+          Type: 0
+      PhysDamage:
+      - Entity: 0
+        ComponentInfo:
+          Point: 10
+      PhysProtection: []
+      Shape:
+      - Entity: 0
+        ComponentInfo:
+          PrefabIndex: -1
+      Weapon:
+      - Entity: 0
+        ComponentInfo:
+          Type: 0

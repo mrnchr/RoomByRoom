@@ -14,9 +14,9 @@ namespace RoomByRoom
     private readonly EcsFilterInject<Inc<RoomCleanedMessage>> _cleanedMsgs = Idents.Worlds.MessageWorld;
     private readonly EcsFilterInject<Inc<InventoryChangedMessage>> _changedMsgs = Idents.Worlds.MessageWorld;
     private readonly EcsFilterInject<Inc<NextRoomMessage>> _nextRoomMsgs = Idents.Worlds.MessageWorld;
-    private readonly EcsCustomInject<InitializeData> _defaultData = default;
-    private readonly EcsCustomInject<Saving> _savedData = default;
-    private readonly EcsCustomInject<SavingService> _savingSvc = default;
+    private readonly EcsCustomInject<GameSaveSO> _defaultData = default;
+    private readonly EcsCustomInject<GameSave> _savedData = default;
+    private readonly EcsCustomInject<GameSaveService> _savingSvc = default;
     private readonly EcsCustomInject<GameInfo> _gameInfo = default;
     private EcsWorld _world;
     private bool _canSave;
@@ -32,13 +32,13 @@ namespace RoomByRoom
       {
         _canSave = true;
         PackSaving();
-        _savingSvc.Value.SaveData(_savedData.Value);
+        _savingSvc.Value.SaveProfile(_savedData.Value);
       }
 
       if (_changedMsgs.Value.GetEntitiesCount() > 0 && _canSave)
       {
         PackSaving();
-        _savingSvc.Value.SaveData(_savedData.Value);
+        _savingSvc.Value.SaveProfile(_savedData.Value);
       }
 
       foreach (int index in _changedMsgs.Value)
@@ -46,16 +46,16 @@ namespace RoomByRoom
 
       foreach (int _ in _dieMsgs.Value)
       {
-        SetDefaultData();
-        _savingSvc.Value.SaveData(_savedData.Value);
+        _savedData.Value.Copy(_defaultData.Value.Value);
+        _savingSvc.Value.SaveProfile(_savedData.Value);
       }
     }
 
     private void PackSaving()
     {
       int player = Utils.GetPlayerEntity(_world);
-      _savedData.Value.GameSave = _gameInfo.Value;
-      _savedData.Value.Player = new SavedPlayer
+      _savedData.Value.Game = _gameInfo.Value;
+      _savedData.Value.Player = new PlayerSave
       {
         Race = _world.Get<RaceInfo>(player),
         HealthCmp = _world.Get<Health>(player),
@@ -65,7 +65,7 @@ namespace RoomByRoom
       };
 
       int room = Utils.GetRoomEntity(_world);
-      _savedData.Value.Room = new SavedRoom
+      _savedData.Value.Room = new RoomSave
       {
         Info = _world.Get<RoomInfo>(room),
         Race = _world.Get<RaceInfo>(room)
@@ -76,7 +76,7 @@ namespace RoomByRoom
       if (handFilter.GetEntitiesCount() > 0)
         playerItems.Add(handFilter.GetRawEntities()[0]);
 
-      _savedData.Value.Inventory = new SavedInventory
+      _savedData.Value.InventorySave = new InventorySave
       {
         Item = SelectComponents<ItemInfo>(playerItems),
         Weapon = SelectComponents<WeaponInfo>(playerItems),
@@ -93,14 +93,11 @@ namespace RoomByRoom
       (from index in playerItems
         where _world.Has<TComponent>(index)
         select new BoundComponent<TComponent>()
-          { BoundEntity = index, ComponentInfo = _world.Get<TComponent>(index) }).ToList();
+          { Entity = index, ComponentInfo = _world.Get<TComponent>(index) }).ToList();
 
     private void SetDefaultData()
     {
-      _savedData.Value.GameSave = _defaultData.Value.GameInfo;
-      _savedData.Value.Player = _defaultData.Value.Player;
-      _savedData.Value.Room = _defaultData.Value.Room;
-      _savedData.Value.Inventory = _defaultData.Value.Inventory;
+      _savedData.Value.Copy(_defaultData.Value.Value);
     }
   }
 }

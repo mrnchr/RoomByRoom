@@ -3,7 +3,7 @@ using System;
 namespace RoomByRoom
 {
   [Serializable]
-  public struct SavedRoom
+  public struct RoomSave
   {
     public RoomInfo Info;
     public RaceInfo Race;

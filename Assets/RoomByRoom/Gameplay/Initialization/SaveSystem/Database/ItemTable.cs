@@ -17,7 +17,7 @@ namespace RoomByRoom.Database
     public BoundComponent<ItemInfo> GetComponent() =>
       new BoundComponent<ItemInfo>
       {
-        BoundEntity = Id,
+        Entity = Id,
         ComponentInfo = new ItemInfo
         {
           Type = (ItemType)ItemType
@@ -26,7 +26,7 @@ namespace RoomByRoom.Database
 
     public void SetComponent(BoundComponent<ItemInfo> comp, string profileName)
     {
-      Id = comp.BoundEntity;
+      Id = comp.Entity;
       ProfileName = profileName;
       ItemType = (int)comp.ComponentInfo.Type;
     }
