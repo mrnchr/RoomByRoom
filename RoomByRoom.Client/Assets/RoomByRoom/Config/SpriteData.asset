@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db37a508de4c419b8deb9272709e684b, type: 3}
+  m_Name: SpriteData
+  m_EditorClassIdentifier: 
+  PlayerHand: {fileID: 21300000, guid: 6ff28a74412534e4086ddaf33fa15d8c, type: 3}
+  OneHands:
+  - {fileID: 21300000, guid: 2801ae8be5bfb594fa73d9d17bebaccd, type: 3}
+  - {fileID: 21300000, guid: 20a34cd9173de5b40bb416789d25ba02, type: 3}
+  - {fileID: 21300000, guid: a37bd7046347d4e43b60b7aec7bb4271, type: 3}
+  - {fileID: 21300000, guid: 517da1bd2ff393e44a53381ef95b9fc4, type: 3}
+  - {fileID: 21300000, guid: fd81ec808eb511e4b964cd68c93ba742, type: 3}
+  - {fileID: 21300000, guid: 5c21eaa2f154d5b4fac782020b3f14d7, type: 3}
+  TwoHands: []
+  Bows: []
+  Boots:
+  - {fileID: 21300000, guid: 2ffebff0d63bc914da0f2f49d4ef5919, type: 3}
+  Leggings:
+  - {fileID: 21300000, guid: b691ad53352a30f4f9bb23558b46c12f, type: 3}
+  Gloves:
+  - {fileID: 21300000, guid: ae257a9da082311479a1077c349b5a1f, type: 3}
+  Breastplates:
+  - {fileID: 21300000, guid: 25c620e89d685e043ac2ec21da699848, type: 3}
+  Helmets:
+  - {fileID: 21300000, guid: e96b3b39b62fedd40bcf499f0935efae, type: 3}
+  Shields:
+  - {fileID: 21300000, guid: 48d7ee7613d0aa84294bb13821ff7f41, type: 3}
+  Artifacts: []

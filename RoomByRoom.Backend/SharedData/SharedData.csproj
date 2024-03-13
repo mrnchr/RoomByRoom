@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>disable</Nullable>
+
+    <PostBuildEvent>copy SharedData.dll $(OutDir)..\..\..\..\..\RoomByRoom.Client\Assets\Plugins\SharedData.dll</PostBuildEvent>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f31962dfbc29430cbcc59985e2f03669, type: 3}
+  m_Name: EnemyData
+  m_EditorClassIdentifier: 
+  Armor:
+    RestoreSpeed: 7
+    BreakRestoreTime: 3
+  Animation:
+    StartAttackFrame: 0
+    EndAttackFrame: 0
+    StartPunchFrame: 0
+    EndPunchFrame: 0
+  AttackDelay: 2
+  MovableCmp:
+    Speed: 3
+  JumpableCmp:
+    JumpForce: 5
+  AttackDistance: 1.2

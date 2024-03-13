@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SharedData\SharedData.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.27" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.27" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\TemplateData\favicon.ico" />
+    <_ContentIncludedByDefault Remove="wwwroot\TemplateData\fullscreen-button.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\TemplateData\progress-bar-empty-dark.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\TemplateData\progress-bar-empty-light.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\TemplateData\progress-bar-full-dark.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\TemplateData\progress-bar-full-light.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\TemplateData\style.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\TemplateData\unity-logo-dark.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\TemplateData\unity-logo-light.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\TemplateData\webgl-logo.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\Build\Test.Web.data" />
+    <_ContentIncludedByDefault Remove="wwwroot\Build\Test.Web.framework.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Build\Test.Web.loader.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Build\Test.Web.wasm" />
+  </ItemGroup>
+
+</Project>
