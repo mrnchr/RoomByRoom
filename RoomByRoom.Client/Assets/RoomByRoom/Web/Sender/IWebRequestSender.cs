@@ -10,7 +10,7 @@ namespace RoomByRoom.Web.Sender
         TResponseData GetData<TResponseData>();
         public bool IsConnectionError();
         public bool IsSuccess();
-        IEnumerator SendRequest(bool freeAfter = false);
-        public Task SendRequestAsync(bool freeAfter = false);
+        IEnumerator SendRequest();
+        public Task SendRequestAsync();
     }
 }

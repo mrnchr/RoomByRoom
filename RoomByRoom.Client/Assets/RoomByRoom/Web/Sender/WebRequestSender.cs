@@ -38,7 +38,7 @@ namespace RoomByRoom.Web.Sender
             return _snapshot != null && _snapshot.Result == UnityWebRequest.Result.Success;
         }
 
-        public IEnumerator SendRequest(bool freeAfter = false)
+        public IEnumerator SendRequest()
         {
             using UnityWebRequest request = _builder.Build(_data);
             {
@@ -49,7 +49,7 @@ namespace RoomByRoom.Web.Sender
             }
         }
 
-        public async Task SendRequestAsync(bool freeAfter = false)
+        public async Task SendRequestAsync()
         {
             using UnityWebRequest request = _builder.Build(_data);
             {
